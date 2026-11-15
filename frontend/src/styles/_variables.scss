@@ -1,0 +1,72 @@
+// ---------------------------------------------------------------
+// ArthaBank design tokens, applied as Bootstrap 5.3 variable overrides
+// ---------------------------------------------------------------
+
+// Brand palette
+$primary: #4f46e5; // indigo
+$secondary: #64748b; // slate
+$success: #059669; // emerald
+$info: #0284c7; // sky
+$warning: #d97706; // amber
+$danger: #dc2626; // red
+$light: #f1f5f9;
+$dark: #0f172a;
+
+// Typography
+$font-family-sans-serif:
+  'Inter Variable',
+  system-ui,
+  -apple-system,
+  'Segoe UI',
+  Roboto,
+  'Helvetica Neue',
+  Arial,
+  sans-serif;
+$font-size-base: 0.9375rem;
+$headings-font-weight: 650;
+$font-weight-semibold: 600;
+$small-font-size: 0.8125rem;
+$lead-font-weight: 400;
+
+// Shape
+$border-radius: 0.625rem;
+$border-radius-sm: 0.5rem;
+$border-radius-lg: 0.875rem;
+$border-radius-xl: 1.25rem;
+$border-radius-xxl: 1.75rem;
+
+// Surfaces (light)
+$body-bg: #f5f7fb;
+$body-color: #0f172a;
+$body-secondary-color: #64748b;
+$border-color: #e2e8f0;
+$card-border-color: rgba(15, 23, 42, 0.07);
+$card-cap-bg: transparent;
+$card-spacer-y: 1.25rem;
+$card-spacer-x: 1.25rem;
+
+// Surfaces (dark)
+$body-bg-dark: #0b1020;
+$body-color-dark: #e2e8f0;
+$body-secondary-color-dark: #94a3b8;
+$body-secondary-bg-dark: #131b33;
+$body-tertiary-bg-dark: #10172c;
+$border-color-dark: #222c47;
+
+// Components
+$link-decoration: none;
+$link-hover-decoration: underline;
+$input-btn-padding-y: 0.55rem;
+$input-btn-padding-x: 1rem;
+$input-btn-focus-width: 0.2rem;
+$btn-font-weight: 550;
+$navbar-padding-y: 0.75rem;
+$table-cell-padding-y: 0.75rem;
+$table-cell-padding-x: 0.75rem;
+$badge-font-weight: 600;
+$badge-padding-y: 0.4em;
+$badge-padding-x: 0.7em;
+$offcanvas-horizontal-width: 280px;
+$toast-max-width: 380px;
+$min-contrast-ratio: 3;
+$enable-negative-margins: true;

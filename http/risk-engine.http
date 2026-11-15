@@ -1,0 +1,26 @@
+@risk = http://localhost:8085
+
+### Spring Boot Actuator health (public)
+GET {{risk}}/actuator/health
+
+### Rule set (paste RISK_ENGINE_API_KEY from backend/.env)
+GET {{risk}}/api/v1/risk/rules
+X-Api-Key: PASTE_RISK_ENGINE_API_KEY
+
+### Score a transfer: Rs 1,23,456 to a payee added 3 hours ago (expect 45, MEDIUM, STEP_UP)
+POST {{risk}}/api/v1/risk/assess
+X-Api-Key: PASTE_RISK_ENGINE_API_KEY
+Content-Type: application/json
+
+{
+  "amount": 12345600, "rail": "NEFT", "channel": "NET_BANKING", "ownAccountTransfer": false,
+  "beneficiaryAgeHours": 3, "transfersLastHour": 0, "amountLast24h": 0, "dailyLimit": 100000000,
+  "averageDebit90d": 10000000, "hourOfDayIst": 11, "accountAgeDays": 400, "kycVerified": true
+}
+
+### Validation error (RFC 9457 problem details)
+POST {{risk}}/api/v1/risk/assess
+X-Api-Key: PASTE_RISK_ENGINE_API_KEY
+Content-Type: application/json
+
+{ "amount": -1, "rail": "NEFT", "channel": "NET_BANKING", "ownAccountTransfer": false, "hourOfDayIst": 30 }

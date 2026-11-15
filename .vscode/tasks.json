@@ -1,0 +1,11 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    { "label": "dev: everything", "type": "npm", "script": "dev", "isBackground": true, "problemMatcher": [] },
+    { "label": "test: backend unit", "type": "shell", "command": "npm --prefix backend test", "group": "test" },
+    { "label": "test: e2e", "type": "shell", "command": "npm --prefix backend run test:e2e", "group": "test" },
+    { "label": "test: frontend", "type": "shell", "command": "npm --prefix frontend test", "group": "test" },
+    { "label": "test: java", "type": "npm", "script": "test:java", "group": "test" },
+    { "label": "atm: balance with the demo card", "type": "shell", "command": "npm run atm -- balance --demo --pin 4826" }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": { "source.fixAll.eslint": "explicit" },
+  "eslint.workingDirectories": [{ "directory": "backend" }, { "directory": "frontend" }],
+  "typescript.tsdk": "frontend/node_modules/typescript/lib",
+  "files.eol": "\n",
+  "files.exclude": { "**/node_modules": true, "**/dist": true, "**/target": true },
+  "[java]": { "editor.defaultFormatter": "redhat.java" },
+  "rest-client.environmentVariables": {
+    "local": { "api": "http://localhost:4000/api/v1", "soap": "http://localhost:4000/soap/banking", "risk": "http://localhost:8085" }
+  },
+  "java.configuration.updateBuildConfiguration": "automatic"
+}

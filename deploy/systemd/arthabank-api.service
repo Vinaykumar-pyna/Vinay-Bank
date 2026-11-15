@@ -1,0 +1,33 @@
+# /etc/systemd/system/arthabank-api.service
+# Core banking API (NestJS). Install the build in /opt/arthabank/backend,
+# create the "arthabank" system user, then:
+#   sudo systemctl daemon-reload && sudo systemctl enable --now arthabank-api
+[Unit]
+Description=ArthaBank core banking API (NestJS)
+After=network-online.target mongod.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=arthabank
+Group=arthabank
+WorkingDirectory=/opt/arthabank/backend
+EnvironmentFile=/opt/arthabank/backend/.env
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/node dist/apps/api/main.js
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+KillSignal=SIGTERM
+
+# Hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/arthabank/backend/.data
+CapabilityBoundingSet=
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,844 @@
+@import './variables';
+@import 'bootstrap/scss/bootstrap';
+
+// ---------------------------------------------------------------
+// App-level tokens (CSS custom properties, switch with the theme)
+// ---------------------------------------------------------------
+:root {
+  --ab-sidebar-width: 264px;
+  --ab-topbar-height: 64px;
+  --ab-card-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 6px 20px rgba(15, 23, 42, 0.05);
+  --ab-card-shadow-hover: 0 2px 4px rgba(15, 23, 42, 0.06), 0 12px 32px rgba(15, 23, 42, 0.1);
+  --ab-brand-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 45%, #312e81 100%);
+  --ab-hero-glow: radial-gradient(60% 60% at 70% 20%, rgba(99, 102, 241, 0.18), transparent 70%);
+  --ab-surface: #ffffff;
+  --ab-surface-muted: #f8fafc;
+  --ab-credit: #059669;
+  --ab-debit: #dc2626;
+  --ab-gold: #f59e0b;
+  /* Chart series (validated categorical slots 1-2 against the light card surface) */
+  --ab-series-1: #2a78d6;
+  --ab-series-2: #eb6834;
+}
+
+[data-bs-theme='dark'] {
+  --ab-card-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.3);
+  --ab-card-shadow-hover: 0 2px 6px rgba(0, 0, 0, 0.45), 0 14px 36px rgba(0, 0, 0, 0.4);
+  --ab-hero-glow: radial-gradient(60% 60% at 70% 20%, rgba(99, 102, 241, 0.25), transparent 70%);
+  --ab-surface: #111831;
+  --ab-surface-muted: #0f1529;
+  --ab-credit: #34d399;
+  --ab-debit: #f87171;
+  --bs-card-bg: var(--ab-surface);
+  /* Dark steps of the same hues, validated against the dark card surface */
+  --ab-series-1: #3987e5;
+  --ab-series-2: #d95926;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'cv11', 'ss01';
+}
+
+::selection {
+  background: rgba(var(--bs-primary-rgb), 0.2);
+}
+
+:focus-visible {
+  outline: 2px solid rgba(var(--bs-primary-rgb), 0.6);
+  outline-offset: 2px;
+}
+
+// ---------------------------------------------------------------
+// Cards
+// ---------------------------------------------------------------
+.card {
+  background: var(--ab-surface);
+  box-shadow: var(--ab-card-shadow);
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.card-hover:hover {
+  box-shadow: var(--ab-card-shadow-hover);
+  transform: translateY(-2px);
+}
+
+.card-title-sm {
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--bs-secondary-color);
+  font-weight: 600;
+}
+
+// ---------------------------------------------------------------
+// Application shell: sidebar + topbar + content
+// ---------------------------------------------------------------
+.app-shell {
+  min-height: 100vh;
+}
+
+.app-sidebar {
+  width: var(--ab-sidebar-width);
+  background: var(--ab-surface);
+  border-right: 1px solid var(--bs-border-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.app-sidebar-fixed {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 1030;
+  display: none;
+
+  @include media-breakpoint-up(lg) {
+    display: flex;
+  }
+}
+
+.app-main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  @include media-breakpoint-up(lg) {
+    margin-left: var(--ab-sidebar-width);
+  }
+}
+
+.app-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+  height: var(--ab-topbar-height);
+  background: rgba(var(--bs-body-bg-rgb), 0.82);
+  backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
+.app-content {
+  flex: 1;
+  padding: 1.5rem;
+
+  @include media-breakpoint-down(md) {
+    padding: 1rem;
+  }
+}
+
+.sidebar-section-label {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--bs-secondary-color);
+  font-weight: 600;
+  padding: 1rem 0.85rem 0.35rem;
+}
+
+.nav-link-ab {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.85rem;
+  border-radius: 0.6rem;
+  color: var(--bs-secondary-color);
+  font-weight: 500;
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+
+  i {
+    font-size: 1.1rem;
+    width: 1.25rem;
+    text-align: center;
+  }
+
+  &:hover {
+    background: var(--bs-tertiary-bg);
+    color: var(--bs-body-color);
+    text-decoration: none;
+  }
+
+  &.active {
+    background: rgba(var(--bs-primary-rgb), 0.1);
+    color: var(--bs-primary);
+    font-weight: 600;
+  }
+}
+
+[data-bs-theme='dark'] .nav-link-ab.active {
+  color: #a5b4fc;
+  background: rgba(99, 102, 241, 0.16);
+}
+
+// ---------------------------------------------------------------
+// Brand
+// ---------------------------------------------------------------
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
+  color: var(--bs-body-color);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+    color: var(--bs-body-color);
+  }
+}
+
+.text-gradient {
+  background: var(--ab-brand-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+[data-bs-theme='dark'] .text-gradient {
+  background: linear-gradient(135deg, #a5b4fc 0%, #818cf8 50%, #c7d2fe 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+// ---------------------------------------------------------------
+// Utilities
+// ---------------------------------------------------------------
+.icon-tile {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+@each $name in (primary, success, warning, danger, info, secondary) {
+  .icon-tile-#{$name} {
+    background: rgba(var(--bs-#{$name}-rgb), 0.12);
+    color: var(--bs-#{$name});
+  }
+}
+
+.avatar {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.85rem;
+  background: var(--ab-brand-gradient);
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.amount-credit {
+  color: var(--ab-credit);
+}
+
+.amount-debit {
+  color: var(--ab-debit);
+}
+
+.font-mono {
+  font-family: SFMono-Regular, ui-monospace, 'Cascadia Code', Menlo, Consolas, monospace;
+}
+
+.min-w-0 {
+  min-width: 0;
+}
+
+.fw-medium {
+  font-weight: 500 !important;
+}
+
+.fw-semibold {
+  font-weight: 600 !important;
+}
+
+.letter-spacing-wide {
+  letter-spacing: 0.08em;
+}
+
+// ---------------------------------------------------------------
+// Tables that turn into stacked cards on phones (CSS only).
+// Each <td> carries data-label="Column name".
+// ---------------------------------------------------------------
+.table-ab {
+  --bs-table-bg: transparent;
+  margin-bottom: 0;
+
+  thead th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--bs-secondary-color);
+    font-weight: 600;
+    border-bottom-width: 1px;
+    white-space: nowrap;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+}
+
+// Responsive tables: below the breakpoint each row becomes a card of label/value pairs.
+@mixin stacked-table {
+  thead {
+    display: none;
+  }
+
+  tr {
+    display: block;
+    border-bottom: 1px solid var(--bs-border-color);
+    padding: 0.75rem 0;
+  }
+
+  tbody tr:last-child {
+    border-bottom: 0;
+  }
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    border: 0;
+    padding: 0.3rem 0;
+    text-align: right;
+
+    &::before {
+      content: attr(data-label);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--bs-secondary-color);
+      font-weight: 600;
+      text-align: left;
+    }
+
+    &[data-label='']::before {
+      content: none;
+    }
+  }
+
+  // Expanded detail rows (audit trail) span the full width instead of label/value pairs.
+  .audit-details-row td {
+    display: block;
+    text-align: left;
+
+    &::before {
+      content: none;
+    }
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .table-stack {
+    @include stacked-table;
+  }
+}
+
+// Wide tables (seven or more columns) also stack on tablets.
+@include media-breakpoint-down(lg) {
+  .table-stack-lg {
+    @include stacked-table;
+  }
+}
+
+// ---------------------------------------------------------------
+// Landing page
+// ---------------------------------------------------------------
+.landing-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 5rem 0 4rem;
+  background: var(--ab-hero-glow);
+
+  @include media-breakpoint-down(md) {
+    padding: 3rem 0 2.5rem;
+  }
+}
+
+.hero-title {
+  font-size: clamp(2.1rem, 5vw, 3.6rem);
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(var(--bs-primary-rgb), 0.1);
+  color: var(--bs-primary);
+  font-weight: 600;
+  font-size: 0.8125rem;
+}
+
+[data-bs-theme='dark'] .hero-badge {
+  color: #a5b4fc;
+}
+
+.feature-card {
+  height: 100%;
+  border: 1px solid var(--bs-border-color);
+}
+
+.section-eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--bs-primary);
+}
+
+[data-bs-theme='dark'] .section-eyebrow {
+  color: #a5b4fc;
+}
+
+.tech-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--bs-border-color);
+  background: var(--ab-surface);
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.status-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  display: inline-block;
+
+  &.online {
+    background: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+  }
+
+  &.offline {
+    background: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+  }
+
+  &.checking {
+    background: #f59e0b;
+  }
+}
+
+// ---------------------------------------------------------------
+// Virtual debit card visual
+// ---------------------------------------------------------------
+.bank-card {
+  position: relative;
+  aspect-ratio: 1.586;
+  width: 100%;
+  max-width: 380px;
+  border-radius: 1.1rem;
+  padding: 1.35rem 1.5rem;
+  color: #fff;
+  background:
+    radial-gradient(120% 120% at 100% 0%, rgba(255, 255, 255, 0.18), transparent 50%),
+    var(--ab-brand-gradient);
+  box-shadow: 0 18px 40px rgba(49, 46, 129, 0.35);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    right: -70px;
+    bottom: -90px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  &.is-blocked {
+    filter: grayscale(0.9);
+    opacity: 0.75;
+  }
+
+  .card-number {
+    font-family: 'Inter Variable', system-ui, sans-serif;
+    font-size: clamp(1.05rem, 3.5vw, 1.35rem);
+    letter-spacing: 0.12em;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .chip {
+    width: 2.6rem;
+    height: 1.9rem;
+    border-radius: 0.35rem;
+    background: linear-gradient(135deg, #fde68a, #f59e0b);
+  }
+}
+
+// ---------------------------------------------------------------
+// Auth pages
+// ---------------------------------------------------------------
+.auth-wrapper {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+
+  @include media-breakpoint-up(lg) {
+    grid-template-columns: 1.05fr 1fr;
+  }
+}
+
+.auth-aside {
+  display: none;
+  background: var(--ab-brand-gradient);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+
+  @include media-breakpoint-up(lg) {
+    display: flex;
+  }
+}
+
+.auth-form-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.25rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+}
+
+// ---------------------------------------------------------------
+// Misc
+// ---------------------------------------------------------------
+.page-loader {
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: var(--bs-secondary-color);
+
+  .empty-icon {
+    font-size: 2.25rem;
+    opacity: 0.6;
+  }
+}
+
+.otp-input {
+  letter-spacing: 0.5em;
+  text-align: center;
+  font-size: 1.35rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.hex-dump {
+  font-family: SFMono-Regular, ui-monospace, 'Cascadia Code', Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  white-space: pre;
+  overflow-x: auto;
+  background: var(--ab-surface-muted);
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+  padding: 0.75rem 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+// ---------------------------------------------------------------
+// Dashboard balance hero
+// ---------------------------------------------------------------
+.balance-hero {
+  background: var(--ab-brand-gradient);
+  color: #fff;
+  border: 0;
+  overflow: hidden;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    right: -120px;
+    top: -140px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .btn-light {
+    color: #312e81;
+    font-weight: 600;
+  }
+
+  .btn-outline-light:hover {
+    color: #312e81;
+  }
+}
+
+.account-tile {
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius-lg);
+  padding: 1rem 1.1rem;
+  background: var(--ab-surface);
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:hover {
+    border-color: rgba(var(--bs-primary-rgb), 0.45);
+    box-shadow: var(--ab-card-shadow);
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+.choice-card {
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius-lg);
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  background: var(--ab-surface);
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+  width: 100%;
+  text-align: left;
+  color: inherit;
+
+  &:hover {
+    border-color: rgba(var(--bs-primary-rgb), 0.45);
+  }
+
+  &.selected {
+    border-color: var(--bs-primary);
+    background: rgba(var(--bs-primary-rgb), 0.06);
+    box-shadow: 0 0 0 1px var(--bs-primary) inset;
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+.stepper {
+  display: flex;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+
+  li {
+    flex: 1;
+    font-size: 0.8125rem;
+    color: var(--bs-secondary-color);
+
+    &::before {
+      content: '';
+      display: block;
+      height: 4px;
+      border-radius: 4px;
+      background: var(--bs-border-color);
+      margin-bottom: 0.4rem;
+    }
+
+    &.done::before,
+    &.current::before {
+      background: var(--bs-primary);
+    }
+
+    &.current {
+      color: var(--bs-body-color);
+      font-weight: 600;
+    }
+  }
+}
+
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px dashed var(--bs-border-color);
+  font-size: 0.9rem;
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  dt {
+    font-weight: 400;
+    color: var(--bs-secondary-color);
+  }
+
+  dd {
+    margin: 0;
+    text-align: right;
+    font-weight: 500;
+  }
+}
+
+.notification-dot {
+  position: absolute;
+  top: 4px;
+  right: 2px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--bs-danger);
+  color: #fff;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+}
+
+@media print {
+  .app-sidebar,
+  .app-topbar,
+  .no-print {
+    display: none !important;
+  }
+
+  .app-main {
+    margin-left: 0 !important;
+  }
+
+  .card {
+    box-shadow: none !important;
+    border: 1px solid #ccc;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Staff portal: KPI tiles, meter lists, audit trail
+// ---------------------------------------------------------------------------
+.stat-tile {
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--bs-secondary-color);
+  }
+
+  .stat-value {
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+// Meter: the fill and its track are two steps of the same hue, so the share reads across the bar.
+.meter-track {
+  height: 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ab-series-1) 18%, transparent);
+  overflow: hidden;
+}
+
+.meter-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--ab-series-1);
+}
+
+// Severity meters (card limits): the fill carries the state, the track is a lighter step of the same hue.
+.meter-warning {
+  background: color-mix(in srgb, var(--bs-warning) 22%, transparent);
+
+  .meter-fill {
+    background: var(--bs-warning);
+  }
+}
+
+.meter-danger {
+  background: color-mix(in srgb, var(--bs-danger) 20%, transparent);
+
+  .meter-fill {
+    background: var(--bs-danger);
+  }
+}
+
+// Card network simulator
+.atm-screen {
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  min-height: 5.5rem;
+  background: #0b1a33;
+  color: #9fd3ff;
+  font-family: SFMono-Regular, ui-monospace, 'Cascadia Code', Menlo, Consolas, monospace;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  &.is-approved {
+    color: #86efac;
+  }
+
+  &.is-declined {
+    color: #fca5a5;
+  }
+}
+
+.pin-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+
+  .btn {
+    padding: 0.6rem 0;
+    font-size: 1.05rem;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.inspector-table td,
+.inspector-table th {
+  padding: 0.25rem 0.4rem;
+}
+
+.audit-details-row > td {
+  background: var(--bs-tertiary-bg);
+}

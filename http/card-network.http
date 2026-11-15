@@ -1,0 +1,39 @@
+@api = http://localhost:4000/api/v1
+
+### Simulated terminals (demo mode only)
+GET {{api}}/simulator/terminals
+
+### Card number and expiry of the first demo customer (demo mode only)
+# @name card
+GET {{api}}/simulator/demo-card
+
+### 0800 echo test through the switch (mutual TLS)
+POST {{api}}/simulator/card-network
+Content-Type: application/json
+
+{ "operation": "ECHO", "terminal": "ATM" }
+
+### 0200 balance inquiry: the PIN block is encrypted under the acquirer zone key
+POST {{api}}/simulator/card-network
+Content-Type: application/json
+
+{
+  "operation": "BALANCE",
+  "terminal": "ATM",
+  "pan": "{{card.response.body.data.pan}}",
+  "expiry": "{{card.response.body.data.expiry}}",
+  "pin": "4826"
+}
+
+### 0200 cash withdrawal of Rs 500
+POST {{api}}/simulator/card-network
+Content-Type: application/json
+
+{
+  "operation": "WITHDRAWAL",
+  "terminal": "ATM",
+  "pan": "{{card.response.body.data.pan}}",
+  "expiry": "{{card.response.body.data.expiry}}",
+  "pin": "4826",
+  "amount": 50000
+}

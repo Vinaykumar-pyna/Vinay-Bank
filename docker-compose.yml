@@ -1,0 +1,84 @@
+# ArthaBank on Docker: MongoDB replica set, API, card switch, Java risk engine
+# and the web app. Run "npm install" (or "npm run setup") first: it creates
+# backend/.env and the keys and certificates in backend/.secrets used here.
+#
+#   docker compose up --build        then open http://localhost:8080
+#
+# Plain HTTP on localhost for a demo, so COOKIE_SECURE is false; in production
+# put the edge proxy from deploy/nginx in front with TLS and set it to true.
+name: arthabank
+
+x-backend-env: &backend-env
+  NODE_ENV: production
+  MONGODB_URI: mongodb://mongo:27017/arthabank?replicaSet=rs0
+  CORS_ORIGINS: http://localhost:8080
+  TRUST_PROXY: "1"
+  COOKIE_SECURE: "false"
+  LEDGER_SQLITE_PATH: /app/.data/ledger.sqlite
+
+services:
+  mongo:
+    image: mongo:8.0
+    command: ["--replSet", "rs0", "--bind_ip_all"]
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      # Initiates the single-node replica set on first start (transactions need one).
+      test:
+        - CMD
+        - mongosh
+        - --quiet
+        - --eval
+        - "try { rs.status().ok } catch (e) { rs.initiate({ _id: 'rs0', members: [{ _id: 0, host: 'mongo:27017' }] }).ok }"
+      interval: 5s
+      timeout: 10s
+      retries: 30
+      start_period: 10s
+
+  api:
+    build: ./backend
+    env_file: ./backend/.env
+    environment:
+      <<: *backend-env
+      CORE_RPC_HOST: 0.0.0.0 # issuer RPC listener, reached by the card switch
+      CARD_SWITCH_HOST: card-switch # acquirer simulator connects here
+      RISK_ENGINE_URL: http://risk-engine:8085
+      SOAP_PUBLIC_URL: http://localhost:8080 # address the WSDL advertises (through nginx)
+    volumes:
+      - ./backend/.secrets:/app/.secrets:ro
+      - ledger-data:/app/.data
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  card-switch:
+    build: ./backend
+    command: ["node", "dist/apps/card-switch/main.js"]
+    env_file: ./backend/.env
+    environment:
+      NODE_ENV: production
+      CARD_SWITCH_HOST: 0.0.0.0
+      CORE_RPC_HOST: api
+    volumes:
+      - ./backend/.secrets:/app/.secrets:ro
+    ports:
+      - "5800:5800" # ISO 8583 over mutual TLS
+    depends_on:
+      - api
+
+  risk-engine:
+    build: ./services/risk-engine
+    env_file: ./backend/.env # RISK_ENGINE_API_KEY
+    environment:
+      RISK_ENGINE_BIND: 0.0.0.0
+
+  web:
+    build: ./frontend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - api
+
+volumes:
+  mongo-data:
+  ledger-data:

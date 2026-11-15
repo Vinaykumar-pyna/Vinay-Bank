@@ -1,0 +1,54 @@
+@soap = http://localhost:4000/soap/banking
+
+### WSDL (contract with XSD types)
+GET {{soap}}?wsdl
+
+### GetAccountBalance with a WS-Security UsernameToken
+# Paste SOAP_PASSWORD from backend/.env. PasswordText is for local testing over
+# HTTP only; real partners send PasswordDigest (nonce and timestamp) over TLS.
+# `npm run soap -- balance` does exactly that with a client built from the WSDL.
+POST {{soap}}
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "urn:arthabank:soap:banking:1#GetAccountBalance"
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:ab="urn:arthabank:soap:banking:1"
+  xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+  <soap:Header>
+    <wsse:Security>
+      <wsse:UsernameToken>
+        <wsse:Username>erp-partner</wsse:Username>
+        <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">PASTE_SOAP_PASSWORD</wsse:Password>
+      </wsse:UsernameToken>
+    </wsse:Security>
+  </soap:Header>
+  <soap:Body>
+    <ab:GetAccountBalanceRequest>
+      <ab:AccountNumber>000210000014</ab:AccountNumber>
+    </ab:GetAccountBalanceRequest>
+  </soap:Body>
+</soap:Envelope>
+
+### GetMiniStatement (same header)
+POST {{soap}}
+Content-Type: text/xml; charset=utf-8
+SOAPAction: "urn:arthabank:soap:banking:1#GetMiniStatement"
+
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:ab="urn:arthabank:soap:banking:1"
+  xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+  <soap:Header>
+    <wsse:Security>
+      <wsse:UsernameToken>
+        <wsse:Username>erp-partner</wsse:Username>
+        <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">PASTE_SOAP_PASSWORD</wsse:Password>
+      </wsse:UsernameToken>
+    </wsse:Security>
+  </soap:Header>
+  <soap:Body>
+    <ab:GetMiniStatementRequest>
+      <ab:AccountNumber>000210000014</ab:AccountNumber>
+      <ab:Count>5</ab:Count>
+    </ab:GetMiniStatementRequest>
+  </soap:Body>
+</soap:Envelope>

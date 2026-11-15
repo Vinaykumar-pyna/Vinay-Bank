@@ -1,0 +1,47 @@
+@api = http://localhost:4000/api/v1
+
+### Sign in as the branch manager
+# @name login
+POST {{api}}/auth/login
+Content-Type: application/json
+
+{ "email": "manager@arthabank.test", "password": "Demo@1234" }
+
+###
+@token = {{login.response.body.data.accessToken}}
+
+### KPI overview (aggregation pipelines) with risk engine health
+GET {{api}}/staff/overview
+Authorization: Bearer {{token}}
+
+### Maker-checker queue
+GET {{api}}/approvals?status=PENDING
+Authorization: Bearer {{token}}
+
+### Customer search (prefix match, KYC filter)
+GET {{api}}/staff/customers?search=pri&kycStatus=VERIFIED
+Authorization: Bearer {{token}}
+
+### Transactions with risk filters (staff see all)
+GET {{api}}/transactions?riskLevel=HIGH&limit=10
+Authorization: Bearer {{token}}
+
+### Audit trail: verify the SHA-256 hash chain
+GET {{api}}/audit/verify
+Authorization: Bearer {{token}}
+
+### General ledger: trial balance (SQL GROUP BY)
+GET {{api}}/ledger/trial-balance
+Authorization: Bearer {{token}}
+
+### General ledger: reconciliation against MongoDB balances
+GET {{api}}/ledger/reconciliation
+Authorization: Bearer {{token}}
+
+### Java risk engine: circuit breaker state and health
+GET {{api}}/risk/engine
+Authorization: Bearer {{token}}
+
+### Run the NEFT settlement batch now
+POST {{api}}/transactions/settlement/run
+Authorization: Bearer {{token}}

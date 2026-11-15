@@ -1,0 +1,144 @@
+{
+  "name": "@arthabank/backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ArthaBank backend: NestJS core banking API, ISO 8583 card switch and shared libraries",
+  "license": "MIT",
+  "scripts": {
+    "build": "nest build api && nest build card-switch",
+    "build:api": "nest build api",
+    "start:dev": "nest start api --watch",
+    "start:debug": "nest start api --debug --watch",
+    "start:switch": "nest start card-switch",
+    "start:switch:dev": "nest start card-switch --watch",
+    "start:prod": "node dist/apps/api/main.js",
+    "start:switch:prod": "node dist/apps/card-switch/main.js",
+    "lint": "eslint \"{apps,libs}/**/*.ts\"",
+    "format": "prettier --write \"{apps,libs}/**/*.ts\" \"scripts/**/*.mjs\"",
+    "format:check": "prettier --check \"{apps,libs}/**/*.ts\" \"scripts/**/*.mjs\"",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:e2e": "jest --config apps/api/test/jest-e2e.config.js --runInBand",
+    "test:e2e:cov": "jest --config apps/api/test/jest-e2e.config.js --runInBand --coverage",
+    "db:reset": "node scripts/reset-db.mjs",
+    "demo:tamper": "node scripts/demo-tamper-audit.mjs",
+    "demo:tamper:restore": "node scripts/demo-tamper-audit.mjs --restore",
+    "atm": "tsx scripts/atm-cli.ts",
+    "soap": "tsx scripts/soap-client.ts"
+  },
+  "dependencies": {
+    "@nestjs/axios": "^4.0.1",
+    "@nestjs/common": "^11.2.10",
+    "@nestjs/config": "^4.0.4",
+    "@nestjs/core": "^11.2.10",
+    "@nestjs/event-emitter": "^3.1.0",
+    "@nestjs/microservices": "^11.2.10",
+    "@nestjs/mongoose": "^11.0.4",
+    "@nestjs/platform-express": "^11.2.10",
+    "@nestjs/platform-socket.io": "^11.2.10",
+    "@nestjs/schedule": "^6.1.3",
+    "@nestjs/swagger": "^11.4.8",
+    "@nestjs/terminus": "^11.1.1",
+    "@nestjs/throttler": "^6.7.1",
+    "@nestjs/typeorm": "^11.0.3",
+    "@nestjs/websockets": "^11.2.10",
+    "@xmldom/xmldom": "^0.9.12",
+    "axios": "^1.21.1",
+    "bcryptjs": "^3.0.3",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.4",
+    "compression": "^1.8.2",
+    "cookie-parser": "^1.4.7",
+    "helmet": "^8.3.0",
+    "joi": "^17.13.9",
+    "jose": "^5.10.0",
+    "mongoose": "^8.24.9",
+    "nestjs-pino": "^4.6.1",
+    "pino-http": "^10.5.0",
+    "qrcode": "^1.5.4",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "soap": "^1.14.0",
+    "sql.js": "^1.16.0",
+    "typeorm": "^0.3.31",
+    "xmlbuilder2": "^4.0.3",
+    "xpath": "^0.0.36",
+    "xslt-processor": "^5.1.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@nestjs/cli": "^11.0.24",
+    "@nestjs/schematics": "^11.1.0",
+    "@nestjs/testing": "^11.2.10",
+    "@peculiar/x509": "^1.14.3",
+    "@types/compression": "^1.8.1",
+    "@types/cookie-parser": "^1.4.10",
+    "@types/express": "^5.0.6",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.19.2",
+    "@types/qrcode": "^1.5.6",
+    "@types/supertest": "^7.2.1",
+    "eslint": "^10.14.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.14.0",
+    "jest": "^30.5.2",
+    "mongodb": "~6.20.0",
+    "mongodb-memory-server-core": "^11.3.0",
+    "pino-pretty": "^13.2.0",
+    "prettier": "^3.10.1",
+    "supertest": "^7.3.2",
+    "ts-jest": "^29.4.15",
+    "ts-loader": "^9.6.2",
+    "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.23.15",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.72.2"
+  },
+  "overrides": {
+    "typeorm": {
+      "glob": "^14.0.6"
+    }
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": ".",
+    "roots": [
+      "<rootDir>/apps/",
+      "<rootDir>/libs/"
+    ],
+    "testRegex": ".*\\.spec\\.ts$",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/test/"
+    ],
+    "transform": {
+      "^.+\\.ts$": [
+        "ts-jest",
+        {
+          "tsconfig": "tsconfig.spec.json"
+        }
+      ]
+    },
+    "moduleNameMapper": {
+      "^@app/shared(|/.*)$": "<rootDir>/libs/shared/src$1"
+    },
+    "collectCoverageFrom": [
+      "apps/**/src/**/*.ts",
+      "libs/**/src/**/*.ts",
+      "!**/main.ts",
+      "!**/*.module.ts",
+      "!**/index.ts",
+      "!**/*.schema.ts",
+      "!**/dto/**",
+      "!**/seed/**"
+    ],
+    "coverageDirectory": "./coverage",
+    "testEnvironment": "node"
+  }
+}
