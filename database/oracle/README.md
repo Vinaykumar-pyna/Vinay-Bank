@@ -1,6 +1,6 @@
 # General ledger on Oracle
 
-ArthaBank keeps operational data (customers, accounts, transactions) in
+Vinay Bank keeps operational data (customers, accounts, transactions) in
 **MongoDB** and the double-entry **general ledger** in a relational database.
 Locally the ledger runs on SQLite through `sql.js`, so nothing has to be
 installed. These scripts define the same ledger for **Oracle Database 19c or
@@ -41,7 +41,7 @@ Then in `backend/.env`:
 ```
 LEDGER_DB_TYPE=oracle
 LEDGER_ORACLE_CONNECT_STRING=localhost:1521/FREEPDB1
-LEDGER_ORACLE_USER=arthabank
+LEDGER_ORACLE_USER=vinaybank
 LEDGER_ORACLE_PASSWORD=...
 ```
 

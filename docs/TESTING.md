@@ -1,12 +1,12 @@
 # Testing
 
-332 automated tests across four suites, all run in CI on every push.
+336 automated tests across four suites, all run in CI on every push.
 
 | Suite | Tool | Tests | Command |
 |---|---|---|---|
 | Backend unit | Jest + ts-jest | 168 in 21 files | `npm --prefix backend test` |
 | API end-to-end | Jest + Supertest + in-memory MongoDB replica set | 83 in 8 files | `npm run test:e2e` |
-| Frontend | Jest + React Testing Library (jsdom) | 64 in 15 files | `npm --prefix frontend test` |
+| Frontend | Jest + React Testing Library (jsdom) | 68 in 16 files | `npm --prefix frontend test` |
 | Risk engine | JUnit 5 + AssertJ + MockMvc | 17 in 2 classes | `npm run test:java` |
 
 ## The test pyramid here
@@ -24,8 +24,9 @@
   the shared library (`npm --prefix backend run test:e2e:cov`).
 - **Frontend tests** cover forms and validation, formatting helpers, role-based
   navigation, the card controls and their meters, the message inspector,
-  dialogs, and the statement export (print tab opened during the click, popup
-  blocker fallback).
+  dialogs, the statement export (print tab opened during the click, popup
+  blocker fallback) and the landing page's buttons for visitors, signed-in
+  users and a session still being restored.
 - **Java tests** run the rules directly and through the full Spring context
   (validation errors, API key filter, actuator health).
 

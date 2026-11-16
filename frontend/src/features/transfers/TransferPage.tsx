@@ -16,7 +16,7 @@ const STEPS: { id: Step; label: string }[] = [
 ];
 
 const tips = [
-  ['bi-lightning-charge', 'ArthaBank to ArthaBank transfers are instant and free.'],
+  ['bi-lightning-charge', 'Vinay Bank to Vinay Bank transfers are instant and free.'],
   ['bi-clock', 'NEFT settles in half-hourly batches; IMPS and RTGS are instant.'],
   ['bi-shield-lock', 'We never call to ask for an OTP. Do not share it with anyone.'],
   ['bi-person-check', 'Transfers of ₹2 lakh or more are approved by your branch.'],
@@ -44,7 +44,7 @@ export default function TransferPage() {
     <>
       <PageHeader
         title="Send money"
-        subtitle="To your own accounts, ArthaBank customers or any bank in India."
+        subtitle="To your own accounts, Vinay Bank customers or any bank in India."
       />
       <Row className="g-4">
         <Col lg={8} xl={7}>

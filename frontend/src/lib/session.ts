@@ -12,7 +12,7 @@ interface SessionStore {
 type RetriableConfig = InternalAxiosRequestConfig & { _retried?: boolean };
 
 const AUTH_ENDPOINTS = /\/auth\/(login|login\/mfa|register|refresh|logout)$/;
-const REFRESH_LOCK = 'arthabank-token-refresh';
+const REFRESH_LOCK = 'vinaybank-token-refresh';
 
 let store: SessionStore | null = null;
 let inFlightRefresh: Promise<string | null> | null = null;

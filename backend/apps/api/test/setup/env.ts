@@ -9,7 +9,7 @@ const baseUri = process.env.E2E_MONGO_URI;
 if (!baseUri) throw new Error('E2E_MONGO_URI missing: global setup did not run');
 
 const uri = new URL(baseUri);
-uri.pathname = `/arthabank_e2e_${randomUUID().slice(0, 8)}`;
+uri.pathname = `/vinaybank_e2e_${randomUUID().slice(0, 8)}`;
 
 const { privateKey, publicKey } = generateKeyPairSync('rsa', {
   modulusLength: 2048,

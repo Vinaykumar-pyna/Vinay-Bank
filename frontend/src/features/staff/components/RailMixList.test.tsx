@@ -11,7 +11,7 @@ describe('RailMixList', () => {
   it('prints each share as text next to its bar', () => {
     render(<RailMixList data={data} />);
     expect(screen.getByText('NEFT')).toBeInTheDocument();
-    expect(screen.getByText('Within ArthaBank')).toBeInTheDocument();
+    expect(screen.getByText('Within Vinay Bank')).toBeInTheDocument();
     expect(screen.getByText('75%')).toBeInTheDocument();
     expect(screen.getByText('<1%')).toBeInTheDocument();
     expect(screen.getByText('1 txn')).toBeInTheDocument();

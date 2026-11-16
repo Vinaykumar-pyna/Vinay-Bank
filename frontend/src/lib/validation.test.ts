@@ -13,7 +13,7 @@ describe('client validation rules', () => {
     expect(PAN_REGEX.test('ABCXE1234F')).toBe(false);
     expect(MOBILE_REGEX.test('9876543210')).toBe(true);
     expect(MOBILE_REGEX.test('1234567890')).toBe(false);
-    expect(IFSC_REGEX.test('ARTH0000001')).toBe(true);
+    expect(IFSC_REGEX.test('VINB0000001')).toBe(true);
   });
 
   it('enforces the password policy with specific messages', () => {

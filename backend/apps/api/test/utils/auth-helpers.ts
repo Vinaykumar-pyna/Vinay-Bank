@@ -33,7 +33,7 @@ export function registrationPayload(overrides: Record<string, unknown> = {}) {
 
 export function refreshCookieFrom(res: request.Response): string | undefined {
   const raw = res.headers['set-cookie'] as unknown as string[] | undefined;
-  const cookie = raw?.find((c) => c.startsWith('ab_refresh='));
+  const cookie = raw?.find((c) => c.startsWith('vb_refresh='));
   return cookie?.split(';')[0];
 }
 
@@ -69,7 +69,7 @@ export async function login(app: INestApplication, email: string, password = TES
 /** Creates a staff user directly in the database (staff cannot self-register). */
 export async function createStaff(app: INestApplication, role: Role, emailPrefix: string) {
   const users = app.get<Model<User>>(getModelToken(User.name));
-  const email = `${emailPrefix}.${Date.now()}@arthabank.test`;
+  const email = `${emailPrefix}.${Date.now()}@vinaybank.test`;
   await users.create({
     role,
     email,

@@ -29,7 +29,7 @@ export class Beneficiary {
   @Prop()
   branchName?: string;
 
-  /** True when the payee banks with ArthaBank (instant internal transfer). */
+  /** True when the payee banks with Vinay Bank (instant internal transfer). */
   @Prop({ default: false })
   isInternal: boolean;
 

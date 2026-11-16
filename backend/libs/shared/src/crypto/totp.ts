@@ -101,5 +101,8 @@ export function buildOtpAuthUri(params: {
     digits: String(DEFAULTS.digits),
     period: String(DEFAULTS.periodSeconds),
   });
-  return `otpauth://totp/${label}?${query.toString()}`;
+  // URLSearchParams writes a space as "+", which some authenticator apps show
+  // literally ("Vinay+Bank"); the key URI format wants RFC 3986 encoding (%20).
+  // A real "+" is already "%2B" at this point, so only spaces are affected.
+  return `otpauth://totp/${label}?${query.toString().replace(/\+/g, '%20')}`;
 }

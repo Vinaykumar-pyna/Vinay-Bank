@@ -1,5 +1,5 @@
-/** Target namespace of the ArthaBank SOAP service. */
-export const SOAP_NAMESPACE = 'urn:arthabank:soap:banking:1';
+/** Target namespace of the Vinay Bank SOAP service. */
+export const SOAP_NAMESPACE = 'urn:vinaybank:soap:banking:1';
 
 /**
  * WSDL 1.1 contract (document/literal, SOAP 1.1) for partner integrations
@@ -8,14 +8,14 @@ export const SOAP_NAMESPACE = 'urn:arthabank:soap:banking:1';
  */
 export function bankingWsdl(location: string): string {
   return `<?xml version="1.0" encoding="UTF-8"?>
-<definitions name="ArthaBankService"
+<definitions name="VinayBankService"
   targetNamespace="${SOAP_NAMESPACE}"
   xmlns="http://schemas.xmlsoap.org/wsdl/"
   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
   xmlns:tns="${SOAP_NAMESPACE}"
   xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 
-  <documentation>ArthaBank partner banking service. Requests must carry a WS-Security UsernameToken (PasswordDigest recommended).</documentation>
+  <documentation>Vinay Bank partner banking service. Requests must carry a WS-Security UsernameToken (PasswordDigest recommended).</documentation>
 
   <types>
     <xsd:schema targetNamespace="${SOAP_NAMESPACE}" elementFormDefault="qualified">
@@ -90,7 +90,7 @@ export function bankingWsdl(location: string): string {
   <message name="ValidateIfscInput"><part name="parameters" element="tns:ValidateIfscRequest"/></message>
   <message name="ValidateIfscOutput"><part name="parameters" element="tns:ValidateIfscResponse"/></message>
 
-  <portType name="ArthaBankPortType">
+  <portType name="VinayBankPortType">
     <operation name="GetAccountBalance">
       <input message="tns:GetAccountBalanceInput"/>
       <output message="tns:GetAccountBalanceOutput"/>
@@ -105,7 +105,7 @@ export function bankingWsdl(location: string): string {
     </operation>
   </portType>
 
-  <binding name="ArthaBankBinding" type="tns:ArthaBankPortType">
+  <binding name="VinayBankBinding" type="tns:VinayBankPortType">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <operation name="GetAccountBalance">
       <soap:operation soapAction="${SOAP_NAMESPACE}#GetAccountBalance"/>
@@ -124,8 +124,8 @@ export function bankingWsdl(location: string): string {
     </operation>
   </binding>
 
-  <service name="ArthaBankService">
-    <port name="ArthaBankPort" binding="tns:ArthaBankBinding">
+  <service name="VinayBankService">
+    <port name="VinayBankPort" binding="tns:VinayBankBinding">
       <soap:address location="${location}"/>
     </port>
   </service>

@@ -10,8 +10,8 @@ interface CashflowPoint {
 }
 
 const SERIES = [
-  { key: 'inflow', label: 'Money in', color: 'var(--ab-series-1)' },
-  { key: 'outflow', label: 'Money out', color: 'var(--ab-series-2)' },
+  { key: 'inflow', label: 'Money in', color: 'var(--vb-series-1)' },
+  { key: 'outflow', label: 'Money out', color: 'var(--vb-series-2)' },
 ] as const;
 
 interface TooltipProps {

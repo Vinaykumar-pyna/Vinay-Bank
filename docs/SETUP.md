@@ -18,8 +18,8 @@ You do **not** need to install MongoDB, Maven, Oracle or Docker.
 ## First run
 
 ```bash
-git clone <repository> arthabank
-cd arthabank
+git clone <repository> vinaybank
+cd vinaybank
 npm install
 npm run dev
 ```

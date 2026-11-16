@@ -132,7 +132,7 @@ export default function RegisterPage() {
         pan: values.pan.toUpperCase(),
         address: { ...values.address, line2: values.address.line2 || undefined },
       }).unwrap();
-      toast.success(`Welcome to ArthaBank, ${session.user.firstName}! Your profile is ready.`);
+      toast.success(`Welcome to Vinay Bank, ${session.user.firstName}! Your profile is ready.`);
     } catch (err) {
       const error = toApiError(err);
       setApiError(error);

@@ -20,7 +20,7 @@ export function RouteErrorPage() {
       <h1 className="h4">{title}</h1>
       <p className="text-body-secondary">
         {isChunkError
-          ? 'A new version of ArthaBank is available. Reload the page to continue.'
+          ? 'A new version of Vinay Bank is available. Reload the page to continue.'
           : 'Something went wrong while showing this page. Our team has been notified.'}
       </p>
       <div className="d-flex gap-2 justify-content-center">

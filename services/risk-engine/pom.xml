@@ -11,11 +11,11 @@
     <relativePath/>
   </parent>
 
-  <groupId>com.arthabank</groupId>
+  <groupId>com.vinaybank</groupId>
   <artifactId>risk-engine</artifactId>
   <version>1.0.0</version>
-  <name>ArthaBank risk engine</name>
-  <description>Fraud risk scoring microservice (Spring Boot) called by the ArthaBank core banking API</description>
+  <name>Vinay Bank risk engine</name>
+  <description>Fraud risk scoring microservice (Spring Boot) called by the Vinay Bank core banking API</description>
 
   <properties>
     <java.version>21</java.version>

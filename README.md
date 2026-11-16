@@ -1,17 +1,17 @@
-# ArthaBank
+# Vinay Bank
 
 A digital banking and card payment platform built with **MongoDB, NestJS (Node.js), React and TypeScript**.
 
-> ArthaBank is a demonstration project, not a real bank. It was built to show a complete,
+> Vinay Bank is a demonstration project, not a real bank. It was built to show a complete,
 > production-style full stack application for the Officer-Developer (Full Stack MERN) role.
 
 [![CI](https://img.shields.io/badge/CI-GitHub%20Actions-2088FF?logo=githubactions&logoColor=white)](.github/workflows/ci.yml)
-![Tests](https://img.shields.io/badge/tests-332-brightgreen)
+![Tests](https://img.shields.io/badge/tests-336-brightgreen)
 ![Stack](https://img.shields.io/badge/stack-MongoDB%20%7C%20NestJS%20%7C%20React%20%7C%20TypeScript-4f46e5)
 
 ## What it does
 
-**Customers** open accounts, send money (own accounts, ArthaBank, IMPS, NEFT,
+**Customers** open accounts, send money (own accounts, Vinay Bank, IMPS, NEFT,
 RTGS) with OTP step-up, manage payees, download statements (CSV, XML, printable
 via XSLT), get live alerts, manage RuPay debit cards (PIN, controls, limits,
 block, report lost), pay salaries from ISO 20022 bulk files and use the ATM
@@ -23,7 +23,7 @@ tamper-evident audit trail.
 Under the hood: an **ISO 8583 card switch** over mutual TLS, a **Java Spring
 Boot fraud engine** behind a circuit breaker, a **SOAP/WSDL** partner service,
 a **double-entry SQL ledger** (Oracle scripts included), AES-GCM field
-encryption, RS256 JWT with refresh-token rotation, TOTP MFA and 332 automated
+encryption, RS256 JWT with refresh-token rotation, TOTP MFA and 336 automated
 tests in CI.
 
 ## Documentation
@@ -89,9 +89,9 @@ credentials for a local, non-production database only (see
 
 | Role | Email | Password |
 |---|---|---|
-| Administrator | admin@arthabank.test | `Demo@1234` |
-| Branch manager (checker) | manager@arthabank.test | `Demo@1234` |
-| Teller (maker) | teller@arthabank.test | `Demo@1234` |
+| Administrator | admin@vinaybank.test | `Demo@1234` |
+| Branch manager (checker) | manager@vinaybank.test | `Demo@1234` |
+| Teller (maker) | teller@vinaybank.test | `Demo@1234` |
 | Customer | priya@example.com | `Demo@1234` |
 | Customer | rahul@example.com | `Demo@1234` |
 | Customer, KYC pending | ananya@example.com | `Demo@1234` |
@@ -131,7 +131,7 @@ npm run atm -- withdraw --demo --pin 4826 --amount 500
 ## Project layout
 
 ```
-arthabank/
+vinaybank/
 ├── backend/            NestJS monorepo
 │   ├── apps/api/       Core banking REST API (issuer, hybrid HTTP + microservice)
 │   ├── apps/card-switch/  ISO 8583 card switch (separate NestJS application)

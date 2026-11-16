@@ -1,0 +1,33 @@
+# /etc/systemd/system/vinaybank-api.service
+# Core banking API (NestJS). Install the build in /opt/vinaybank/backend,
+# create the "vinaybank" system user, then:
+#   sudo systemctl daemon-reload && sudo systemctl enable --now vinaybank-api
+[Unit]
+Description=Vinay Bank core banking API (NestJS)
+After=network-online.target mongod.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=vinaybank
+Group=vinaybank
+WorkingDirectory=/opt/vinaybank/backend
+EnvironmentFile=/opt/vinaybank/backend/.env
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/node dist/apps/api/main.js
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+KillSignal=SIGTERM
+
+# Hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/vinaybank/backend/.data
+CapabilityBoundingSet=
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

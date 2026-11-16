@@ -15,10 +15,10 @@ export function usePageTitle(): string {
     .reverse()
     .find((match) => (match.handle as RouteHandle | undefined)?.title)?.handle as
     RouteHandle | undefined;
-  const value = title?.title ?? 'ArthaBank';
+  const value = title?.title ?? 'Vinay Bank';
 
   useEffect(() => {
-    document.title = value === 'ArthaBank' ? 'ArthaBank | Digital Banking' : `${value} | ArthaBank`;
+    document.title = value === 'Vinay Bank' ? 'Vinay Bank | Digital Banking' : `${value} | Vinay Bank`;
   }, [value]);
 
   return value;

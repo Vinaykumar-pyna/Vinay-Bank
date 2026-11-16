@@ -5,7 +5,7 @@ import { RiskController } from './risk.controller';
 import { RiskService } from './risk.service';
 
 @Module({
-  imports: [HttpModule.register({ headers: { 'User-Agent': 'ArthaBank-API/1.0' } })],
+  imports: [HttpModule.register({ headers: { 'User-Agent': 'VinayBank-API/1.0' } })],
   controllers: [RiskController],
   providers: [RiskService, RiskEngineClient],
   exports: [RiskService],

@@ -71,10 +71,11 @@ const options = {
   },
 };
 // Windows runs .cmd files only through a shell; the command line is fixed text (no user input).
+// Elsewhere mvnw runs through sh, so it works even if a checkout lost the execute bit.
 const child =
   process.platform === 'win32'
     ? spawn(`"${resolve(here, 'mvnw.cmd')}" ${goal.join(' ')}`, { ...options, shell: true })
-    : spawn(resolve(here, 'mvnw'), goal, options);
+    : spawn('sh', [resolve(here, 'mvnw'), ...goal], options);
 child.on('exit', (code) => {
   if (testing) process.exit(code ?? 0);
   // The engine is optional: never take the rest of the dev stack down with it.

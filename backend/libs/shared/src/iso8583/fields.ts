@@ -1,5 +1,5 @@
 /**
- * ISO 8583:1987 data elements used by the ArthaBank card network (ASCII variant).
+ * ISO 8583:1987 data elements used by the Vinay Bank card network (ASCII variant).
  *
  * Encoding rules:
  *  - MTI, numeric (n), alphanumeric (an) and special (ans) fields are ASCII.

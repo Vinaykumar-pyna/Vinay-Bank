@@ -16,7 +16,7 @@ import { formatMoney, rupeesToPaise } from '@/lib/format';
 import { MessageInspector, type InspectedExchange } from './MessageInspector';
 
 const TERMINALS = {
-  ATM: { label: 'ATM', place: 'ArthaBank ATM, Fort, Mumbai', icon: 'bi-cash-stack' },
+  ATM: { label: 'ATM', place: 'Vinay Bank ATM, Fort, Mumbai', icon: 'bi-cash-stack' },
   POS: { label: 'Shop terminal', place: 'Blue Tokai Coffee, Pune', icon: 'bi-shop' },
 } as const;
 const QUICK_CASH = [500, 1_000, 2_000, 5_000];

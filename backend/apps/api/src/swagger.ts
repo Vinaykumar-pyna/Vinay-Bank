@@ -11,7 +11,7 @@ export function setupSwagger(app: INestApplication): void {
     .setTitle(`${APP_NAME} Core Banking API`)
     .setDescription(
       [
-        'REST API for the ArthaBank digital banking platform.',
+        'REST API for the Vinay Bank digital banking platform.',
         '',
         'All responses use an envelope: `{ success, data, meta? }` on success and',
         '`{ success: false, statusCode, error: { code, message, details? }, requestId }` on failure.',
@@ -20,7 +20,7 @@ export function setupSwagger(app: INestApplication): void {
     )
     .setVersion(APP_VERSION)
     .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }, 'access-token')
-    .addCookieAuth('ab_refresh', { type: 'apiKey', in: 'cookie' }, 'refresh-cookie')
+    .addCookieAuth('vb_refresh', { type: 'apiKey', in: 'cookie' }, 'refresh-cookie')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

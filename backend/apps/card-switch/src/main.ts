@@ -9,7 +9,7 @@ async function bootstrap(): Promise<void> {
     logger: new ConsoleLogger({ json: process.env.NODE_ENV === 'production' }),
   });
   app.enableShutdownHooks();
-  new Logger('Bootstrap').log('ArthaBank card switch started');
+  new Logger('Bootstrap').log('Vinay Bank card switch started');
 }
 
 bootstrap().catch((error: unknown) => {

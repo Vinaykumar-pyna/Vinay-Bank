@@ -56,7 +56,7 @@ export class UserStatusDto {
 }
 
 export class CashOperationDto {
-  @Matches(/^\d{12}$/, { message: 'Enter the 12-digit ArthaBank account number' })
+  @Matches(/^\d{12}$/, { message: 'Enter the 12-digit Vinay Bank account number' })
   accountNumber: string;
 
   /** Amount in paise (Rs 100 to Rs 50 lakh) */

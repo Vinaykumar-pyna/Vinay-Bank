@@ -41,7 +41,7 @@ export class TransferRequestDto {
   @IsMongoId()
   beneficiaryId?: string;
 
-  /** For other banks: IMPS (default), NEFT or RTGS. Ignored for ArthaBank payees. */
+  /** For other banks: IMPS (default), NEFT or RTGS. Ignored for Vinay Bank payees. */
   @IsOptional()
   @IsIn([PaymentRail.IMPS, PaymentRail.NEFT, PaymentRail.RTGS])
   rail?: PaymentRail;

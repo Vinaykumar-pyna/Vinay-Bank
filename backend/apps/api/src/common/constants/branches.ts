@@ -24,7 +24,7 @@ const branch = (
   ifsc: `${BANK_IFSC_PREFIX}0${code.padStart(6, '0')}`,
 });
 
-/** ArthaBank branches. IFSC = "ARTH" + "0" + 6-character branch code. */
+/** Vinay Bank branches. IFSC = "VINB" + "0" + 6-character branch code. */
 export const BRANCHES: readonly Branch[] = [
   branch(
     '0001',

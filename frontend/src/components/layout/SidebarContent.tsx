@@ -20,7 +20,7 @@ export function SidebarContent({ sections, homePath, onNavigate }: SidebarConten
     .filter((section) => section.items.length > 0);
   return (
     <div className="d-flex flex-column h-100">
-      <div className="px-3 d-flex align-items-center" style={{ height: 'var(--ab-topbar-height)' }}>
+      <div className="px-3 d-flex align-items-center" style={{ height: 'var(--vb-topbar-height)' }}>
         <Logo to={homePath} />
       </div>
       <nav className="flex-grow-1 overflow-auto px-2 pb-3" aria-label="Main navigation">

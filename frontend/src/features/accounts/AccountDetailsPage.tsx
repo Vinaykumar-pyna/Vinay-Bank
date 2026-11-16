@@ -52,7 +52,7 @@ export default function AccountDetailsPage() {
               params: { from: from || undefined, to: to || undefined, direction },
             })
             .then((response) => response.data),
-        `ArthaBank-${account?.accountNumber.slice(-4)}-statement`,
+        `VinayBank-${account?.accountNumber.slice(-4)}-statement`,
       );
     } catch (err) {
       toast.error(errorMessage(err));

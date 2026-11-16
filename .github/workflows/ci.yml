@@ -18,9 +18,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -31,7 +31,7 @@ jobs:
 
       # mongodb-memory-server downloads the mongod binary on first use (e2e tests)
       - name: Cache the MongoDB binary
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ~/.cache/mongodb-binaries
           key: mongodb-binaries-${{ runner.os }}-v1
@@ -65,7 +65,7 @@ jobs:
 
       - name: Upload coverage reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: coverage
           path: |
@@ -81,13 +81,15 @@ jobs:
       run:
         working-directory: services/risk-engine
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: 21
           cache: maven
 
+      # Through sh, so a checkout that lost the execute bit (a repository created
+      # on Windows) still works; mvnw is also committed with mode 100755.
       - name: Test and package
-        run: ./mvnw -B verify
+        run: sh ./mvnw -B verify

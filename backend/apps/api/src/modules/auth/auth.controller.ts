@@ -31,7 +31,7 @@ import {
 import { SessionsService } from './sessions.service';
 import { TokenService } from './token.service';
 
-export const REFRESH_COOKIE = 'ab_refresh';
+export const REFRESH_COOKIE = 'vb_refresh';
 const REFRESH_COOKIE_PATH = '/api/v1/auth';
 
 /** Stricter per-IP limit for credential endpoints, read per request from configuration. */

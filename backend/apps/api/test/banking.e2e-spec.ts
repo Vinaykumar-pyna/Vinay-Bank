@@ -49,7 +49,7 @@ describe('Core banking (e2e)', () => {
       expect(accounts).toHaveLength(1);
       expect(accounts[0]).toMatchObject({ type: 'SAVINGS', status: 'ACTIVE', ledgerBalance: 0 });
       expect(accounts[0].accountNumber).toMatch(/^0001\d{8}$/);
-      expect(accounts[0].ifsc).toBe('ARTH0000001');
+      expect(accounts[0].ifsc).toBe('VINB0000001');
     });
 
     it('requires a manager to approve an additional account, never the requester', async () => {
@@ -160,7 +160,7 @@ describe('Core banking (e2e)', () => {
       expect(added.body.data).toMatchObject({
         isInternal: true,
         inCoolingPeriod: true,
-        bankName: 'ArthaBank',
+        bankName: 'Vinay Bank',
       });
 
       const before = new Date();

@@ -72,7 +72,7 @@ export function RevealCardModal({ card, onClose }: { card: DebitCard; onClose: (
               </div>
               <p className="small text-body-secondary mt-3 mb-0">
                 <i className="bi bi-eye-slash me-1" aria-hidden="true" />
-                Hidden again in {secondsLeft}s. ArthaBank never asks for these details by phone or
+                Hidden again in {secondsLeft}s. Vinay Bank never asks for these details by phone or
                 email.
               </p>
             </>

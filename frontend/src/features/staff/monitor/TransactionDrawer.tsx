@@ -11,7 +11,7 @@ function PartyBlock({ label, party }: { label: string; party?: Party }) {
   return (
     <div className="border rounded-3 p-3">
       <div className="small text-body-secondary mb-1">{label}</div>
-      <div className="fw-semibold">{party?.name ?? 'ArthaBank'}</div>
+      <div className="fw-semibold">{party?.name ?? 'Vinay Bank'}</div>
       {party && (
         <div className="small text-body-secondary">
           <span className="font-mono">{party.maskedAccount}</span>

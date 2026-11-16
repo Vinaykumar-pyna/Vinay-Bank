@@ -22,7 +22,7 @@ async function bootstrap(): Promise<void> {
   if (connectCardNetwork(app)) await app.startAllMicroservices();
   await app.listen(port);
 
-  logger.log(`ArthaBank API ready at http://localhost:${port}/api/v1`, 'Bootstrap');
+  logger.log(`Vinay Bank API ready at http://localhost:${port}/api/v1`, 'Bootstrap');
   logger.log(`API docs at http://localhost:${port}/api/docs`, 'Bootstrap');
 }
 

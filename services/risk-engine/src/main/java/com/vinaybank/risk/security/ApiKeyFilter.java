@@ -1,4 +1,4 @@
-package com.arthabank.risk.security;
+package com.vinaybank.risk.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

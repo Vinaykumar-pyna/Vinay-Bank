@@ -13,7 +13,7 @@ conventions and lists every interface.
 | Money | Integer **paise** (`150050` = Rs 1,500.50). Never floating point |
 | Dates | ISO 8601 UTC strings; the UI shows India time |
 | Authentication | `Authorization: Bearer <access token>` (RS256 JWT, 15 minutes) |
-| Session refresh | `POST /auth/refresh` with the `ab_refresh` httpOnly cookie and `X-Requested-With: XMLHttpRequest` |
+| Session refresh | `POST /auth/refresh` with the `vb_refresh` httpOnly cookie and `X-Requested-With: XMLHttpRequest` |
 | Authorization | Role-based: `CUSTOMER`, `TELLER`, `MANAGER`, `ADMIN`; ownership checks in services |
 | Validation | Unknown properties are rejected; field errors are listed in `error.details` |
 | Idempotency | `Idempotency-Key: <uuid>` is required on money-moving POSTs (transfers, cash, bulk); a retry returns the original result with `Idempotent-Replayed: true` |

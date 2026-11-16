@@ -1,6 +1,6 @@
 # Architecture
 
-ArthaBank is a modular monolith for core banking (NestJS + MongoDB) surrounded by
+Vinay Bank is a modular monolith for core banking (NestJS + MongoDB) surrounded by
 three independently deployable services that a bank really runs separately: a
 card switch, a fraud risk engine and a relational general ledger.
 
@@ -13,7 +13,7 @@ flowchart LR
   atm([ATM / POS terminal]) -- "ISO 8583 over mutual TLS" --> switch
   partner([Partner ERP]) -- "SOAP 1.1 + WS-Security" --> api
 
-  subgraph ArthaBank
+  subgraph Vinay Bank
     web["Web app<br/>React 19, Redux Toolkit, Bootstrap 5"]
     api["Core banking API<br/>NestJS 11 (hybrid HTTP + microservice)"]
     switch["Card switch<br/>NestJS app, TLS server :5800"]

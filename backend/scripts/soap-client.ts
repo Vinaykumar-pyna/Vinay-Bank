@@ -1,5 +1,5 @@
 /**
- * ArthaBank SOAP partner client: downloads the WSDL, lets node-soap build a
+ * Vinay Bank SOAP partner client: downloads the WSDL, lets node-soap build a
  * client from it and calls the service with a WS-Security UsernameToken
  * (PasswordDigest with nonce and timestamp), the way a partner's ERP system
  * would.
@@ -35,7 +35,7 @@ const { positionals, values } = parseArgs({
   },
 });
 const command = positionals[0] ?? 'balance';
-const SOAP_ACTION = 'urn:arthabank:soap:banking:1#';
+const SOAP_ACTION = 'urn:vinaybank:soap:banking:1#';
 
 const dim = (s: string) => `\x1b[2m${s}\x1b[0m`;
 const bold = (s: string) => `\x1b[1m${s}\x1b[0m`;

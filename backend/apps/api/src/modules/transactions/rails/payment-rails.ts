@@ -22,9 +22,9 @@ export interface RailPolicy {
 
 class InternalRail implements RailPolicy {
   readonly rail = PaymentRail.INTERNAL;
-  readonly label = 'ArthaBank transfer';
+  readonly label = 'Vinay Bank transfer';
   readonly settlement = 'INSTANT' as const;
-  readonly description = 'Instant, free, 24x7 between ArthaBank accounts';
+  readonly description = 'Instant, free, 24x7 between Vinay Bank accounts';
   validate(): string | null {
     return null;
   }

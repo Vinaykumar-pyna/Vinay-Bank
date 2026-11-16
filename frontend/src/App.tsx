@@ -16,7 +16,7 @@ export default function App() {
         toastOptions={{
           duration: 4500,
           className: 'shadow-sm',
-          style: { background: 'var(--ab-surface)', color: 'var(--bs-body-color)' },
+          style: { background: 'var(--vb-surface)', color: 'var(--bs-body-color)' },
         }}
       />
     </Provider>

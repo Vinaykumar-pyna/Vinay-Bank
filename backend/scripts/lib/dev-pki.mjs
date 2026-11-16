@@ -33,7 +33,7 @@ export async function createDevPki({ validDays = 825 } = {}) {
   const caKeys = await generateKeys();
   const ca = await x509.X509CertificateGenerator.createSelfSigned({
     serialNumber: serial(),
-    name: 'CN=ArthaBank Development CA, O=ArthaBank, C=IN',
+    name: 'CN=Vinay Bank Development CA, O=Vinay Bank, C=IN',
     notBefore,
     notAfter,
     keys: caKeys,
@@ -56,7 +56,7 @@ export async function createDevPki({ validDays = 825 } = {}) {
     if (altNames) extensions.push(new x509.SubjectAlternativeNameExtension(altNames));
     const cert = await x509.X509CertificateGenerator.create({
       serialNumber: serial(),
-      subject: `CN=${commonName}, O=ArthaBank, C=IN`,
+      subject: `CN=${commonName}, O=Vinay Bank, C=IN`,
       issuer: ca.subject,
       notBefore,
       notAfter,
@@ -72,7 +72,7 @@ export async function createDevPki({ validDays = 825 } = {}) {
     { type: 'dns', value: 'localhost' },
     { type: 'ip', value: '127.0.0.1' },
   ]);
-  const client = await issue('arthabank-card-network-client', x509.ExtendedKeyUsage.clientAuth);
+  const client = await issue('vinaybank-card-network-client', x509.ExtendedKeyUsage.clientAuth);
   return { ca: ca.toString('pem'), server, client };
 }
 

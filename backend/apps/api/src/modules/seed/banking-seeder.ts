@@ -234,8 +234,8 @@ export class BankingSeeder {
           category: Category.CASH,
           amount: rng.pick([1000, 2000, 3000, 5000]) * RUPEE,
           debit: person.key,
-          counterparty: merchant('ArthaBank ATM'),
-          narrationDebit: 'ATM WDL - ArthaBank ATM',
+          counterparty: merchant('Vinay Bank ATM'),
+          narrationDebit: 'ATM WDL - Vinay Bank ATM',
         });
         if (person.key !== 'ananyaSavings') {
           events.push({
@@ -291,8 +291,8 @@ export class BankingSeeder {
           name: holder('rahulSavings'),
           accountNumber: acct('rahulSavings').accountNumber,
         },
-        narrationDebit: `To ${holder('rahulSavings')} (ArthaBank) - Dinner split`,
-        narrationCredit: `From ${holder('priyaSavings')} (ArthaBank) - Dinner split`,
+        narrationDebit: `To ${holder('rahulSavings')} (Vinay Bank) - Dinner split`,
+        narrationCredit: `From ${holder('priyaSavings')} (Vinay Bank) - Dinner split`,
         remarks: 'Dinner split',
       });
       // Freelance income into Priya's current account.
@@ -325,7 +325,7 @@ export class BankingSeeder {
     // Opening balances as a single credit on the start date.
     for (const account of Object.values(accounts)) {
       const id = new Types.ObjectId();
-      const reference = `AB${istDateStamp(start).slice(2)}${randomDigits(8)}`;
+      const reference = `VB${istDateStamp(start).slice(2)}${randomDigits(8)}`;
       txnDocs.push({
         _id: id,
         reference,
@@ -366,7 +366,7 @@ export class BankingSeeder {
       const credit = event.credit ? accounts[event.credit] : undefined;
       if (debit && debit.balance - event.amount < 500 * RUPEE) continue; // never overdraw demo accounts
       const id = new Types.ObjectId();
-      const reference = `AB${istDateStamp(event.at).slice(2)}${randomDigits(8)}`;
+      const reference = `VB${istDateStamp(event.at).slice(2)}${randomDigits(8)}`;
       const selfTransfer = Boolean(debit && credit && debit.owner._id.equals(credit.owner._id));
       txnDocs.push({
         _id: id,

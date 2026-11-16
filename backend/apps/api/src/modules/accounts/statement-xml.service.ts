@@ -102,7 +102,7 @@ export class StatementXmlService {
     }
 
     return {
-      filename: `ArthaBank-${account.accountNumber.slice(-4)}-statement`,
+      filename: `VinayBank-${account.accountNumber.slice(-4)}-statement`,
       xml: doc.end({ prettyPrint: true }),
     };
   }

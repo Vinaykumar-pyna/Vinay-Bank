@@ -37,9 +37,9 @@ export const TERMINALS: Record<'ATM' | 'POS', TerminalProfile> = {
   ATM: {
     type: 'ATM',
     terminalId: 'ATMMUM01',
-    merchantId: 'ARTHAATM0000001',
-    label: 'ArthaBank ATM, Fort, Mumbai',
-    nameLocation: location('ARTHABANK ATM FORT', 'MUMBAI'),
+    merchantId: 'VINAYATM0000001',
+    label: 'Vinay Bank ATM, Fort, Mumbai',
+    nameLocation: location('VINAY BANK ATM FORT', 'MUMBAI'),
     mcc: MCC_ATM,
     entryMode: '051', // chip read, PIN entered
   },

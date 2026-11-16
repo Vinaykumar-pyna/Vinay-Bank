@@ -1,6 +1,6 @@
 (function () {
   try {
-    var saved = localStorage.getItem('ab-theme');
+    var saved = localStorage.getItem('vb-theme');
     var theme =
       saved === 'light' || saved === 'dark'
         ? saved

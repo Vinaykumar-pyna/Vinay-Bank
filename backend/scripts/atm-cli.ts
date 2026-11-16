@@ -1,5 +1,5 @@
 /**
- * ArthaBank ATM terminal (command line): talks ISO 8583 to the card switch
+ * Vinay Bank ATM terminal (command line): talks ISO 8583 to the card switch
  * directly over mutual TLS, exactly like ATM software would.
  *
  *   npm run atm -- echo
@@ -134,8 +134,8 @@ async function buildRequest(): Promise<IsoMessage> {
       32: '600001',
       37: `${ist.getUTCFullYear() % 10}${String(julian).padStart(3, '0')}${pad2(ist.getUTCHours())}${stan}`,
       41: 'ATMCLI01',
-      42: 'ARTHAATMCLI0001',
-      43: `${'ARTHABANK CLI ATM'.padEnd(25)}${'MUMBAI'.padEnd(13)}IN`,
+      42: 'VINAYATMCLI0001',
+      43: `${'VINAY BANK CLI ATM'.padEnd(25)}${'MUMBAI'.padEnd(13)}IN`,
       49: CURRENCY_INR,
       52: encryptPinBlock(buildPinBlock(values.pin, card.pan), config.keys.zpkAcquirer),
     },

@@ -94,7 +94,7 @@ async function main() {
   if (await isPortOpen(PORT)) {
     log(`Port ${PORT} is already in use; assuming a MongoDB instance is running there.`);
     await ensureReplicaSet();
-    log(`Ready: mongodb://127.0.0.1:${PORT}/arthabank?replicaSet=${REPLICA_SET}`);
+    log(`Ready: mongodb://127.0.0.1:${PORT}/vinaybank?replicaSet=${REPLICA_SET}`);
     setInterval(() => undefined, 1 << 30); // stay alive so `concurrently` keeps the group running
     return;
   }
@@ -141,7 +141,7 @@ async function main() {
 
   await waitForPort(PORT, 60_000);
   await ensureReplicaSet();
-  log(`Ready: mongodb://127.0.0.1:${PORT}/arthabank?replicaSet=${REPLICA_SET}`);
+  log(`Ready: mongodb://127.0.0.1:${PORT}/vinaybank?replicaSet=${REPLICA_SET}`);
   log(`Data directory: ${dbPath}`);
 }
 

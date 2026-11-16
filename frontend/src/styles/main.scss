@@ -5,34 +5,34 @@
 // App-level tokens (CSS custom properties, switch with the theme)
 // ---------------------------------------------------------------
 :root {
-  --ab-sidebar-width: 264px;
-  --ab-topbar-height: 64px;
-  --ab-card-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 6px 20px rgba(15, 23, 42, 0.05);
-  --ab-card-shadow-hover: 0 2px 4px rgba(15, 23, 42, 0.06), 0 12px 32px rgba(15, 23, 42, 0.1);
-  --ab-brand-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 45%, #312e81 100%);
-  --ab-hero-glow: radial-gradient(60% 60% at 70% 20%, rgba(99, 102, 241, 0.18), transparent 70%);
-  --ab-surface: #ffffff;
-  --ab-surface-muted: #f8fafc;
-  --ab-credit: #059669;
-  --ab-debit: #dc2626;
-  --ab-gold: #f59e0b;
+  --vb-sidebar-width: 264px;
+  --vb-topbar-height: 64px;
+  --vb-card-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 6px 20px rgba(15, 23, 42, 0.05);
+  --vb-card-shadow-hover: 0 2px 4px rgba(15, 23, 42, 0.06), 0 12px 32px rgba(15, 23, 42, 0.1);
+  --vb-brand-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 45%, #312e81 100%);
+  --vb-hero-glow: radial-gradient(60% 60% at 70% 20%, rgba(99, 102, 241, 0.18), transparent 70%);
+  --vb-surface: #ffffff;
+  --vb-surface-muted: #f8fafc;
+  --vb-credit: #059669;
+  --vb-debit: #dc2626;
+  --vb-gold: #f59e0b;
   /* Chart series (validated categorical slots 1-2 against the light card surface) */
-  --ab-series-1: #2a78d6;
-  --ab-series-2: #eb6834;
+  --vb-series-1: #2a78d6;
+  --vb-series-2: #eb6834;
 }
 
 [data-bs-theme='dark'] {
-  --ab-card-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.3);
-  --ab-card-shadow-hover: 0 2px 6px rgba(0, 0, 0, 0.45), 0 14px 36px rgba(0, 0, 0, 0.4);
-  --ab-hero-glow: radial-gradient(60% 60% at 70% 20%, rgba(99, 102, 241, 0.25), transparent 70%);
-  --ab-surface: #111831;
-  --ab-surface-muted: #0f1529;
-  --ab-credit: #34d399;
-  --ab-debit: #f87171;
-  --bs-card-bg: var(--ab-surface);
+  --vb-card-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.3);
+  --vb-card-shadow-hover: 0 2px 6px rgba(0, 0, 0, 0.45), 0 14px 36px rgba(0, 0, 0, 0.4);
+  --vb-hero-glow: radial-gradient(60% 60% at 70% 20%, rgba(99, 102, 241, 0.25), transparent 70%);
+  --vb-surface: #111831;
+  --vb-surface-muted: #0f1529;
+  --vb-credit: #34d399;
+  --vb-debit: #f87171;
+  --bs-card-bg: var(--vb-surface);
   /* Dark steps of the same hues, validated against the dark card surface */
-  --ab-series-1: #3987e5;
-  --ab-series-2: #d95926;
+  --vb-series-1: #3987e5;
+  --vb-series-2: #d95926;
 }
 
 body {
@@ -54,15 +54,15 @@ body {
 // Cards
 // ---------------------------------------------------------------
 .card {
-  background: var(--ab-surface);
-  box-shadow: var(--ab-card-shadow);
+  background: var(--vb-surface);
+  box-shadow: var(--vb-card-shadow);
   transition:
     box-shadow 0.2s ease,
     transform 0.2s ease;
 }
 
 .card-hover:hover {
-  box-shadow: var(--ab-card-shadow-hover);
+  box-shadow: var(--vb-card-shadow-hover);
   transform: translateY(-2px);
 }
 
@@ -82,8 +82,8 @@ body {
 }
 
 .app-sidebar {
-  width: var(--ab-sidebar-width);
-  background: var(--ab-surface);
+  width: var(--vb-sidebar-width);
+  background: var(--vb-surface);
   border-right: 1px solid var(--bs-border-color);
   display: flex;
   flex-direction: column;
@@ -107,7 +107,7 @@ body {
   min-height: 100vh;
 
   @include media-breakpoint-up(lg) {
-    margin-left: var(--ab-sidebar-width);
+    margin-left: var(--vb-sidebar-width);
   }
 }
 
@@ -115,7 +115,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 1020;
-  height: var(--ab-topbar-height);
+  height: var(--vb-topbar-height);
   background: rgba(var(--bs-body-bg-rgb), 0.82);
   backdrop-filter: saturate(180%) blur(12px);
   border-bottom: 1px solid var(--bs-border-color);
@@ -196,7 +196,7 @@ body {
 }
 
 .text-gradient {
-  background: var(--ab-brand-gradient);
+  background: var(--vb-brand-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -238,17 +238,17 @@ body {
   justify-content: center;
   font-weight: 600;
   font-size: 0.85rem;
-  background: var(--ab-brand-gradient);
+  background: var(--vb-brand-gradient);
   color: #fff;
   flex-shrink: 0;
 }
 
 .amount-credit {
-  color: var(--ab-credit);
+  color: var(--vb-credit);
 }
 
 .amount-debit {
-  color: var(--ab-debit);
+  color: var(--vb-debit);
 }
 
 .font-mono {
@@ -365,7 +365,7 @@ body {
   position: relative;
   overflow: hidden;
   padding: 5rem 0 4rem;
-  background: var(--ab-hero-glow);
+  background: var(--vb-hero-glow);
 
   @include media-breakpoint-down(md) {
     padding: 3rem 0 2.5rem;
@@ -419,7 +419,7 @@ body {
   padding: 0.45rem 0.9rem;
   border-radius: 999px;
   border: 1px solid var(--bs-border-color);
-  background: var(--ab-surface);
+  background: var(--vb-surface);
   font-weight: 500;
   font-size: 0.875rem;
 }
@@ -458,7 +458,7 @@ body {
   color: #fff;
   background:
     radial-gradient(120% 120% at 100% 0%, rgba(255, 255, 255, 0.18), transparent 50%),
-    var(--ab-brand-gradient);
+    var(--vb-brand-gradient);
   box-shadow: 0 18px 40px rgba(49, 46, 129, 0.35);
   overflow: hidden;
   display: flex;
@@ -512,7 +512,7 @@ body {
 
 .auth-aside {
   display: none;
-  background: var(--ab-brand-gradient);
+  background: var(--vb-brand-gradient);
   color: #fff;
   position: relative;
   overflow: hidden;
@@ -569,7 +569,7 @@ body {
   line-height: 1.6;
   white-space: pre;
   overflow-x: auto;
-  background: var(--ab-surface-muted);
+  background: var(--vb-surface-muted);
   border: 1px solid var(--bs-border-color);
   border-radius: var(--bs-border-radius);
   padding: 0.75rem 1rem;
@@ -588,7 +588,7 @@ body {
 // Dashboard balance hero
 // ---------------------------------------------------------------
 .balance-hero {
-  background: var(--ab-brand-gradient);
+  background: var(--vb-brand-gradient);
   color: #fff;
   border: 0;
   overflow: hidden;
@@ -619,7 +619,7 @@ body {
   border: 1px solid var(--bs-border-color);
   border-radius: var(--bs-border-radius-lg);
   padding: 1rem 1.1rem;
-  background: var(--ab-surface);
+  background: var(--vb-surface);
   text-decoration: none;
   color: inherit;
   display: block;
@@ -629,7 +629,7 @@ body {
 
   &:hover {
     border-color: rgba(var(--bs-primary-rgb), 0.45);
-    box-shadow: var(--ab-card-shadow);
+    box-shadow: var(--vb-card-shadow);
     color: inherit;
     text-decoration: none;
   }
@@ -640,7 +640,7 @@ body {
   border-radius: var(--bs-border-radius-lg);
   padding: 0.85rem 1rem;
   cursor: pointer;
-  background: var(--ab-surface);
+  background: var(--vb-surface);
   transition:
     border-color 0.15s ease,
     background-color 0.15s ease;
@@ -776,14 +776,14 @@ body {
 .meter-track {
   height: 8px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--ab-series-1) 18%, transparent);
+  background: color-mix(in srgb, var(--vb-series-1) 18%, transparent);
   overflow: hidden;
 }
 
 .meter-fill {
   height: 100%;
   border-radius: 999px;
-  background: var(--ab-series-1);
+  background: var(--vb-series-1);
 }
 
 // Severity meters (card limits): the fill carries the state, the track is a lighter step of the same hue.

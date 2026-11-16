@@ -1,4 +1,4 @@
-# ArthaBank risk engine (Java, Spring Boot)
+# Vinay Bank risk engine (Java, Spring Boot)
 
 A small fraud-scoring microservice. The core banking API (NestJS) asks it to
 score every transfer before the money moves, and acts on the decision:

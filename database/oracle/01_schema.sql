@@ -1,5 +1,5 @@
 -- =============================================================================
--- ArthaBank general ledger: Oracle schema (Oracle Database 19c or later)
+-- Vinay Bank general ledger: Oracle schema (Oracle Database 19c or later)
 -- The same tables the API maps with TypeORM (apps/api/src/modules/ledger).
 -- Amounts are in paise (NUMBER(19)), so there is no floating point anywhere.
 -- =============================================================================

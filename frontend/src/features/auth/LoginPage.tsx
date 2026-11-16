@@ -112,7 +112,7 @@ export default function LoginPage() {
       </Form>
 
       <p className="text-center text-body-secondary mt-4 mb-0">
-        New to ArthaBank? <Link to="/register">Open an account</Link>
+        New to Vinay Bank? <Link to="/register">Open an account</Link>
       </p>
 
       {env.showDemoAccounts && (

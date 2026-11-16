@@ -79,11 +79,11 @@ function MfaSetupModal({ onClose }: { onClose: () => void }) {
   };
 
   const download = () => {
-    const text = `ArthaBank recovery codes\nGenerated ${new Date().toLocaleString('en-IN')}\nEach code works once.\n\n${recoveryCodes!.join('\n')}\n`;
+    const text = `Vinay Bank recovery codes\nGenerated ${new Date().toLocaleString('en-IN')}\nEach code works once.\n\n${recoveryCodes!.join('\n')}\n`;
     const url = URL.createObjectURL(new Blob([text], { type: 'text/plain' }));
     const link = Object.assign(document.createElement('a'), {
       href: url,
-      download: 'arthabank-recovery-codes.txt',
+      download: 'vinaybank-recovery-codes.txt',
     });
     link.click();
     URL.revokeObjectURL(url);
@@ -124,7 +124,7 @@ function MfaSetupModal({ onClose }: { onClose: () => void }) {
             <div className="text-center my-3">
               <img
                 src={setup.qrCodeDataUrl}
-                alt="QR code to add ArthaBank to your authenticator app"
+                alt="QR code to add Vinay Bank to your authenticator app"
                 width={200}
                 height={200}
                 className="rounded border bg-white p-2"

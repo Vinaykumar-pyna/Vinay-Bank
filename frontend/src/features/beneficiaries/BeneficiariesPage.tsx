@@ -94,7 +94,7 @@ export default function BeneficiariesPage() {
                     <div className="d-flex flex-wrap gap-1 mt-1">
                       {b.isInternal && (
                         <Badge bg="primary-subtle" text="primary-emphasis" className="rounded-pill">
-                          ArthaBank · instant
+                          Vinay Bank · instant
                         </Badge>
                       )}
                       {b.inCoolingPeriod && (
@@ -134,7 +134,7 @@ export default function BeneficiariesPage() {
               description={
                 query
                   ? undefined
-                  : 'Add a payee to send money to other ArthaBank customers or any bank in India.'
+                  : 'Add a payee to send money to other Vinay Bank customers or any bank in India.'
               }
               action={
                 !query && <Button onClick={() => setShowAdd(true)}>Add your first payee</Button>

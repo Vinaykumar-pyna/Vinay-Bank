@@ -86,7 +86,7 @@ export function AddBeneficiaryModal({ show, onHide }: { show: boolean; onHide: (
           <Form.Group controlId="ben-ifsc">
             <Form.Label>IFSC code</Form.Label>
             <Form.Control
-              placeholder="e.g. HDFC0000240 or ARTH0000003"
+              placeholder="e.g. HDFC0000240 or VINB0000003"
               maxLength={11}
               style={{ textTransform: 'uppercase' }}
               isInvalid={!!errors.ifsc || lookup.isError}

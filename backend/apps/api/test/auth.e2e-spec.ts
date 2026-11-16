@@ -47,7 +47,7 @@ describe('Authentication and security (e2e)', () => {
       expect(JSON.stringify(res.body)).not.toContain(payload.pan);
 
       const cookie = (res.headers['set-cookie'] as unknown as string[]).find((c) =>
-        c.startsWith('ab_refresh='),
+        c.startsWith('vb_refresh='),
       )!;
       expect(cookie).toContain('HttpOnly');
       expect(cookie).toContain('SameSite=Strict');
@@ -221,7 +221,7 @@ describe('Authentication and security (e2e)', () => {
         .set(XHR)
         .set('Cookie', cookie)
         .expect(204);
-      expect(String(res.headers['set-cookie'])).toContain('ab_refresh=;');
+      expect(String(res.headers['set-cookie'])).toContain('vb_refresh=;');
       await http().get('/api/v1/auth/me').set('Authorization', `Bearer ${accessToken}`).expect(401);
       await http().post('/api/v1/auth/refresh').set(XHR).set('Cookie', cookie).expect(401);
     });
@@ -234,7 +234,7 @@ describe('Authentication and security (e2e)', () => {
 
       const setup = await http().post('/api/v1/auth/mfa/setup').set(auth).expect(200);
       expect(setup.body.data.qrCodeDataUrl).toMatch(/^data:image\/png;base64,/);
-      expect(setup.body.data.otpauthUrl).toContain('otpauth://totp/ArthaBank');
+      expect(setup.body.data.otpauthUrl).toContain('otpauth://totp/Vinay%20Bank');
       const secret = (setup.body.data.manualEntryKey as string).replace(/\s/g, '');
 
       await http().post('/api/v1/auth/mfa/enable').set(auth).send({ code: '000000' }).expect(400);

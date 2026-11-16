@@ -135,8 +135,8 @@ export default function configuration(): AppConfig {
     auth: {
       jwtPrivateKeyPem: readPem(process.env.JWT_PRIVATE_KEY, process.env.JWT_PRIVATE_KEY_PATH),
       jwtPublicKeyPem: readPem(process.env.JWT_PUBLIC_KEY, process.env.JWT_PUBLIC_KEY_PATH),
-      issuer: process.env.JWT_ISSUER ?? 'arthabank-api',
-      audience: process.env.JWT_AUDIENCE ?? 'arthabank-web',
+      issuer: process.env.JWT_ISSUER ?? 'vinaybank-api',
+      audience: process.env.JWT_AUDIENCE ?? 'vinaybank-web',
       accessTtlSeconds: toInt(process.env.JWT_ACCESS_TTL_SECONDS, 900),
       refreshTtlDays: toInt(process.env.REFRESH_TOKEN_TTL_DAYS, 7),
       bcryptRounds: toInt(process.env.BCRYPT_ROUNDS, 12),

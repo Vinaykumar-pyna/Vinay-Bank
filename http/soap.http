@@ -9,10 +9,10 @@ GET {{soap}}?wsdl
 # `npm run soap -- balance` does exactly that with a client built from the WSDL.
 POST {{soap}}
 Content-Type: text/xml; charset=utf-8
-SOAPAction: "urn:arthabank:soap:banking:1#GetAccountBalance"
+SOAPAction: "urn:vinaybank:soap:banking:1#GetAccountBalance"
 
 <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
-  xmlns:ab="urn:arthabank:soap:banking:1"
+  xmlns:vb="urn:vinaybank:soap:banking:1"
   xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
   <soap:Header>
     <wsse:Security>
@@ -23,19 +23,19 @@ SOAPAction: "urn:arthabank:soap:banking:1#GetAccountBalance"
     </wsse:Security>
   </soap:Header>
   <soap:Body>
-    <ab:GetAccountBalanceRequest>
-      <ab:AccountNumber>000210000014</ab:AccountNumber>
-    </ab:GetAccountBalanceRequest>
+    <vb:GetAccountBalanceRequest>
+      <vb:AccountNumber>000210000014</vb:AccountNumber>
+    </vb:GetAccountBalanceRequest>
   </soap:Body>
 </soap:Envelope>
 
 ### GetMiniStatement (same header)
 POST {{soap}}
 Content-Type: text/xml; charset=utf-8
-SOAPAction: "urn:arthabank:soap:banking:1#GetMiniStatement"
+SOAPAction: "urn:vinaybank:soap:banking:1#GetMiniStatement"
 
 <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
-  xmlns:ab="urn:arthabank:soap:banking:1"
+  xmlns:vb="urn:vinaybank:soap:banking:1"
   xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
   <soap:Header>
     <wsse:Security>
@@ -46,9 +46,9 @@ SOAPAction: "urn:arthabank:soap:banking:1#GetMiniStatement"
     </wsse:Security>
   </soap:Header>
   <soap:Body>
-    <ab:GetMiniStatementRequest>
-      <ab:AccountNumber>000210000014</ab:AccountNumber>
-      <ab:Count>5</ab:Count>
-    </ab:GetMiniStatementRequest>
+    <vb:GetMiniStatementRequest>
+      <vb:AccountNumber>000210000014</vb:AccountNumber>
+      <vb:Count>5</vb:Count>
+    </vb:GetMiniStatementRequest>
   </soap:Body>
 </soap:Envelope>

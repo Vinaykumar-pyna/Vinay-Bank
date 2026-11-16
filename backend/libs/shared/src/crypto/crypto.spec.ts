@@ -95,14 +95,14 @@ describe('verifyTotp', () => {
     expect(verifyTotp('abcdef', secret, { timeMs: now }).valid).toBe(false);
   });
 
-  it('builds an otpauth URI for authenticator apps', () => {
+  it('builds an otpauth URI for authenticator apps (spaces as %20, not +)', () => {
     const uri = buildOtpAuthUri({
       secret: 'JBSWY3DPEHPK3PXP',
-      account: 'a@b.co',
-      issuer: 'ArthaBank',
+      account: 'a+b@c.co',
+      issuer: 'Vinay Bank',
     });
     expect(uri).toBe(
-      'otpauth://totp/ArthaBank:a%40b.co?secret=JBSWY3DPEHPK3PXP&issuer=ArthaBank&algorithm=SHA1&digits=6&period=30',
+      'otpauth://totp/Vinay%20Bank:a%2Bb%40c.co?secret=JBSWY3DPEHPK3PXP&issuer=Vinay%20Bank&algorithm=SHA1&digits=6&period=30',
     );
   });
 });

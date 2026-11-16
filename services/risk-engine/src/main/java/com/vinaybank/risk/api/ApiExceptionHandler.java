@@ -1,4 +1,4 @@
-package com.arthabank.risk.api;
+package com.vinaybank.risk.api;
 
 import java.util.List;
 import java.util.Map;

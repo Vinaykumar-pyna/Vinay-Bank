@@ -63,18 +63,18 @@ checksum differs from the pinned `.zip`.
 ## Option 2: Linux server (systemd)
 
 1. Install Node.js 22 LTS, Java 21, nginx and MongoDB (3-node replica set in production).
-2. Create a service user: `sudo useradd --system --home /opt/arthabank arthabank`.
+2. Create a service user: `sudo useradd --system --home /opt/vinaybank vinaybank`.
 3. Build: `npm ci && npm run build`, and `./mvnw -B package` in `services/risk-engine`.
 4. Copy `backend/dist`, `backend/package*.json` (then `npm ci --omit=dev`),
-   `backend/.env`, `backend/.secrets` and the risk engine jar to `/opt/arthabank`.
+   `backend/.env`, `backend/.secrets` and the risk engine jar to `/opt/vinaybank`.
    Restrict permissions: `chmod 600 .env`, `chmod 700 .secrets`.
 5. Install the units from `deploy/systemd/` and start them:
 
 ```bash
 sudo cp deploy/systemd/*.service /etc/systemd/system/
 sudo systemctl daemon-reload
-sudo systemctl enable --now arthabank-api arthabank-switch arthabank-risk
-journalctl -u arthabank-api -f
+sudo systemctl enable --now vinaybank-api vinaybank-switch vinaybank-risk
+journalctl -u vinaybank-api -f
 ```
 
 The units run as the unprivileged user with `ProtectSystem=strict`,
@@ -82,7 +82,7 @@ The units run as the unprivileged user with `ProtectSystem=strict`,
 writable.
 
 6. Build the web app (`npm --prefix frontend run build`), copy `frontend/dist`
-   to `/var/www/arthabank`, install `deploy/nginx/arthabank.conf` and the proxy
+   to `/var/www/vinaybank`, install `deploy/nginx/vinaybank.conf` and the proxy
    snippet in it, get a certificate (for example with certbot) and reload nginx.
 
 **PM2** is an alternative to systemd: `pm2 start deploy/pm2/ecosystem.config.cjs`

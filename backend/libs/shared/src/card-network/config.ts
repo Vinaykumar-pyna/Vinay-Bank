@@ -13,7 +13,7 @@ export interface TlsMaterial {
  * this project one environment file holds all of them for convenience.
  */
 export interface CardNetworkConfig {
-  /** Bank identification number: the first six digits of every ArthaBank card */
+  /** Bank identification number: the first six digits of every Vinay Bank card */
   bin: string;
   switchHost: string;
   switchPort: number;

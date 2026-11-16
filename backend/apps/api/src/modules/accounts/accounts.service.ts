@@ -320,7 +320,7 @@ export class AccountsService {
         paiseToRupeeString(p.balanceAfter),
       ]),
     ]);
-    return { filename: `ArthaBank-${account.accountNumber.slice(-4)}-statement.csv`, csv };
+    return { filename: `VinayBank-${account.accountNumber.slice(-4)}-statement.csv`, csv };
   }
 
   async setStatus(

@@ -5,7 +5,7 @@ interface LogoMarkProps {
   size?: number;
 }
 
-/** The ArthaBank mark: a stylised "A" with a gold coin, on the brand gradient. */
+/** The Vinay Bank mark: a stylised "V" with a gold coin dropping into it, on the brand gradient. */
 export function LogoMark({ size = 32 }: LogoMarkProps) {
   const gradientId = useId();
   return (
@@ -17,12 +17,8 @@ export function LogoMark({ size = 32 }: LogoMarkProps) {
         </linearGradient>
       </defs>
       <rect width="64" height="64" rx="16" fill={`url(#${gradientId})`} />
-      <path
-        fill="#fff"
-        fillRule="evenodd"
-        d="M32 13 49 51h-8.2l-3.4-8H26.6l-3.4 8H15L32 13Zm0 15.2L28.9 36h6.2L32 28.2Z"
-      />
-      <circle cx="48" cy="16" r="5" fill="#fbbf24" />
+      <path fill="#fff" d="M15 13h8.2L32 37.6 40.8 13H49L35.4 51h-6.8L15 13Z" />
+      <circle cx="32" cy="18.5" r="4.5" fill="#fbbf24" />
     </svg>
   );
 }
@@ -40,11 +36,11 @@ export function Logo({ to = '/', size = 32, className = '', light = false }: Log
     <Link
       to={to}
       className={`brand ${light ? 'text-white' : ''} ${className}`}
-      aria-label="ArthaBank home"
+      aria-label="Vinay Bank home"
     >
       <LogoMark size={size} />
       <span>
-        Artha<span className={light ? 'text-white' : 'text-gradient'}>Bank</span>
+        Vinay <span className={light ? 'text-white' : 'text-gradient'}>Bank</span>
       </span>
     </Link>
   );

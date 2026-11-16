@@ -30,7 +30,7 @@ export function toApiError(error: unknown): ApiError {
         message:
           error.code === 'ECONNABORTED'
             ? 'The server took too long to respond. Please try again.'
-            : 'Cannot reach ArthaBank servers. Check your connection and try again.',
+            : 'Cannot reach Vinay Bank servers. Check your connection and try again.',
       };
     }
     const body = response.data;

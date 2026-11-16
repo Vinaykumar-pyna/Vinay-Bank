@@ -1,4 +1,4 @@
-# ArthaBank on Docker: MongoDB replica set, API, card switch, Java risk engine
+# Vinay Bank on Docker: MongoDB replica set, API, card switch, Java risk engine
 # and the web app. Run "npm install" (or "npm run setup") first: it creates
 # backend/.env and the keys and certificates in backend/.secrets used here.
 #
@@ -6,11 +6,11 @@
 #
 # Plain HTTP on localhost for a demo, so COOKIE_SECURE is false; in production
 # put the edge proxy from deploy/nginx in front with TLS and set it to true.
-name: arthabank
+name: vinaybank
 
 x-backend-env: &backend-env
   NODE_ENV: production
-  MONGODB_URI: mongodb://mongo:27017/arthabank?replicaSet=rs0
+  MONGODB_URI: mongodb://mongo:27017/vinaybank?replicaSet=rs0
   CORS_ORIGINS: http://localhost:8080
   TRUST_PROXY: "1"
   COOKIE_SECURE: "false"

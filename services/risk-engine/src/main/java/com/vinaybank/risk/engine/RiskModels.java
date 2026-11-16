@@ -1,4 +1,4 @@
-package com.arthabank.risk.engine;
+package com.vinaybank.risk.engine;
 
 import java.util.List;
 

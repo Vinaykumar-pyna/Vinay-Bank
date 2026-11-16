@@ -16,7 +16,7 @@ const exchange = (id: number, code: string, approved: boolean): InspectedExchang
   id,
   outcome: {
     operation: 'BALANCE',
-    terminal: 'ArthaBank ATM',
+    terminal: 'Vinay Bank ATM',
     approved,
     responseCode: code,
     message: approved ? 'Approved' : 'Incorrect PIN',

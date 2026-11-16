@@ -1,8 +1,8 @@
 {
-  "name": "@arthabank/frontend",
+  "name": "@vinaybank/frontend",
   "private": true,
   "version": "1.0.0",
-  "description": "ArthaBank web app: customer internet banking and staff portal (React, TypeScript, Redux Toolkit, Bootstrap)",
+  "description": "Vinay Bank web app: customer internet banking and staff portal (React, TypeScript, Redux Toolkit, Bootstrap)",
   "type": "module",
   "scripts": {
     "dev": "vite",

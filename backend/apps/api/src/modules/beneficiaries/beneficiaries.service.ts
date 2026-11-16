@@ -96,17 +96,17 @@ export class BeneficiariesService {
 
     let internalAccountId: Types.ObjectId | undefined;
     if (isOwnIfsc(dto.ifsc)) {
-      // For ArthaBank payees we can verify the account immediately (like a "penny drop" check).
+      // For Vinay Bank payees we can verify the account immediately (like a "penny drop" check).
       if (!isValidAccountNumber(dto.accountNumber)) {
         throw AppException.validation([
-          { field: 'accountNumber', messages: ['This is not a valid ArthaBank account number'] },
+          { field: 'accountNumber', messages: ['This is not a valid Vinay Bank account number'] },
         ]);
       }
       const account = await this.accounts.findByNumber(dto.accountNumber);
       if (!account || ![AccountStatus.ACTIVE, AccountStatus.FROZEN].includes(account.status)) {
         throw AppException.unprocessable(
           ErrorCode.ACCOUNT_NOT_ACTIVE,
-          'No active ArthaBank account has this number',
+          'No active Vinay Bank account has this number',
         );
       }
       if (account.customerId.toString() === user.id) {

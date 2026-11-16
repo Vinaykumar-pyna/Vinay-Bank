@@ -22,7 +22,7 @@ export function DebitCardVisual({ card, pan }: DebitCardVisualProps) {
         style={{ zIndex: 1 }}
       >
         <div>
-          <div className="fw-semibold">ArthaBank</div>
+          <div className="fw-semibold">Vinay Bank</div>
           <div className="small opacity-75">{card.variant}</div>
         </div>
         <span className="fw-bold fst-italic letter-spacing-wide">RuPay</span>

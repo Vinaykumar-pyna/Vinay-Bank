@@ -263,7 +263,7 @@ describe('Staff portal (e2e)', () => {
 
   describe('administration', () => {
     it('lets admins create staff who can then sign in', async () => {
-      const email = `newteller.${Date.now()}@arthabank.test`;
+      const email = `newteller.${Date.now()}@vinaybank.test`;
       await http()
         .post('/api/v1/staff/users')
         .set(auth(manager.accessToken))

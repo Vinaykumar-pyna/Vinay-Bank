@@ -24,7 +24,7 @@ describe('LoginPage', () => {
     await userEvent.click(screen.getByRole('button', { name: /demo accounts/i }));
     await userEvent.click(await screen.findByRole('button', { name: /Kavya Iyer/ }));
     await waitFor(() =>
-      expect(screen.getByLabelText('Email')).toHaveValue('manager@arthabank.test'),
+      expect(screen.getByLabelText('Email')).toHaveValue('manager@vinaybank.test'),
     );
     expect(screen.getByLabelText('Password')).toHaveValue('Demo@1234');
   });

@@ -128,8 +128,8 @@ export class CardsService {
       this.contextHash(cardId, purpose),
       (code) =>
         purpose === 'CARD_REVEAL'
-          ? `${code} is your ArthaBank OTP to view the details of card XX${card.last4}. Never share it.`
-          : `${code} is your ArthaBank OTP to set the PIN of card XX${card.last4}. Never share it.`,
+          ? `${code} is your Vinay Bank OTP to view the details of card XX${card.last4}. Never share it.`
+          : `${code} is your Vinay Bank OTP to set the PIN of card XX${card.last4}. Never share it.`,
     );
   }
 

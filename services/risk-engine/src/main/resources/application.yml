@@ -6,7 +6,7 @@ server:
 
 spring:
   application:
-    name: arthabank-risk-engine
+    name: vinaybank-risk-engine
   threads:
     virtual:
       enabled: true # Java 21 virtual threads for request handling
@@ -30,6 +30,6 @@ management:
 
 info:
   app:
-    name: ArthaBank risk engine
+    name: Vinay Bank risk engine
     version: 1.0.0
     rules-version: java-rules-1.0

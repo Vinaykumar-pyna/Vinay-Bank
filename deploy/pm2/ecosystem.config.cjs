@@ -9,7 +9,7 @@
 module.exports = {
   apps: [
     {
-      name: 'arthabank-api',
+      name: 'vinaybank-api',
       cwd: './backend',
       script: 'dist/apps/api/main.js',
       instances: 1,
@@ -19,14 +19,14 @@ module.exports = {
       kill_timeout: 30000,
     },
     {
-      name: 'arthabank-switch',
+      name: 'vinaybank-switch',
       cwd: './backend',
       script: 'dist/apps/card-switch/main.js',
       instances: 1,
       env: { NODE_ENV: 'production' },
     },
     {
-      name: 'arthabank-risk',
+      name: 'vinaybank-risk',
       cwd: './services/risk-engine',
       script: 'java',
       args: ['-jar', 'target/risk-engine-1.0.0.jar'],

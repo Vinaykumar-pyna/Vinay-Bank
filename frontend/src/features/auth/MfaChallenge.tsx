@@ -40,7 +40,7 @@ export function MfaChallenge({ mfaToken, onBack }: MfaChallengeProps) {
       <p className="text-body-secondary mb-4">
         {useRecovery
           ? 'Enter one of the recovery codes you saved when you set up two-factor authentication.'
-          : 'Open your authenticator app and enter the 6-digit code for ArthaBank.'}
+          : 'Open your authenticator app and enter the 6-digit code for Vinay Bank.'}
       </p>
 
       {error && (

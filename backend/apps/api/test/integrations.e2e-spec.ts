@@ -71,7 +71,7 @@ function soapEnvelope(
     )
     .digest('base64');
   return `<?xml version="1.0" encoding="UTF-8"?>
-<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ab="urn:arthabank:soap:banking:1"
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:vb="urn:vinaybank:soap:banking:1"
   xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"
   xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
   <soap:Header>
@@ -122,7 +122,7 @@ describe('Integrations: SOAP, XML/XSLT, ISO 20022 and forex (e2e)', () => {
       http()
         .post('/soap/banking')
         .set('Content-Type', 'text/xml; charset=utf-8')
-        .set('SOAPAction', `"urn:arthabank:soap:banking:1#${action}"`)
+        .set('SOAPAction', `"urn:vinaybank:soap:banking:1#${action}"`)
         .send(envelope);
 
     it('publishes the WSDL', async () => {
@@ -133,14 +133,14 @@ describe('Integrations: SOAP, XML/XSLT, ISO 20022 and forex (e2e)', () => {
     });
 
     it('returns a balance for a signed request', async () => {
-      const body = `<ab:GetAccountBalanceRequest><ab:AccountNumber>${partner.savings.accountNumber}</ab:AccountNumber></ab:GetAccountBalanceRequest>`;
+      const body = `<vb:GetAccountBalanceRequest><vb:AccountNumber>${partner.savings.accountNumber}</vb:AccountNumber></vb:GetAccountBalanceRequest>`;
       const res = await post(soapEnvelope(body), 'GetAccountBalance').expect(200);
       expect(res.text).toMatch(/<\w*:?AvailableBalance>25000\.00</);
       expect(res.text).toContain(partner.savings.accountNumber);
     });
 
     it('returns a mini statement with the requested number of entries, newest first', async () => {
-      const body = `<ab:GetMiniStatementRequest><ab:AccountNumber>${partner.savings.accountNumber}</ab:AccountNumber><ab:Count>2</ab:Count></ab:GetMiniStatementRequest>`;
+      const body = `<vb:GetMiniStatementRequest><vb:AccountNumber>${partner.savings.accountNumber}</vb:AccountNumber><vb:Count>2</vb:Count></vb:GetMiniStatementRequest>`;
       const res = await post(soapEnvelope(body), 'GetMiniStatement').expect(200);
       expect(res.text).toContain('Test funding');
       // Count is an xsd:int, which node-soap hands over as a number
@@ -180,7 +180,7 @@ describe('Integrations: SOAP, XML/XSLT, ISO 20022 and forex (e2e)', () => {
         const replay = await http()
           .post('/soap/banking')
           .set('Content-Type', 'text/xml; charset=utf-8')
-          .set('SOAPAction', '"urn:arthabank:soap:banking:1#GetMiniStatement"')
+          .set('SOAPAction', '"urn:vinaybank:soap:banking:1#GetMiniStatement"')
           .send(client.lastRequest);
         expect(replay.status).toBe(401);
       } finally {
@@ -190,7 +190,7 @@ describe('Integrations: SOAP, XML/XSLT, ISO 20022 and forex (e2e)', () => {
     });
 
     it('rejects a wrong password, a replayed nonce and a stale timestamp', async () => {
-      const body = `<ab:GetAccountBalanceRequest><ab:AccountNumber>${partner.savings.accountNumber}</ab:AccountNumber></ab:GetAccountBalanceRequest>`;
+      const body = `<vb:GetAccountBalanceRequest><vb:AccountNumber>${partner.savings.accountNumber}</vb:AccountNumber></vb:GetAccountBalanceRequest>`;
       const wrong = await post(
         soapEnvelope(body, { password: 'not-the-password' }),
         'GetAccountBalance',
@@ -212,7 +212,7 @@ describe('Integrations: SOAP, XML/XSLT, ISO 20022 and forex (e2e)', () => {
 
     it("only shows the partner's own customer accounts", async () => {
       const other = await customer(1_000);
-      const body = `<ab:GetAccountBalanceRequest><ab:AccountNumber>${other.savings.accountNumber}</ab:AccountNumber></ab:GetAccountBalanceRequest>`;
+      const body = `<vb:GetAccountBalanceRequest><vb:AccountNumber>${other.savings.accountNumber}</vb:AccountNumber></vb:GetAccountBalanceRequest>`;
       const res = await post(soapEnvelope(body), 'GetAccountBalance');
       expect(res.status).toBeGreaterThanOrEqual(400);
       expect(res.text).toContain('Account not found for this partner');
@@ -336,7 +336,7 @@ describe('Integrations: SOAP, XML/XSLT, ISO 20022 and forex (e2e)', () => {
       expect(again.body.data.issues[0].path).toBe('GrpHdr/MsgId');
     });
 
-    it('checks every ArthaBank payee in the file (one lookup for all lines)', async () => {
+    it('checks every Vinay Bank payee in the file (one lookup for all lines)', async () => {
       const payer = await customer(10_000);
       const payee = await customer(0);
       const line = (id: string, number: string): Payee => ({
@@ -361,7 +361,7 @@ describe('Integrations: SOAP, XML/XSLT, ISO 20022 and forex (e2e)', () => {
       expect(preview.body.data.totals).toMatchObject({ count: 4, internal: 4, neft: 0 });
       const issues = preview.body.data.issues as { message: string; path: string }[];
       expect(issues.map((issue) => issue.message)).toEqual([
-        'No active ArthaBank account has this number',
+        'No active Vinay Bank account has this number',
         'A payment cannot go to the debit account itself',
       ]);
       expect(issues[0].path).toMatch(/^CdtTrfTxInf\[\d+\]\/CdtrAcct$/);

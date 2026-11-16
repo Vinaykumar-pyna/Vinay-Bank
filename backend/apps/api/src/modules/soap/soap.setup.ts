@@ -25,8 +25,8 @@ export function mountSoapServices(app: NestExpressApplication): void {
 
   // node-soap calls these with (args, callback, headers, req); returning a promise is supported.
   const services = {
-    ArthaBankService: {
-      ArthaBankPort: {
+    VinayBankService: {
+      VinayBankPort: {
         GetAccountBalance: (args: Record<string, unknown>) => banking.getAccountBalance(args),
         GetMiniStatement: (args: Record<string, unknown>) => banking.getMiniStatement(args),
         ValidateIfsc: (args: Record<string, unknown>) => banking.validateIfsc(args),

@@ -36,7 +36,7 @@ export default function DashboardPage() {
         <p className="text-body-secondary mb-0">
           {user?.lastLoginAt
             ? `Last sign-in ${formatDateTime(user.lastLoginAt)}`
-            : 'Welcome to ArthaBank'}
+            : 'Welcome to Vinay Bank'}
         </p>
       </div>
 

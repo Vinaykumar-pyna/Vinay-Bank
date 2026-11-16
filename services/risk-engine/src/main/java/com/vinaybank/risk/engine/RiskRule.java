@@ -1,7 +1,7 @@
-package com.arthabank.risk.engine;
+package com.vinaybank.risk.engine;
 
-import com.arthabank.risk.engine.RiskModels.RiskFacts;
-import com.arthabank.risk.engine.RiskModels.RuleHit;
+import com.vinaybank.risk.engine.RiskModels.RiskFacts;
+import com.vinaybank.risk.engine.RiskModels.RuleHit;
 import java.util.Optional;
 
 /**

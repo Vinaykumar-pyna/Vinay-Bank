@@ -16,7 +16,7 @@ export default async function globalSetup(): Promise<void> {
   process.env.E2E_MONGO_URI = replSet.getUri();
 
   // Fresh mutual-TLS certificates for the card network tests (never the developer's own).
-  const tlsDir = mkdtempSync(join(tmpdir(), 'arthabank-e2e-tls-'));
+  const tlsDir = mkdtempSync(join(tmpdir(), 'vinaybank-e2e-tls-'));
   execFileSync(process.execPath, [resolve(__dirname, '../../../../scripts/gen-tls.mjs'), tlsDir]);
   process.env.E2E_TLS_DIR = tlsDir;
   (globalThis as { __MONGO_REPLSET__?: MongoMemoryReplSet }).__MONGO_REPLSET__ = replSet;

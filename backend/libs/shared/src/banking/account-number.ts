@@ -1,7 +1,7 @@
 import { isValidLuhn, luhnCheckDigit } from './luhn';
 
 /**
- * ArthaBank account number: 12 digits
+ * Vinay Bank account number: 12 digits
  *   BBBB  branch code
  *   PP    product (10 = savings, 20 = current)
  *   SSSSS serial within branch and product

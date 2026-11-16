@@ -1,19 +1,19 @@
 # Interview guide
 
-How to present ArthaBank for the **Officer-Developer, Full Stack (MERN)** role:
+How to present Vinay Bank for the **Officer-Developer, Full Stack (MERN)** role:
 a pitch, a demo script, how every requirement in the job notification maps to
 the code, and the questions you are likely to get, with answers.
 
 ## The pitch
 
-**30 seconds.** "ArthaBank is a full-stack digital banking platform I built with
+**30 seconds.** "Vinay Bank is a full-stack digital banking platform I built with
 MongoDB, NestJS, React and TypeScript. Customers open accounts, send money over
 IMPS, NEFT and RTGS, manage RuPay debit cards and upload ISO 20022 bulk payment
 files; branch staff work a maker-checker queue, a cash counter and a
 tamper-evident audit trail. Around the core there is an ISO 8583 card switch
 over mutual TLS, a Java Spring Boot fraud engine behind a circuit breaker, a
 SOAP service with WS-Security, and a double-entry general ledger in SQL with
-Oracle scripts. It has 332 automated tests and CI."
+Oracle scripts. It has 336 automated tests and CI."
 
 **Two minutes.** Add the architecture in one breath (modular NestJS monolith
 for the core because transfers need ACID across accounts, postings, approvals
@@ -63,11 +63,11 @@ Start `npm run dev` before the interview and sign in once to warm up.
 
 ## Job notification requirements, mapped
 
-| Requirement | Where it is in ArthaBank |
+| Requirement | Where it is in Vinay Bank |
 |---|---|
 | Node.js / NestJS banking applications on a NoSQL database | `backend/apps/api`: 20+ NestJS modules on MongoDB (replica set, multi-document transactions, aggregation pipelines, TTL and unique indexes) |
 | Integrating outside APIs and microservices | IFSC directory and ECB exchange rates with caching and fallbacks; Java risk engine over HTTP with a circuit breaker; card switch as a separate NestJS app over a NestJS TCP microservice |
-| Unit testing | 332 tests: Jest (backend, frontend), React Testing Library, Supertest e2e with an in-memory replica set, JUnit 5 + MockMvc |
+| Unit testing | 336 tests: Jest (backend, frontend), React Testing Library, Supertest e2e with an in-memory replica set, JUnit 5 + MockMvc |
 | Front-end architecture | Feature folders, route-level code splitting, Redux Toolkit + RTK Query with cache invalidation tags, typed API layer, guards by role, design tokens in SCSS |
 | Databases, performance | Indexes on every query path, `lean()` reads, aggregation pipelines for KPIs, single round-trip `$lookup`, streaming audit verification, compression, cached lookups, lazy-loaded pages |
 | MongoDB, NestJS, React, TypeScript (MERN with NestJS) | The whole stack, TypeScript strict mode end to end |
@@ -139,7 +139,7 @@ are present; bit 1 announces a secondary bitmap for fields 65-128.
 
 **Why can't you just store the PIN hashed?** Only 10,000 four-digit PINs exist:
 any unkeyed hash is brute-forced instantly. Issuers keep a verification value
-computed with a secret key held in an HSM. ArthaBank does the same with an HMAC.
+computed with a secret key held in an HSM. Vinay Bank does the same with an HMAC.
 
 **What does mutual TLS add?** The server proves its identity to the client and
 the client proves its identity to the server, with certificates from a private
@@ -217,7 +217,7 @@ four-line probe program and fixed in the dev runner.
 
 | | |
 |---|---|
-| Automated tests | 332 (168 backend unit, 83 API e2e, 64 frontend, 17 JUnit) |
+| Automated tests | 336 (168 backend unit, 83 API e2e, 68 frontend, 17 JUnit) |
 | E2E coverage | 87% of statements, 90% of lines (API, switch, shared lib) |
 | REST endpoints | 77, plus SOAP (3 operations), ISO 8583 (3 message pairs), RPC (2), WebSocket |
 | Runtime processes | 5: MongoDB, API, card switch, risk engine, web |

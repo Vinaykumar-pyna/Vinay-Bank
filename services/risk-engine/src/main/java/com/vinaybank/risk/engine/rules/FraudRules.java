@@ -1,8 +1,8 @@
-package com.arthabank.risk.engine.rules;
+package com.vinaybank.risk.engine.rules;
 
-import com.arthabank.risk.engine.RiskModels.RiskFacts;
-import com.arthabank.risk.engine.RiskModels.RuleHit;
-import com.arthabank.risk.engine.RiskRule;
+import com.vinaybank.risk.engine.RiskModels.RiskFacts;
+import com.vinaybank.risk.engine.RiskModels.RuleHit;
+import com.vinaybank.risk.engine.RiskRule;
 import java.util.Optional;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;

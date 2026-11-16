@@ -1,10 +1,10 @@
-package com.arthabank.risk.engine;
+package com.vinaybank.risk.engine;
 
-import com.arthabank.risk.engine.RiskModels.RiskAssessment;
-import com.arthabank.risk.engine.RiskModels.RiskDecision;
-import com.arthabank.risk.engine.RiskModels.RiskFacts;
-import com.arthabank.risk.engine.RiskModels.RiskLevel;
-import com.arthabank.risk.engine.RiskModels.RuleHit;
+import com.vinaybank.risk.engine.RiskModels.RiskAssessment;
+import com.vinaybank.risk.engine.RiskModels.RiskDecision;
+import com.vinaybank.risk.engine.RiskModels.RiskFacts;
+import com.vinaybank.risk.engine.RiskModels.RiskLevel;
+import com.vinaybank.risk.engine.RiskModels.RuleHit;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;

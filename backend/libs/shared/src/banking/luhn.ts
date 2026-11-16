@@ -1,6 +1,6 @@
 /**
  * Luhn (mod 10) check digit, ISO/IEC 7812. Used on card numbers and on
- * ArthaBank account numbers: it catches every single-digit typo and most
+ * Vinay Bank account numbers: it catches every single-digit typo and most
  * transpositions of adjacent digits before a payment is attempted.
  */
 export function luhnCheckDigit(payload: string): number {

@@ -38,7 +38,7 @@ export function SpendingBreakdown({ items }: { items: { category: string; amount
                 className="rounded-pill h-100"
                 style={{
                   width: `${Math.max(3, (item.amount / max) * 100)}%`,
-                  background: 'var(--ab-series-1)',
+                  background: 'var(--vb-series-1)',
                 }}
               />
             </div>

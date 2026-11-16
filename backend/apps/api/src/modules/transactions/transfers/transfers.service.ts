@@ -62,7 +62,7 @@ interface ResolvedPayee {
   accountNumber: string;
   ifsc: string;
   bankName: string;
-  /** Set when the money stays inside ArthaBank and must be credited to this account. */
+  /** Set when the money stays inside Vinay Bank and must be credited to this account. */
   internalAccount?: AccountDocument;
   beneficiaryId?: Types.ObjectId;
   coolingUntil?: Date;
@@ -216,7 +216,7 @@ export class TransfersService {
         'TRANSFER',
         this.quotes.contextHash(payload),
         (code) =>
-          `${code} is your ArthaBank OTP to send ${formatInr(dto.amount)} to ${payee.name}. ` +
+          `${code} is your Vinay Bank OTP to send ${formatInr(dto.amount)} to ${payee.name}. ` +
           'Valid for 5 minutes. Never share it with anyone, including bank staff.',
       );
       payload.otp = { challengeId: challenge.challengeId, channel: challenge.channel };
@@ -426,7 +426,7 @@ export class TransfersService {
     const debitNarration = selfTransfer
       ? `Transfer to own account ${maskAccountNumber(to.accountNumber)}${remarks}`
       : txn.rail === PaymentRail.INTERNAL
-        ? `To ${to.name} (ArthaBank)${remarks}`
+        ? `To ${to.name} (Vinay Bank)${remarks}`
         : `${txn.rail} to ${to.name} (${to.bankName ?? to.ifsc})${remarks}`;
 
     const postings: Partial<Posting>[] = [
@@ -470,7 +470,7 @@ export class TransfersService {
         balanceAfter: credited.ledgerBalance,
         narration: selfTransfer
           ? `Transfer from own account ${maskAccountNumber(from.accountNumber)}${remarks}`
-          : `From ${from.name} (ArthaBank)${remarks}`,
+          : `From ${from.name} (Vinay Bank)${remarks}`,
         counterpartyName: from.name,
         counterpartyAccount: maskAccountNumber(from.accountNumber),
         category: Category.TRANSFER,

@@ -1,17 +1,17 @@
-# /etc/systemd/system/arthabank-risk.service
+# /etc/systemd/system/vinaybank-risk.service
 # Fraud risk engine (Java 21, Spring Boot). Build with: ./mvnw -B package
 [Unit]
-Description=ArthaBank fraud risk engine (Spring Boot)
+Description=Vinay Bank fraud risk engine (Spring Boot)
 After=network-online.target
 Wants=network-online.target
 
 [Service]
 Type=simple
-User=arthabank
-Group=arthabank
-WorkingDirectory=/opt/arthabank/risk-engine
-EnvironmentFile=/opt/arthabank/backend/.env
-ExecStart=/usr/bin/java -XX:MaxRAMPercentage=50 -jar /opt/arthabank/risk-engine/risk-engine-1.0.0.jar
+User=vinaybank
+Group=vinaybank
+WorkingDirectory=/opt/vinaybank/risk-engine
+EnvironmentFile=/opt/vinaybank/backend/.env
+ExecStart=/usr/bin/java -XX:MaxRAMPercentage=50 -jar /opt/vinaybank/risk-engine/risk-engine-1.0.0.jar
 SuccessExitStatus=143
 Restart=on-failure
 RestartSec=5

@@ -5,7 +5,7 @@
 POST {{api}}/auth/login
 Content-Type: application/json
 
-{ "email": "manager@arthabank.test", "password": "Demo@1234" }
+{ "email": "manager@vinaybank.test", "password": "Demo@1234" }
 
 ###
 @token = {{login.response.body.data.accessToken}}

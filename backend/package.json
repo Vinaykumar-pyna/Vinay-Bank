@@ -1,8 +1,8 @@
 {
-  "name": "@arthabank/backend",
+  "name": "@vinaybank/backend",
   "version": "1.0.0",
   "private": true,
-  "description": "ArthaBank backend: NestJS core banking API, ISO 8583 card switch and shared libraries",
+  "description": "Vinay Bank backend: NestJS core banking API, ISO 8583 card switch and shared libraries",
   "license": "MIT",
   "scripts": {
     "build": "nest build api && nest build card-switch",

@@ -53,16 +53,16 @@ describe('saveStatement', () => {
 
   it('downloads the page instead when a popup blocker refuses the tab', async () => {
     open.mockReturnValue(null);
-    await saveStatement('html', () => Promise.resolve(file), 'ArthaBank-0014-statement');
+    await saveStatement('html', () => Promise.resolve(file), 'VinayBank-0014-statement');
     expect(clicked).toHaveLength(1);
-    expect(clicked[0].download).toBe('ArthaBank-0014-statement.html');
+    expect(clicked[0].download).toBe('VinayBank-0014-statement.html');
     expect(URL.revokeObjectURL).toHaveBeenCalledWith('blob:http://localhost/statement');
   });
 
   it('downloads CSV and XML files without opening a tab', async () => {
-    await saveStatement('csv', () => Promise.resolve(file), 'ArthaBank-0014-statement');
+    await saveStatement('csv', () => Promise.resolve(file), 'VinayBank-0014-statement');
     expect(open).not.toHaveBeenCalled();
-    expect(clicked[0].download).toBe('ArthaBank-0014-statement.csv');
+    expect(clicked[0].download).toBe('VinayBank-0014-statement.csv');
   });
 
   it('closes the empty tab and reports the error when the request fails', async () => {

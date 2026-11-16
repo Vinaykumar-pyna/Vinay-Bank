@@ -36,7 +36,7 @@ export function toAccountView(account: Account & { _id: Types.ObjectId }): Accou
     ifsc: account.ifsc,
     branch: {
       code: account.branchCode,
-      name: branch?.name ?? 'ArthaBank',
+      name: branch?.name ?? 'Vinay Bank',
       city: branch?.city ?? '',
     },
     currency: account.currency,

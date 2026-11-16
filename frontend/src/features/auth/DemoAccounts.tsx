@@ -6,9 +6,9 @@ const accounts = [
   { email: 'priya@example.com', name: 'Priya Sharma', role: 'Customer', note: 'KYC verified' },
   { email: 'rahul@example.com', name: 'Rahul Verma', role: 'Customer', note: 'KYC verified' },
   { email: 'ananya@example.com', name: 'Ananya Gupta', role: 'Customer', note: 'KYC pending' },
-  { email: 'teller@arthabank.test', name: 'Rohan Das', role: 'Teller', note: 'Maker' },
-  { email: 'manager@arthabank.test', name: 'Kavya Iyer', role: 'Manager', note: 'Checker' },
-  { email: 'admin@arthabank.test', name: 'Aarav Mehta', role: 'Admin', note: 'Full access' },
+  { email: 'teller@vinaybank.test', name: 'Rohan Das', role: 'Teller', note: 'Maker' },
+  { email: 'manager@vinaybank.test', name: 'Kavya Iyer', role: 'Manager', note: 'Checker' },
+  { email: 'admin@vinaybank.test', name: 'Aarav Mehta', role: 'Admin', note: 'Full access' },
 ];
 
 interface DemoAccountsProps {

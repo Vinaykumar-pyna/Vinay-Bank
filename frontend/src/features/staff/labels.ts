@@ -1,7 +1,7 @@
 import type { Role } from '@/features/auth/types';
 
 export const RAIL_LABELS: Record<string, string> = {
-  INTERNAL: 'Within ArthaBank',
+  INTERNAL: 'Within Vinay Bank',
   IMPS: 'IMPS',
   NEFT: 'NEFT',
   RTGS: 'RTGS',

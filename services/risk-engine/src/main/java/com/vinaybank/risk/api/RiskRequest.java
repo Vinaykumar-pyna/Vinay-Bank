@@ -1,6 +1,6 @@
-package com.arthabank.risk.api;
+package com.vinaybank.risk.api;
 
-import com.arthabank.risk.engine.RiskModels.RiskFacts;
+import com.vinaybank.risk.engine.RiskModels.RiskFacts;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

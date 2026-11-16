@@ -58,7 +58,7 @@ export class AccountsController {
   }
 
   @Get('branches')
-  @ApiOperation({ summary: 'ArthaBank branches and IFSC codes' })
+  @ApiOperation({ summary: 'Vinay Bank branches and IFSC codes' })
   branches() {
     return BRANCHES;
   }

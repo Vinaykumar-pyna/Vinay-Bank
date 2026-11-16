@@ -31,7 +31,7 @@ import { StaffOverviewService } from './staff-overview.service';
 import { StaffUsersService } from './staff-users.service';
 
 class AccountLookupDto {
-  @Matches(/^\d{12}$/, { message: 'Enter the 12-digit ArthaBank account number' })
+  @Matches(/^\d{12}$/, { message: 'Enter the 12-digit Vinay Bank account number' })
   accountNumber: string;
 }
 

@@ -168,8 +168,8 @@ export default function TransactionsMonitorPage() {
                         <div className="text-body-secondary font-mono">{t.reference}</div>
                       </td>
                       <td data-label="Parties" className="small">
-                        <div className="fw-medium">{t.from?.name ?? 'ArthaBank'}</div>
-                        <div className="text-body-secondary">to {t.to?.name ?? 'ArthaBank'}</div>
+                        <div className="fw-medium">{t.from?.name ?? 'Vinay Bank'}</div>
+                        <div className="text-body-secondary">to {t.to?.name ?? 'Vinay Bank'}</div>
                       </td>
                       <td data-label="Method" className="small">
                         {RAIL_LABELS[t.rail] ?? t.rail}

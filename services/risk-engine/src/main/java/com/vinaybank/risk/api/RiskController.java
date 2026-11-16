@@ -1,7 +1,7 @@
-package com.arthabank.risk.api;
+package com.vinaybank.risk.api;
 
-import com.arthabank.risk.engine.RiskEngine;
-import com.arthabank.risk.engine.RiskModels.RiskAssessment;
+import com.vinaybank.risk.engine.RiskEngine;
+import com.vinaybank.risk.engine.RiskModels.RiskAssessment;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Map;

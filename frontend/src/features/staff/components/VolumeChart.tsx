@@ -63,7 +63,7 @@ export function VolumeChart({ data }: { data: DailyVolume[] }) {
             <Bar
               dataKey="amount"
               name="Value"
-              fill="var(--ab-series-1)"
+              fill="var(--vb-series-1)"
               radius={[4, 4, 0, 0]}
               maxBarSize={24}
             />

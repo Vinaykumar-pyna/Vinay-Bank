@@ -40,7 +40,7 @@
       "name": "Risk engine: Spring Boot",
       "type": "java",
       "request": "launch",
-      "mainClass": "com.arthabank.risk.RiskEngineApplication",
+      "mainClass": "com.vinaybank.risk.RiskEngineApplication",
       "projectName": "risk-engine",
       "envFile": "${workspaceFolder}/backend/.env",
       "vmArgs": "-Djdk.net.unixdomain.tmpdir=${env:SystemRoot}/Temp"

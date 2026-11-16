@@ -26,7 +26,7 @@ export function AccountHolderPanel({ data, loading, error }: AccountHolderPanelP
     return (
       <Alert variant="warning" className="mb-0 small">
         {notFound
-          ? 'No ArthaBank account has this number. Check the passbook or cheque leaf.'
+          ? 'No Vinay Bank account has this number. Check the passbook or cheque leaf.'
           : 'Account lookup failed.'}
       </Alert>
     );

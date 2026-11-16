@@ -8,7 +8,7 @@ function staffUser(role: Role): UserProfile {
   return {
     id: 'u1',
     role,
-    email: 'someone@arthabank.test',
+    email: 'someone@vinaybank.test',
     phone: '9000000000',
     firstName: 'Test',
     lastName: 'User',

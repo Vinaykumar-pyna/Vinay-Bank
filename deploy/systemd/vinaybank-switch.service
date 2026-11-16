@@ -1,16 +1,16 @@
-# /etc/systemd/system/arthabank-switch.service
+# /etc/systemd/system/vinaybank-switch.service
 # ISO 8583 card switch (NestJS, mutual TLS on port 5800).
 [Unit]
-Description=ArthaBank ISO 8583 card switch
-After=network-online.target arthabank-api.service
+Description=Vinay Bank ISO 8583 card switch
+After=network-online.target vinaybank-api.service
 Wants=network-online.target
 
 [Service]
 Type=simple
-User=arthabank
-Group=arthabank
-WorkingDirectory=/opt/arthabank/backend
-EnvironmentFile=/opt/arthabank/backend/.env
+User=vinaybank
+Group=vinaybank
+WorkingDirectory=/opt/vinaybank/backend
+EnvironmentFile=/opt/vinaybank/backend/.env
 Environment=NODE_ENV=production
 ExecStart=/usr/bin/node dist/apps/card-switch/main.js
 Restart=on-failure

@@ -1,8 +1,8 @@
 {
-  "name": "arthabank",
+  "name": "vinaybank",
   "version": "1.0.0",
   "private": true,
-  "description": "ArthaBank - digital banking and card payment platform built with MongoDB, NestJS, React and TypeScript",
+  "description": "Vinay Bank - digital banking and card payment platform built with MongoDB, NestJS, React and TypeScript",
   "license": "MIT",
   "engines": {
     "node": ">=22.12.0"

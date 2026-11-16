@@ -49,7 +49,7 @@ function PreviewTable({ preview }: { preview: BulkPreview }) {
                 {p.payeeBank}
                 <div className="text-body-secondary font-mono">{p.creditorIfsc}</div>
               </td>
-              <td data-label="Method">{p.rail === 'INTERNAL' ? 'Within ArthaBank' : 'NEFT'}</td>
+              <td data-label="Method">{p.rail === 'INTERNAL' ? 'Within Vinay Bank' : 'NEFT'}</td>
               <td data-label="Check">
                 {problems.length ? (
                   <ul className="mb-0 ps-3 text-danger-emphasis">
@@ -192,7 +192,7 @@ export default function BulkPaymentsPage() {
                   <tr key={p.reference}>
                     <td className="font-mono">{p.endToEndId}</td>
                     <td className="font-mono">{p.reference}</td>
-                    <td>{p.rail === 'INTERNAL' ? 'Within ArthaBank' : p.rail}</td>
+                    <td>{p.rail === 'INTERNAL' ? 'Within Vinay Bank' : p.rail}</td>
                     <td>
                       <StatusBadge status={p.status} />
                     </td>

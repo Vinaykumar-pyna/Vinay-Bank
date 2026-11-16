@@ -7,7 +7,7 @@ export interface UiState {
   sidebarOpen: boolean;
 }
 
-export const THEME_STORAGE_KEY = 'ab-theme';
+export const THEME_STORAGE_KEY = 'vb-theme';
 
 function initialTheme(): Theme {
   if (typeof document === 'undefined') return 'light';

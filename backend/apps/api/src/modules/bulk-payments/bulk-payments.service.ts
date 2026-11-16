@@ -108,7 +108,7 @@ export class BulkPaymentsService {
         'BULK_PAYMENT',
         this.contextHash(xml),
         (code) =>
-          `${code} is your ArthaBank OTP to approve ${preview.totals.count} payments totalling ` +
+          `${code} is your Vinay Bank OTP to approve ${preview.totals.count} payments totalling ` +
           `${formatInr(preview.totals.amount)} (file ${preview.messageId}). Never share it.`,
       );
     }
@@ -159,7 +159,7 @@ export class BulkPaymentsService {
         ),
       ),
     );
-    // One indexed query for every ArthaBank payee in the file, not one per payment line
+    // One indexed query for every Vinay Bank payee in the file, not one per payment line
     const internalNumbers = [
       ...new Set(
         batch.payments.filter((p) => isOwnIfsc(p.creditorIfsc)).map((p) => p.creditorAccount),
@@ -181,7 +181,7 @@ export class BulkPaymentsService {
         if (!payee || ![AccountStatus.ACTIVE, AccountStatus.FROZEN].includes(payee.status)) {
           issues.push({
             path: `CdtTrfTxInf[${payment.index}]/CdtrAcct`,
-            message: 'No active ArthaBank account has this number',
+            message: 'No active Vinay Bank account has this number',
             payment: payment.index,
           });
         } else if (account && payee.id === account.id) {
@@ -415,7 +415,7 @@ export class BulkPaymentsService {
         message: `${result.count} payments from file ${result.messageId} were debited from A/c ${maskAccountNumber(account.accountNumber)}. ${processing.length} NEFT payment(s) settle in the next batch.`,
         link: '/app/bulk-payments',
       });
-      // Payees at ArthaBank get their usual credit alerts (the payer already has the summary).
+      // Payees at Vinay Bank get their usual credit alerts (the payer already has the summary).
       for (const transactionId of completed) {
         this.events.emit(DomainEvents.TRANSACTION_COMPLETED, {
           transactionId,

@@ -1,7 +1,7 @@
 /**
  * Money helpers.
  *
- * Every amount in ArthaBank is an integer number of paise (1 rupee = 100 paise).
+ * Every amount in Vinay Bank is an integer number of paise (1 rupee = 100 paise).
  * Binary floating point cannot represent most decimal fractions exactly
  * (0.1 + 0.2 !== 0.3), which is unacceptable for balances. Integers are exact,
  * and Number.MAX_SAFE_INTEGER paise is about 90 trillion rupees.

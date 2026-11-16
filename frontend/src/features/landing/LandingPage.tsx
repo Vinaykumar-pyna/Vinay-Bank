@@ -1,9 +1,9 @@
 import { Badge, Col, Container, Nav, Navbar, Row } from 'react-bootstrap';
-import { Link } from 'react-router';
 import { Logo } from '@/components/common/Logo';
 import { ThemeToggle } from '@/components/common/ThemeToggle';
 import { env } from '@/config/env';
 import { ApiStatus } from './ApiStatus';
+import { HeroActions, NavbarActions } from './LandingActions';
 
 const features = [
   {
@@ -83,12 +83,7 @@ export default function LandingPage() {
             </Nav>
             <div className="d-flex align-items-center gap-2 py-2 py-md-0">
               <ThemeToggle />
-              <Link to="/login" className="btn btn-outline-primary">
-                Sign in
-              </Link>
-              <Link to="/register" className="btn btn-primary">
-                Open an account
-              </Link>
+              <NavbarActions />
             </div>
           </Navbar.Collapse>
         </Container>
@@ -110,12 +105,7 @@ export default function LandingPage() {
                   every rupee, protected by bank-grade encryption and fraud monitoring.
                 </p>
                 <div className="d-flex flex-wrap gap-2">
-                  <Link to="/register" className="btn btn-primary btn-lg">
-                    Get started <i className="bi bi-arrow-right ms-1" aria-hidden="true" />
-                  </Link>
-                  <Link to="/login" className="btn btn-outline-secondary btn-lg">
-                    I already bank here
-                  </Link>
+                  <HeroActions />
                 </div>
                 <div className="d-flex flex-wrap gap-4 mt-4 small text-body-secondary">
                   <span>
@@ -172,7 +162,7 @@ export default function LandingPage() {
                 <div className="section-eyebrow mb-2">Security</div>
                 <h2 className="h1 fw-bold mb-3">Your money, protected in layers</h2>
                 <p className="text-body-secondary">
-                  ArthaBank applies defence in depth: encryption at rest and in transit, strong
+                  Vinay Bank applies defence in depth: encryption at rest and in transit, strong
                   authentication, least-privilege access and an audit trail that cannot be quietly
                   rewritten.
                 </p>
@@ -217,7 +207,7 @@ export default function LandingPage() {
       <footer className="border-top py-4">
         <Container className="d-flex flex-column flex-md-row gap-3 justify-content-between align-items-center">
           <div className="small text-body-secondary text-center text-md-start">
-            © {new Date().getFullYear()} ArthaBank. A demonstration project, not a real bank.
+            © {new Date().getFullYear()} Vinay Bank. A demonstration project, not a real bank.
           </div>
           <ApiStatus />
         </Container>

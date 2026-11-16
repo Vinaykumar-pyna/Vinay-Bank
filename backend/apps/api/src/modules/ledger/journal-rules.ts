@@ -1,6 +1,6 @@
 import type { GlAccountType } from './entities/ledger.entities';
 
-/** General ledger accounts used by ArthaBank (a simplified Indian bank chart of accounts). */
+/** General ledger accounts used by Vinay Bank (a simplified Indian bank chart of accounts). */
 export const GL = {
   CASH: '1001',
   CLEARING: '1101',

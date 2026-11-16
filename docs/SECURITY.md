@@ -1,12 +1,12 @@
 # Security
 
 Banking software is judged first on how it fails. This page lists the controls
-in ArthaBank, where they live in the code, and what a real deployment would
+in Vinay Bank, where they live in the code, and what a real deployment would
 add.
 
 ## OWASP Top 10 (2021) mapping
 
-| Risk | Controls in ArthaBank |
+| Risk | Controls in Vinay Bank |
 |---|---|
 | A01 Broken access control | Global `JwtAuthGuard` + `RolesGuard` (opt-out only with `@Public()`); ownership checks in every service; need-to-know masking (tellers see masked mobile numbers, customers see only a risk level); maker-checker enforced on the server (`MAKER_CHECKER_VIOLATION`) |
 | A02 Cryptographic failures | AES-256-GCM field encryption with AAD; HMAC blind indexes; RS256 tokens; bcrypt; TLS 1.2+ with mutual authentication on the card network; secrets generated per installation |
@@ -129,7 +129,7 @@ npm --prefix frontend audit --omit=dev   # what ships: 0 vulnerabilities
   latest 0.3 release) still depends on glob 10, which carries moderate
   advisories for glob and minimatch. An `overrides` entry in
   `backend/package.json` gives TypeORM the patched glob 14 instead. TypeORM
-  only calls glob when entities are given as file patterns; ArthaBank passes
+  only calls glob when entities are given as file patterns; Vinay Bank passes
   entity classes, and the ledger tests prove the override changes nothing.
 - **Development tooling: moderate and low findings, accepted.** They come from
   Jest, typescript-eslint and the Nest CLI (glob, minimatch, and deepmerge

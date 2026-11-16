@@ -35,7 +35,7 @@ export class TransactionsService {
 
   /** Customer-facing reference, e.g. AB261113 + 8 random digits (like a UTR). */
   generateReference(): string {
-    return `AB${istDateStamp().slice(2)}${randomDigits(8)}`;
+    return `VB${istDateStamp().slice(2)}${randomDigits(8)}`;
   }
 
   async create(data: Partial<Transaction>, session: ClientSession): Promise<TransactionDocument> {
