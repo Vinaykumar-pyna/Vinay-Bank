@@ -15,7 +15,7 @@ interface DemoAccountsProps {
   onPick: (email: string, password: string) => void;
 }
 
-/** Demo shortcuts for local runs and interview demos (hidden with VITE_SHOW_DEMO_ACCOUNTS=false). */
+/** Demo shortcuts for local runs and walkthroughs (hidden with VITE_SHOW_DEMO_ACCOUNTS=false). */
 export function DemoAccounts({ onPick }: DemoAccountsProps) {
   return (
     <Accordion className="mt-4">

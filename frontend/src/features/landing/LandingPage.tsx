@@ -207,7 +207,7 @@ export default function LandingPage() {
       <footer className="border-top py-4">
         <Container className="d-flex flex-column flex-md-row gap-3 justify-content-between align-items-center">
           <div className="small text-body-secondary text-center text-md-start">
-            © {new Date().getFullYear()} Vinay Bank. A demonstration project, not a real bank.
+            © {new Date().getFullYear()} Vinay Bank. A personal project, not a real bank.
           </div>
           <ApiStatus />
         </Container>

@@ -2,8 +2,9 @@
 
 A digital banking and card payment platform built with **MongoDB, NestJS (Node.js), React and TypeScript**.
 
-> Vinay Bank is a demonstration project, not a real bank. It was built to show a complete,
-> production-style full stack application for the Officer-Developer (Full Stack MERN) role.
+> Vinay Bank is a personal project, not a real bank. It was developed independently to explore
+> how real-world banking systems work and to implement their features and technologies end to
+> end, in a complete, production-style application.
 
 [![CI](https://img.shields.io/badge/CI-GitHub%20Actions-2088FF?logo=githubactions&logoColor=white)](.github/workflows/ci.yml)
 ![Tests](https://img.shields.io/badge/tests-336-brightgreen)
@@ -30,7 +31,7 @@ tests in CI.
 
 | Document | Contents |
 |---|---|
-| [Interview guide](docs/INTERVIEW_GUIDE.md) | Pitch, 15-minute demo script, job notification mapped to the code, questions and answers |
+| [Walkthrough](docs/WALKTHROUGH.md) | Summary, guided feature tour, where each technology is used, design decisions explained |
 | [Architecture](docs/ARCHITECTURE.md) | Components, module map, request pipeline, sequence diagrams, data model, design patterns |
 | [Setup](docs/SETUP.md) | Installation, configuration, troubleshooting |
 | [API](docs/API.md) | Conventions, all 77 REST endpoints, SOAP, ISO 8583, RPC and WebSocket interfaces |
@@ -142,7 +143,7 @@ vinaybank/
 ├── database/oracle/    General ledger for Oracle: DDL, PL/SQL package, reports
 ├── deploy/             nginx, systemd and PM2 configuration
 ├── http/               REST Client request collections
-├── docs/               Architecture, setup, API, security, testing, deployment, interview guide
+├── docs/               Walkthrough, architecture, setup, API, security, testing, deployment
 ├── .github/workflows/  CI: lint, type-check, all tests, builds (Node and Java jobs)
 └── docker-compose.yml  The whole platform in containers
 ```

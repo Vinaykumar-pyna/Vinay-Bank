@@ -2,7 +2,7 @@ import { Role } from '../../common/enums/role.enum';
 import { KycStatus } from '../users/user.schema';
 
 /**
- * Demo data for local development and interview demos.
+ * Demo data for local development and walkthroughs.
  * These are test credentials for a local, non-production database only.
  */
 export const DEMO_PASSWORD = 'Demo@1234';

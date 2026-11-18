@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Interview demo: simulates an insider who edits history directly in MongoDB,
+ * Tamper demo: simulates an insider who edits history directly in MongoDB,
  * bypassing the API. Afterwards, Audit trail -> "Verify integrity" in the staff
  * portal (or GET /api/v1/audit/verify) reports the exact record that changed.
  *
