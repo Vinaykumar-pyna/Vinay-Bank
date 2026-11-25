@@ -25,9 +25,11 @@ With Oracle Database Free in Docker:
 docker run -d --name oracle -p 1521:1521 -e ORACLE_PASSWORD=change-me gvenzl/oracle-free
 ```
 
-Then connect as an application user (SQL\*Plus, SQLcl or SQL Developer) and run
-the scripts in order: `@01_schema.sql`, `@02_seed_chart_of_accounts.sql`,
-`@03_ledger_pkg.sql`, `@04_reports.sql`.
+Then connect as an application user with any Oracle SQL client and run the
+scripts in order, each as a whole script: `01_schema.sql`,
+`02_seed_chart_of_accounts.sql`, `03_ledger_pkg.sql`, `04_reports.sql`. PL/SQL
+blocks end with a line containing only `/`, the usual terminator in Oracle
+scripts.
 
 ## Pointing the API at Oracle
 

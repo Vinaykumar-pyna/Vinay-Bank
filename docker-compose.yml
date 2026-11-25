@@ -22,6 +22,11 @@ services:
     command: ["--replSet", "rs0", "--bind_ip_all"]
     volumes:
       - mongo-data:/data/db
+    ports:
+      # Lets database clients on this machine connect with
+      # mongodb://localhost:27017/vinaybank?directConnection=true
+      # Bound to 127.0.0.1 only, because this MongoDB has no password.
+      - "127.0.0.1:27017:27017"
     healthcheck:
       # Initiates the single-node replica set on first start (transactions need one).
       test:

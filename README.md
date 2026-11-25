@@ -41,7 +41,7 @@ tests in CI.
 | [Deployment](docs/DEPLOYMENT.md) | Docker Compose, nginx, systemd, PM2, production settings |
 | [Risk engine](services/risk-engine/README.md) | The Java service: design, API, running and testing |
 | [Oracle ledger](database/oracle/README.md) | DDL, PL/SQL package and reports |
-| [HTTP requests](http/README.md) | Ready-to-send requests for REST Client |
+| [HTTP requests](http/README.md) | Ready-to-send API requests as plain-text `.http` files |
 
 ## Tech stack
 
@@ -142,7 +142,7 @@ vinaybank/
 ├── services/risk-engine/  Fraud risk microservice: Java 21, Spring Boot 4, Maven Wrapper
 ├── database/oracle/    General ledger for Oracle: DDL, PL/SQL package, reports
 ├── deploy/             nginx, systemd and PM2 configuration
-├── http/               REST Client request collections
+├── http/               Ready-to-send HTTP requests (.http files)
 ├── docs/               Walkthrough, architecture, setup, API, security, testing, deployment
 ├── .github/workflows/  CI: lint, type-check, all tests, builds (Node and Java jobs)
 └── docker-compose.yml  The whole platform in containers

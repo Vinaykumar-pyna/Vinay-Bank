@@ -100,7 +100,7 @@ CREATE OR REPLACE PACKAGE BODY ledger_pkg AS
 END ledger_pkg;
 /
 
--- Example call (SQL*Plus / SQL Developer):
+-- Example call (enable server output in your client to see the message):
 -- DECLARE
 --   v_id NUMBER;
 -- BEGIN

@@ -13,6 +13,7 @@ coverage/
 !.env.example
 .secrets/
 .data/
+ledger-snapshot.sqlite
 
 # Java / Maven / Gradle
 target/
@@ -29,11 +30,7 @@ npm-debug.log*
 Thumbs.db
 .idea/
 *.iml
-.vscode/*
-!.vscode/extensions.json
-!.vscode/launch.json
-!.vscode/settings.json
-!.vscode/tasks.json
+.vscode/
 
 # Local AI-assistant tooling
 .claude/

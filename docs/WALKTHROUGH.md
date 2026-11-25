@@ -79,7 +79,7 @@ the [README](../README.md#demo-sign-in).
 | MongoDB, NestJS, React, TypeScript | The whole stack, TypeScript strict mode end to end |
 | REST and JSON | 77 versioned endpoints, uniform envelopes and error codes, OpenAPI docs |
 | Object-oriented design and patterns | Strategy, Registry, State machine, Observer, Circuit breaker, Adapter, Repository, DI (see ARCHITECTURE.md) |
-| IDE setup | VS Code workspace: debug configurations (API, Jest, Chrome, Spring Boot), tasks, REST Client collections |
+| Developer tooling | npm scripts for every task (`dev`, `test`, `lint`, `typecheck`, `format`, `build`); an API debug mode (`npm --prefix backend run start:debug`) that any Node.js debugger can attach to on port 9229; EditorConfig and Prettier for consistent formatting in any editor; plain-text `.http` request files |
 | NoSQL and relational / Oracle SQL | MongoDB for operations; double-entry ledger in SQL via TypeORM; Oracle DDL, PL/SQL package and analytic reports in `database/oracle` |
 | Linux | systemd units with hardening, PM2 config, Linux deployment guide, Docker images |
 | Cryptography | AES-256-GCM with AAD and key rotation, HMAC blind indexes, RS256 JWT, bcrypt, TOTP, SHA-256 hash chain, triple-DES PIN blocks, HMAC MACs, PKI with mutual TLS |

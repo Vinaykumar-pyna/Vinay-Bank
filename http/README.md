@@ -1,9 +1,15 @@
 # HTTP request collections
 
-Ready-made requests for the [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
-extension in VS Code (or any editor that understands `.http` files). Start the
-stack with `npm run dev`, open a file and click **Send Request** above a request.
-Requests named with `# @name` feed tokens into the requests below them.
+Ready-made API requests as plain-text `.http` files. Many editors and IDEs can
+send them directly (some through an extension), and so can command-line
+runners; any request can also be copied into `curl` or another HTTP client.
+To try the REST endpoints in a browser instead, use the interactive API docs at
+http://localhost:4000/api/docs.
+
+Start the stack with `npm run dev` and work through a file from top to bottom.
+Requests named with `# @name` capture values, such as the access token, for the
+requests below them; if your tool does not support that, paste the token into
+the `@token` variable by hand.
 
 | File | Covers |
 |---|---|

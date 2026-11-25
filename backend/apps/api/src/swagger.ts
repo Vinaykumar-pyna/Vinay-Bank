@@ -4,7 +4,7 @@ import { APP_NAME, APP_VERSION } from './common/constants/app.constants';
 
 /**
  * OpenAPI documentation, served at /api/docs (UI) and /api/docs-json (spec).
- * The JSON spec can be imported directly into Postman or Insomnia.
+ * The JSON spec can be imported into any OpenAPI-compatible client or tool.
  */
 export function setupSwagger(app: INestApplication): void {
   const config = new DocumentBuilder()

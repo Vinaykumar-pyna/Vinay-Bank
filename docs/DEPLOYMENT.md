@@ -38,8 +38,13 @@ first build downloads about 1.5 GB of base images and packages and takes a few
 minutes; later builds reuse the cache.
 
 - **Stop `npm run dev` first**: both publish the card switch on port 5800.
-- Only nginx (8080) and the card switch (5800) are published. The API, MongoDB
-  and the risk engine are reachable only inside the Compose network.
+- nginx (8080) and the card switch (5800) are published. The API and the risk
+  engine are reachable only inside the Compose network.
+- MongoDB is published on `127.0.0.1:27017` only, so database clients on this
+  machine can connect (see [Inspecting the data](#inspecting-the-data)). It has
+  no password, which is why it is never exposed beyond localhost. If another
+  MongoDB already uses port 27017, change the host port in `docker-compose.yml`
+  (for example `127.0.0.1:27019:27017`).
 - Point the terminal clients at the containers:
 
 ```bash
@@ -59,6 +64,43 @@ start. Secrets are mounted read-only, never baked into images. The Maven
 Wrapper checks the Maven download against a pinned SHA-256; the build stage
 installs `unzip` because without it the wrapper fetches the `.tar.gz`, whose
 checksum differs from the pinned `.zip`.
+
+### Inspecting the data
+
+These steps work with any MongoDB or SQLite client, database IDE or command
+line.
+
+**MongoDB** (customers, accounts, transactions, audit trail):
+
+- Connection string: `mongodb://localhost:27017/vinaybank?directConnection=true`
+  (no user name or password).
+- Keep `directConnection=true`. The single-node replica set announces itself
+  as `mongo:27017`, a host name that only resolves inside the Compose network;
+  without the option, clients try to reach that name and time out.
+- Without a client installed, open the MongoDB shell inside the container:
+  `docker compose exec mongo mongosh vinaybank`.
+
+**General ledger** (SQLite, inside the `api` container): the API keeps the
+ledger in memory and rewrites `/app/.data/ledger.sqlite` after every change, so
+copy a snapshot and open the copy with any SQLite client. Copy it again to
+refresh; changes made to the copy never reach the application.
+
+```bash
+docker compose cp api:app/.data/ledger.sqlite ledger-snapshot.sqlite
+```
+
+The container path has no leading `/` so that the command works unchanged in
+every shell. `ledger-snapshot.sqlite` is listed in `.gitignore`.
+
+While browsing:
+
+- Amounts are integers in paise: `ledgerBalance: 24861540` is Rs 2,48,615.40.
+- Some fields are encrypted at rest (AES-256-GCM) and look random on purpose,
+  for example `kyc.panEncrypted` and `cards.panEncrypted`; masked versions such
+  as `kyc.panMasked` and `last4` are readable.
+- Treat the data as read-only. Each `audit_logs` record is chained to the one
+  before it by a SHA-256 hash, so an edit made outside the API is reported by
+  "Verify integrity" (`npm run demo:tamper` demonstrates exactly that).
 
 ## Option 2: Linux server (systemd)
 
