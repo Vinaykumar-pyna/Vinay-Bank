@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { isAxiosError } from 'axios';
 import { firstValueFrom } from 'rxjs';
 import { BANK_NAME } from '../../common/constants/app.constants';
+import { findBankByIfsc } from '../../common/constants/banks';
 import { findBranchByIfsc, isOwnIfsc } from '../../common/constants/branches';
 import { AppException } from '../../common/exceptions/app.exception';
 import { ErrorCode } from '../../common/exceptions/error-codes';
@@ -34,25 +35,6 @@ interface RazorpayIfscResponse {
   UPI?: boolean;
 }
 
-/** Known bank codes, used to name the bank when the live directory is unreachable. */
-const BANK_CODES: Record<string, string> = {
-  SBIN: 'State Bank of India',
-  HDFC: 'HDFC Bank',
-  ICIC: 'ICICI Bank',
-  UTIB: 'Axis Bank',
-  KKBK: 'Kotak Mahindra Bank',
-  PUNB: 'Punjab National Bank',
-  BARB: 'Bank of Baroda',
-  CNRB: 'Canara Bank',
-  UBIN: 'Union Bank of India',
-  IDIB: 'Indian Bank',
-  BKID: 'Bank of India',
-  YESB: 'Yes Bank',
-  INDB: 'IndusInd Bank',
-  IDFB: 'IDFC First Bank',
-  FDRL: 'Federal Bank',
-};
-
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000;
 const CACHE_MAX_ENTRIES = 2000;
 
@@ -61,7 +43,8 @@ const CACHE_MAX_ENTRIES = 2000;
  * directory (an outside data source), with:
  *  - a timeout, so a slow third party cannot hang our requests
  *  - an in-memory cache (IFSC data rarely changes)
- *  - graceful degradation to a built-in bank list when the API is unavailable
+ *  - graceful degradation to the built-in bank list (common/constants/banks.ts)
+ *    when the API is unavailable
  */
 @Injectable()
 export class IfscService {
@@ -132,7 +115,7 @@ export class IfscService {
       this.logger.warn(
         `IFSC directory unavailable (${(error as Error).message}); using offline data`,
       );
-      const bank = BANK_CODES[ifsc.slice(0, 4)];
+      const bank = findBankByIfsc(ifsc)?.name;
       if (!bank) {
         throw new AppException(
           ErrorCode.EXTERNAL_SERVICE_ERROR,

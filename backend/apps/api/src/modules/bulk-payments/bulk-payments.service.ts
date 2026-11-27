@@ -477,10 +477,18 @@ export class BulkPaymentsService {
         account: '30012345678',
         note: 'Salary November',
       },
+      {
+        id: `SAL-${stamp}-003`,
+        amount: '28000.00',
+        ifsc: 'BARB0ANDHER',
+        name: 'Neha Joshi',
+        account: '29080100004567',
+        note: 'Salary November',
+      },
       ...(own
         ? [
             {
-              id: `SAL-${stamp}-003`,
+              id: `SAL-${stamp}-004`,
               amount: '5000.00',
               ifsc: own.ifsc,
               name: `${customer.firstName} ${customer.lastName}`,

@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 import { createBrowserRouter, Navigate, Outlet } from 'react-router';
-import { PageLoader } from '@/components/common/PageLoader';
+import { FullScreenLoader } from '@/components/common/PageLoader';
 import { RouteErrorPage } from '@/components/common/RouteErrorPage';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { customerNavigation, staffNavigation } from '@/components/layout/navigation';
@@ -10,6 +10,7 @@ import { STAFF_ROLES } from '@/features/auth/types';
 import LandingPage from '@/features/landing/LandingPage';
 import NotFoundPage from '@/features/misc/NotFoundPage';
 import { NotificationBell } from '@/features/notifications/NotificationBell';
+import { RootLayout } from './RootLayout';
 
 /** Route-level code splitting: each page becomes its own JS chunk, loaded on first visit. */
 const page = (loader: () => Promise<{ default: ComponentType }>) => async () => ({
@@ -28,8 +29,9 @@ const topbarRight = (
 
 export const router = createBrowserRouter([
   {
+    element: <RootLayout />,
     errorElement: <RouteErrorPage />,
-    HydrateFallback: PageLoader,
+    HydrateFallback: FullScreenLoader,
     children: [
       { path: '/', element: <LandingPage /> },
       {

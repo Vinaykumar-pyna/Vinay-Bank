@@ -60,6 +60,13 @@ $input-btn-padding-y: 0.55rem;
 $input-btn-padding-x: 1rem;
 $input-btn-focus-width: 0.2rem;
 $btn-font-weight: 550;
+// Bootstrap's default plus transform, for the press-in effect (styles/_interactions.scss).
+$btn-transition:
+  color 0.15s ease-in-out,
+  background-color 0.15s ease-in-out,
+  border-color 0.15s ease-in-out,
+  box-shadow 0.15s ease-in-out,
+  transform 0.12s ease-out;
 $navbar-padding-y: 0.75rem;
 $table-cell-padding-y: 0.75rem;
 $table-cell-padding-x: 0.75rem;
@@ -70,3 +77,6 @@ $offcanvas-horizontal-width: 280px;
 $toast-max-width: 380px;
 $min-contrast-ratio: 3;
 $enable-negative-margins: true;
+// Animations stay on whatever the device's reduced-motion setting: transitions,
+// spinners, placeholders and progress bars always animate.
+$enable-reduced-motion: false;

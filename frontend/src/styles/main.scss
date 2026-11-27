@@ -1,5 +1,9 @@
 @import './variables';
 @import 'bootstrap/scss/bootstrap';
+@import './scrollbars';
+@import './loader';
+@import './interactions';
+@import './owl';
 
 // ---------------------------------------------------------------
 // App-level tokens (CSS custom properties, switch with the theme)
@@ -537,13 +541,6 @@ body {
 // ---------------------------------------------------------------
 // Misc
 // ---------------------------------------------------------------
-.page-loader {
-  min-height: 40vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .empty-state {
   text-align: center;
   padding: 2.5rem 1rem;
@@ -575,13 +572,11 @@ body {
   padding: 0.75rem 1rem;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    transition: none !important;
-    animation: none !important;
-  }
+// Animations are always on. Bootstrap's reduced-motion rules are switched off in
+// _variables.scss, and in-page links scroll smoothly on every device (Bootstrap
+// only does that when the device has no reduced-motion preference).
+:root {
+  scroll-behavior: smooth;
 }
 
 // ---------------------------------------------------------------

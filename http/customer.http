@@ -45,8 +45,16 @@ Authorization: Bearer {{token}}
 GET {{api}}/beneficiaries
 Authorization: Bearer {{token}}
 
+### Banks payees can be added at (bank code, name, example IFSC)
+GET {{api}}/banks
+Authorization: Bearer {{token}}
+
 ### IFSC lookup (live directory with offline fallback)
 GET {{api}}/ifsc/HDFC0000240
+Authorization: Bearer {{token}}
+
+### IFSC lookup for a Bank of Baroda branch
+GET {{api}}/ifsc/BARB0ANDHER
 Authorization: Bearer {{token}}
 
 ### Transfer step 1: quote (fee, rail, risk score and OTP challenge)

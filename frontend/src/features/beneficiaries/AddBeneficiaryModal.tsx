@@ -1,12 +1,20 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
 import { Alert, Button, Form, Modal, Spinner } from 'react-bootstrap';
 import { useForm, useWatch, type FieldPath } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { z } from 'zod';
-import { useAddBeneficiaryMutation, useLookupIfscQuery } from '@/features/banking/bankingApi';
+import {
+  useAddBeneficiaryMutation,
+  useGetBanksQuery,
+  useLookupIfscQuery,
+} from '@/features/banking/bankingApi';
 import { useDebouncedValue } from '@/hooks/useDebouncedValue';
 import { errorMessage, fieldErrors, toApiError } from '@/lib/apiError';
 import { IFSC_REGEX } from '@/lib/validation';
+
+/** Bank picker value for a bank that is not in the list: the IFSC is typed in full. */
+const OTHER_BANK = 'OTHER';
 
 const schema = z
   .object({
@@ -32,12 +40,16 @@ type Values = z.input<typeof schema>;
 
 export function AddBeneficiaryModal({ show, onHide }: { show: boolean; onHide: () => void }) {
   const [addBeneficiary, { isLoading }] = useAddBeneficiaryMutation();
+  const banks = useGetBanksQuery(undefined, { skip: !show });
+  const [otherBank, setOtherBank] = useState(false);
   const {
     register,
     handleSubmit,
     control,
     reset,
     setError,
+    setValue,
+    setFocus,
     formState: { errors },
   } = useForm<Values>({ resolver: zodResolver(schema), defaultValues: { ifsc: '' } });
 
@@ -45,8 +57,28 @@ export function AddBeneficiaryModal({ show, onHide }: { show: boolean; onHide: (
   const debouncedIfsc = useDebouncedValue(ifsc, 400);
   const lookup = useLookupIfscQuery(debouncedIfsc, { skip: !IFSC_REGEX.test(debouncedIfsc) });
 
+  // The IFSC is the source of truth: its first four letters name the bank, so the
+  // picker follows whatever is typed, and picking a bank fills in those letters.
+  const bankList = banks.data ?? [];
+  const bank = bankList.find((b) => b.code === ifsc.slice(0, 4));
+  const bankValue = bank?.code ?? (otherBank || ifsc.length >= 4 ? OTHER_BANK : '');
+
+  const fillIfsc = (value: string) =>
+    setValue('ifsc', value, { shouldDirty: true, shouldValidate: !!errors.ifsc });
+
+  const chooseBank = (code: string) => {
+    setOtherBank(code === OTHER_BANK);
+    if (code === OTHER_BANK) {
+      if (bank) fillIfsc('');
+    } else if (!ifsc.startsWith(code)) {
+      fillIfsc(`${code}0`);
+    }
+    setFocus('ifsc');
+  };
+
   const close = () => {
     reset({ name: '', nickname: '', accountNumber: '', confirmAccountNumber: '', ifsc: '' });
+    setOtherBank(false);
     onHide();
   };
 
@@ -83,10 +115,67 @@ export function AddBeneficiaryModal({ show, onHide }: { show: boolean; onHide: (
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="d-grid gap-3">
+          {(bankList.length > 0 || banks.isLoading) && (
+            <Form.Group controlId="ben-bank">
+              <Form.Label>Bank</Form.Label>
+              <Form.Select
+                value={bankValue}
+                disabled={banks.isLoading}
+                onChange={(e) => chooseBank(e.target.value)}
+                aria-describedby="ben-bank-help"
+              >
+                <option value="" disabled>
+                  {banks.isLoading ? 'Loading banks...' : "Choose the payee's bank"}
+                </option>
+                {bankList
+                  .filter((b) => b.isInternal)
+                  .map((b) => (
+                    <option key={b.code} value={b.code}>
+                      {b.name} (instant and free)
+                    </option>
+                  ))}
+                <optgroup label="Other banks in India">
+                  {bankList
+                    .filter((b) => !b.isInternal)
+                    .map((b) => (
+                      <option key={b.code} value={b.code}>
+                        {b.name}
+                      </option>
+                    ))}
+                </optgroup>
+                <option value={OTHER_BANK}>Another bank (type its IFSC)</option>
+              </Form.Select>
+              <Form.Text id="ben-bank-help">
+                {bank ? (
+                  <>
+                    {bank.name} IFSC codes start with <span className="font-mono">{bank.code}0</span>
+                    , for example{' '}
+                    <Button
+                      variant="link"
+                      size="sm"
+                      className="p-0 align-baseline font-mono"
+                      onClick={() => {
+                        fillIfsc(bank.exampleIfsc);
+                        setFocus('name');
+                      }}
+                      aria-label={`Use the example IFSC ${bank.exampleIfsc}`}
+                    >
+                      {bank.exampleIfsc}
+                    </Button>
+                    .
+                  </>
+                ) : bankValue === OTHER_BANK ? (
+                  "Type the 11-character IFSC from the payee's cheque book or bank statement."
+                ) : (
+                  'Pick a bank to fill in the start of its IFSC, or type the IFSC directly.'
+                )}
+              </Form.Text>
+            </Form.Group>
+          )}
           <Form.Group controlId="ben-ifsc">
             <Form.Label>IFSC code</Form.Label>
             <Form.Control
-              placeholder="e.g. HDFC0000240 or VINB0000003"
+              placeholder={bank ? `e.g. ${bank.exampleIfsc}` : 'e.g. HDFC0000240 or VINB0000003'}
               maxLength={11}
               style={{ textTransform: 'uppercase' }}
               isInvalid={!!errors.ifsc || lookup.isError}

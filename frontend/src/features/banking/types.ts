@@ -75,6 +75,15 @@ export interface Beneficiary {
   createdAt: string;
 }
 
+/** A bank payees can be added at (GET /banks). Every IFSC of the bank starts with its code. */
+export interface Bank {
+  code: string;
+  name: string;
+  exampleIfsc: string;
+  /** Vinay Bank itself: payees are paid instantly and free of charge. */
+  isInternal: boolean;
+}
+
 export interface IfscDetails {
   ifsc: string;
   bank: string;

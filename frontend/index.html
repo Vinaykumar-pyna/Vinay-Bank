@@ -9,12 +9,219 @@
     />
     <meta name="theme-color" content="#4f46e5" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <!-- Applies the saved light/dark theme before first paint (no flash of the wrong theme). -->
+    <!-- Applies the saved theme before first paint (no flash of the wrong theme). -->
     <script src="/theme-init.js"></script>
+    <!--
+      Boot splash: painted before any JavaScript or stylesheet has loaded, then
+      faded out by src/lib/bootSplash.ts once the first page is ready. It draws
+      the same animated VB mark as src/components/common/BrandLoader.tsx
+      (styles in src/styles/_loader.scss), so keep the two in step.
+    -->
+    <style>
+      .vb-boot {
+        position: fixed;
+        inset: 0;
+        z-index: 2000;
+        display: grid;
+        place-items: center;
+        background:
+          radial-gradient(60% 60% at 70% 20%, rgba(99, 102, 241, 0.18), transparent 70%),
+          #f5f7fb;
+        color: #0f172a;
+        font-family: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        text-align: center;
+        transition: opacity 0.4s ease;
+      }
+      [data-bs-theme='dark'] .vb-boot {
+        background:
+          radial-gradient(60% 60% at 70% 20%, rgba(99, 102, 241, 0.25), transparent 70%),
+          #0b1020;
+        color: #e2e8f0;
+      }
+      .vb-boot.is-leaving {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .vb-boot__brand {
+        margin-top: 1rem;
+        font-size: 1.35rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+      .vb-boot__brand span {
+        color: #4f46e5;
+      }
+      [data-bs-theme='dark'] .vb-boot__brand span {
+        color: #a5b4fc;
+      }
+      .vb-boot__label {
+        margin-top: 0.85rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #64748b;
+      }
+      [data-bs-theme='dark'] .vb-boot__label {
+        color: #94a3b8;
+      }
+      .vb-boot__label::after {
+        content: '...';
+        display: inline-block;
+        width: 1.1em;
+        overflow: hidden;
+        vertical-align: bottom;
+        text-align: left;
+        animation: vb-boot-dots 1.4s steps(4, end) infinite;
+      }
+      @keyframes vb-boot-dots {
+        from {
+          width: 0;
+        }
+        to {
+          width: 1.1em;
+        }
+      }
+      .vb-boot svg * {
+        transform-box: view-box;
+        transform-origin: 60px 60px;
+      }
+      .vb-boot .glow {
+        animation: vb-boot-glow 2.8s ease-in-out infinite;
+      }
+      .vb-boot .orbit {
+        animation: vb-boot-spin 1.4s linear infinite;
+      }
+      .vb-boot .tile {
+        animation: vb-boot-breathe 2.8s ease-in-out infinite;
+      }
+      .vb-boot .letter {
+        fill: none;
+        stroke: #fff;
+        stroke-width: 6.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 1 1;
+        animation: vb-boot-draw 2.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+      }
+      .vb-boot .letter-b {
+        animation-delay: 0.14s;
+      }
+      .vb-boot .coin {
+        animation: vb-boot-coin 2.8s ease-in-out infinite;
+      }
+      @keyframes vb-boot-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes vb-boot-glow {
+        0%,
+        100% {
+          opacity: 0.55;
+          transform: scale(0.9);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.04);
+        }
+      }
+      @keyframes vb-boot-breathe {
+        50% {
+          transform: scale(1.035);
+        }
+      }
+      @keyframes vb-boot-draw {
+        0% {
+          stroke-dashoffset: 1;
+        }
+        32%,
+        72% {
+          stroke-dashoffset: 0;
+        }
+        94%,
+        100% {
+          stroke-dashoffset: -1;
+        }
+      }
+      @keyframes vb-boot-coin {
+        0%,
+        26% {
+          opacity: 0;
+          transform: translateY(-30px);
+        }
+        38%,
+        50%,
+        76% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        44% {
+          transform: translateY(-5px);
+        }
+        90%,
+        100% {
+          opacity: 0;
+        }
+      }
+    </style>
     <title>Vinay Bank | Digital Banking</title>
   </head>
   <body>
-    <noscript>Vinay Bank needs JavaScript enabled to run.</noscript>
+    <noscript>
+      <style>
+        .vb-boot {
+          display: none;
+        }
+      </style>
+      Vinay Bank needs JavaScript enabled to run.
+    </noscript>
+    <div id="vb-boot-splash" class="vb-boot" role="status" aria-live="polite">
+      <div>
+        <svg width="104" height="104" viewBox="0 0 120 120" aria-hidden="true">
+          <defs>
+            <linearGradient id="vb-boot-tile" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#6366f1" />
+              <stop offset="1" stop-color="#3730a3" />
+            </linearGradient>
+            <linearGradient id="vb-boot-arc" x1="1" y1="0" x2="0" y2="1">
+              <stop offset="0.25" stop-color="#818cf8" stop-opacity="0" />
+              <stop offset="0.62" stop-color="#6366f1" />
+              <stop offset="0.78" stop-color="#a78bfa" />
+            </linearGradient>
+            <radialGradient id="vb-boot-glow">
+              <stop offset="0.3" stop-color="#6366f1" stop-opacity="0.45" />
+              <stop offset="1" stop-color="#6366f1" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+          <circle class="glow" cx="60" cy="60" r="60" fill="url(#vb-boot-glow)" />
+          <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(99,102,241,0.14)" stroke-width="3" />
+          <g class="orbit">
+            <circle
+              cx="60"
+              cy="60"
+              r="54"
+              fill="none"
+              stroke="url(#vb-boot-arc)"
+              stroke-width="3.5"
+              stroke-linecap="round"
+              stroke-dasharray="100 240"
+            />
+            <circle cx="45.1" cy="111.9" r="3" fill="#fbbf24" />
+          </g>
+          <g class="tile">
+            <rect x="22" y="22" width="76" height="76" rx="22" fill="url(#vb-boot-tile)" />
+            <path class="letter" d="M35 44 46 76 57 44" pathLength="1" />
+            <path
+              class="letter letter-b"
+              d="M66 76V44h7a8 8 0 0 1 0 16h-7 9a8 8 0 0 1 0 16h-9"
+              pathLength="1"
+            />
+            <circle class="coin" cx="46" cy="48.5" r="4.5" fill="#fbbf24" />
+          </g>
+        </svg>
+        <div class="vb-boot__brand" aria-hidden="true">Vinay <span>Bank</span></div>
+        <div id="vb-boot-label" class="vb-boot__label">Loading</div>
+      </div>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

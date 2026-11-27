@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { Alert, Button, Card, Form, Modal, Spinner } from 'react-bootstrap';
 import toast from 'react-hot-toast';
+import { PageLoader } from '@/components/common/PageLoader';
 import { StatusBadge } from '@/components/common/StatusBadge';
 import {
   useMeQuery,
@@ -109,11 +110,7 @@ function MfaSetupModal({ onClose }: { onClose: () => void }) {
           </Alert>
         )}
 
-        {!setup && !error && (
-          <div className="text-center py-4">
-            <Spinner animation="border" variant="primary" />
-          </div>
-        )}
+        {!setup && !error && <PageLoader compact label="Preparing your authenticator setup" />}
 
         {setup && !recoveryCodes && (
           <Form onSubmit={confirm}>

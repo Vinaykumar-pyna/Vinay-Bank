@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router';
 import { useAppSelector } from '@/app/hooks';
-import { PageLoader } from '@/components/common/PageLoader';
+import { FullScreenLoader } from '@/components/common/PageLoader';
 import { homePathFor, type Role } from './types';
 
 interface RequireAuthProps {
@@ -10,7 +10,7 @@ interface RequireAuthProps {
 }
 
 /**
- * Protects a route tree. While the session is being restored it shows a loader;
+ * Protects a route tree. While the session is being restored it shows the loading screen;
  * anonymous users go to /login (and come back afterwards); users without the
  * required role are sent to their own home page. The API enforces the same
  * rules on the server; this guard is only for user experience.
@@ -19,7 +19,7 @@ export function RequireAuth({ roles, children }: RequireAuthProps) {
   const { status, user } = useAppSelector((state) => state.auth);
   const location = useLocation();
 
-  if (status === 'unknown') return <PageLoader label="Restoring your secure session" />;
+  if (status === 'unknown') return <FullScreenLoader label="Restoring your secure session" />;
   if (status === 'anonymous' || !user) {
     return <Navigate to="/login" replace state={{ from: location.pathname + location.search }} />;
   }
@@ -34,7 +34,7 @@ export function RequireAuth({ roles, children }: RequireAuthProps) {
 export function GuestOnly({ children }: { children: ReactNode }) {
   const { status, user } = useAppSelector((state) => state.auth);
   const location = useLocation();
-  if (status === 'unknown') return <PageLoader />;
+  if (status === 'unknown') return <FullScreenLoader />;
   if (status === 'authenticated' && user) {
     const from = (location.state as { from?: string } | null)?.from;
     return <Navigate to={from ?? homePathFor(user.role)} replace />;

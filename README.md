@@ -7,13 +7,14 @@ A digital banking and card payment platform built with **MongoDB, NestJS (Node.j
 > end, in a complete, production-style application.
 
 [![CI](https://img.shields.io/badge/CI-GitHub%20Actions-2088FF?logo=githubactions&logoColor=white)](.github/workflows/ci.yml)
-![Tests](https://img.shields.io/badge/tests-336-brightgreen)
+![Tests](https://img.shields.io/badge/tests-370-brightgreen)
 ![Stack](https://img.shields.io/badge/stack-MongoDB%20%7C%20NestJS%20%7C%20React%20%7C%20TypeScript-4f46e5)
 
 ## What it does
 
 **Customers** open accounts, send money (own accounts, Vinay Bank, IMPS, NEFT,
-RTGS) with OTP step-up, manage payees, download statements (CSV, XML, printable
+RTGS) with OTP step-up, manage payees at Vinay Bank and 15 other banks (Bank of
+Baroda, SBI, HDFC and more), download statements (CSV, XML, printable
 via XSLT), get live alerts, manage RuPay debit cards (PIN, controls, limits,
 block, report lost), pay salaries from ISO 20022 bulk files and use the ATM
 simulator. **Staff** (teller, manager, admin) get a KPI dashboard, a
@@ -24,7 +25,7 @@ tamper-evident audit trail.
 Under the hood: an **ISO 8583 card switch** over mutual TLS, a **Java Spring
 Boot fraud engine** behind a circuit breaker, a **SOAP/WSDL** partner service,
 a **double-entry SQL ledger** (Oracle scripts included), AES-GCM field
-encryption, RS256 JWT with refresh-token rotation, TOTP MFA and 336 automated
+encryption, RS256 JWT with refresh-token rotation, TOTP MFA and 370 automated
 tests in CI.
 
 ## Documentation
@@ -34,7 +35,7 @@ tests in CI.
 | [Walkthrough](docs/WALKTHROUGH.md) | Summary, guided feature tour, where each technology is used, design decisions explained |
 | [Architecture](docs/ARCHITECTURE.md) | Components, module map, request pipeline, sequence diagrams, data model, design patterns |
 | [Setup](docs/SETUP.md) | Installation, configuration, troubleshooting |
-| [API](docs/API.md) | Conventions, all 77 REST endpoints, SOAP, ISO 8583, RPC and WebSocket interfaces |
+| [API](docs/API.md) | Conventions, all 78 REST endpoints, SOAP, ISO 8583, RPC and WebSocket interfaces |
 | [Security](docs/SECURITY.md) | OWASP Top 10 mapping, authentication, money movement, encryption, card security |
 | [ISO 8583](docs/ISO8583.md) | Message formats, bitmaps, PIN blocks, MACs, response codes, how to try it |
 | [Testing](docs/TESTING.md) | Test suites, coverage, what each end-to-end suite proves |
@@ -52,7 +53,7 @@ tests in CI.
 | Card network | NestJS microservices (TCP + TLS), Node `tls`, own ISO 8583 codec, triple DES, HMAC |
 | Integrations | node-soap (SOAP/WSDL), xmlbuilder2, xslt-processor, @xmldom/xmldom + xpath, Frankfurter (ECB), Razorpay IFSC |
 | General ledger | TypeORM, SQLite (sql.js), Oracle DDL and PL/SQL |
-| Risk engine | Java 21, Spring Boot 4.1, Bean Validation, Actuator, JUnit 5, Maven Wrapper |
+| Risk engine | Java 21, Spring Boot 4.1, Bean Validation, Actuator, JUnit 6, Maven Wrapper |
 | Quality and delivery | Jest, React Testing Library, Supertest, mongodb-memory-server, ESLint, Prettier, GitHub Actions, Docker, nginx, systemd, PM2 |
 
 ## Quick start

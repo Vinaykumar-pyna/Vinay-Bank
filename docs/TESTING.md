@@ -1,13 +1,13 @@
 # Testing
 
-336 automated tests across four suites, all run in CI on every push.
+370 automated tests across four suites, all run in CI on every push.
 
 | Suite | Tool | Tests | Command |
 |---|---|---|---|
-| Backend unit | Jest + ts-jest | 168 in 21 files | `npm --prefix backend test` |
-| API end-to-end | Jest + Supertest + in-memory MongoDB replica set | 83 in 8 files | `npm run test:e2e` |
-| Frontend | Jest + React Testing Library (jsdom) | 68 in 16 files | `npm --prefix frontend test` |
-| Risk engine | JUnit 5 + AssertJ + MockMvc | 17 in 2 classes | `npm run test:java` |
+| Backend unit | Jest + ts-jest | 171 in 22 files | `npm --prefix backend test` |
+| API end-to-end | Jest + Supertest + in-memory MongoDB replica set | 84 in 8 files | `npm run test:e2e` |
+| Frontend | Jest + React Testing Library (jsdom) | 98 in 25 files | `npm --prefix frontend test` |
+| Risk engine | JUnit 6 + AssertJ + MockMvc | 17 in 2 classes | `npm run test:java` |
 
 ## The test pyramid here
 
@@ -25,8 +25,12 @@
 - **Frontend tests** cover forms and validation, formatting helpers, role-based
   navigation, the card controls and their meters, the message inspector,
   dialogs, the statement export (print tab opened during the click, popup
-  blocker fallback) and the landing page's buttons for visitors, signed-in
-  users and a session still being restored.
+  blocker fallback), the landing page's buttons for visitors, signed-in
+  users and a session still being restored, the payee bank picker, the loading
+  screens (delays, minimum display time, hand-over from the boot splash), the
+  auto-hiding scrollbars, the animated cursor, the account opening steps (no
+  error before a field is used, the terms checked only on submit) and the
+  sign-in owl's poses.
 - **Java tests** run the rules directly and through the full Spring context
   (validation errors, API key filter, actuator health).
 
@@ -39,7 +43,7 @@
 | `banking.e2e-spec.ts` | Transfers on every rail, OTP binding, idempotent replay, concurrent debits cannot overdraw, cooling period, approvals, NEFT settlement and return, statements and CSV |
 | `staff.e2e-spec.ts` | Cash counter with approval thresholds and holds, idempotent cash slips, four-eyes rule, KYC review, masking for tellers, disabling a user, staff creation |
 | `cards.e2e-spec.ts` | Card issue rules, OTP-gated reveal, weak PINs, the full ISO 8583 chain over mutual TLS, PIN lock after three tries, daily limits, reversal, controls, hotlist, forged MAC (63), client without a certificate |
-| `integrations.e2e-spec.ts` | WSDL, WS-Security digest, replayed nonce, stale timestamp, partner scoping, a node-soap client generated from the WSDL, mini statement `Count`, XML statement and XSLT, markup in narrations escaped and the printable page's CSP, pain.001 preview, payee checks, OTP and atomic payment, duplicate file, control totals, XXE, forex fallback |
+| `integrations.e2e-spec.ts` | WSDL, WS-Security digest, replayed nonce, stale timestamp, partner scoping, a node-soap client generated from the WSDL, mini statement `Count`, XML statement and XSLT, markup in narrations escaped and the printable page's CSP, pain.001 preview, payee checks, OTP and atomic payment, duplicate file, control totals, XXE, the bank list and a Bank of Baroda payee paid over IMPS, forex fallback |
 | `ledger.e2e-spec.ts` | Trial balance balances, reconciliation, a balance changed without a transaction is detected, exactly-once posting |
 | `risk-engine.e2e-spec.ts` | Contract with a stand-in Java engine: API key, fallback with the same verdict, circuit opens and fails fast, recovery after the cooldown, malformed answers |
 

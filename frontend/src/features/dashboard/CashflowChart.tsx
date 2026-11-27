@@ -92,7 +92,12 @@ export function CashflowChart({ data }: { data: CashflowPoint[] }) {
               tickFormatter={(v: number) => formatMoneyCompact(v)}
               tick={{ fill: 'var(--bs-secondary-color)', fontSize: 12 }}
             />
-            <Tooltip content={<CashflowTooltip />} cursor={{ fill: 'var(--bs-tertiary-bg)' }} />
+            {/* isAnimationActive: animate on every device (by default Recharts skips it under reduced motion). */}
+            <Tooltip
+              content={<CashflowTooltip />}
+              cursor={{ fill: 'var(--bs-tertiary-bg)' }}
+              isAnimationActive
+            />
             {SERIES.map((s) => (
               <Bar
                 key={s.key}
@@ -101,6 +106,7 @@ export function CashflowChart({ data }: { data: CashflowPoint[] }) {
                 fill={s.color}
                 radius={[4, 4, 0, 0]}
                 maxBarSize={24}
+                isAnimationActive
               />
             ))}
           </BarChart>

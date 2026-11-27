@@ -3,6 +3,7 @@ import { Alert, Badge, Button, Col, Form, Row, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router';
 import { AmountInput } from '@/components/banking/AmountInput';
 import { Money } from '@/components/banking/Money';
+import { PageLoader } from '@/components/common/PageLoader';
 import {
   useGetAccountsQuery,
   useGetBeneficiariesQuery,
@@ -95,11 +96,7 @@ export function TransferDetailsForm({ initialPayeeId, initial, onQuoted }: Props
   };
 
   if (accounts.isLoading || beneficiaries.isLoading) {
-    return (
-      <div className="text-center py-5">
-        <Spinner animation="border" variant="primary" />
-      </div>
-    );
+    return <PageLoader compact label="Loading your accounts and payees" />;
   }
 
   return (
@@ -155,10 +152,10 @@ export function TransferDetailsForm({ initialPayeeId, initial, onQuoted }: Props
         <div className="mb-4">
           {beneficiaries.data?.length ? (
             <div
-              className="d-grid gap-2"
+              className="d-grid gap-2 overflow-y-auto"
               role="radiogroup"
               aria-label="Payee"
-              style={{ maxHeight: 280, overflowY: 'auto' }}
+              style={{ maxHeight: 280 }}
             >
               {beneficiaries.data.map((b) => (
                 <button

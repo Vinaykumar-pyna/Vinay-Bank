@@ -13,7 +13,7 @@ the `@token` variable by hand.
 
 | File | Covers |
 |---|---|
-| `customer.http` | Sign-in, profile, accounts, statement (JSON, XML, XSLT), payees, transfer quote, cards, forex |
+| `customer.http` | Sign-in, profile, accounts, statement (JSON, XML, XSLT), payees, bank list and IFSC lookup, transfer quote, cards, forex |
 | `staff.http` | Staff sign-in, overview, approvals, customers, audit verification, ledger, risk engine status |
 | `card-network.http` | Card network simulator: echo test, balance and withdrawal through the ISO 8583 switch |
 | `soap.http` | SOAP service: WSDL and operations with a WS-Security UsernameToken |

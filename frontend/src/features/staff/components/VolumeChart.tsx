@@ -59,13 +59,19 @@ export function VolumeChart({ data }: { data: DailyVolume[] }) {
               tickFormatter={(v: number) => formatMoneyCompact(v)}
               tick={{ fill: 'var(--bs-secondary-color)', fontSize: 12 }}
             />
-            <Tooltip content={<VolumeTooltip />} cursor={{ fill: 'var(--bs-tertiary-bg)' }} />
+            {/* isAnimationActive: animate on every device (by default Recharts skips it under reduced motion). */}
+            <Tooltip
+              content={<VolumeTooltip />}
+              cursor={{ fill: 'var(--bs-tertiary-bg)' }}
+              isAnimationActive
+            />
             <Bar
               dataKey="amount"
               name="Value"
               fill="var(--vb-series-1)"
               radius={[4, 4, 0, 0]}
               maxBarSize={24}
+              isAnimationActive
             />
           </BarChart>
         </ResponsiveContainer>

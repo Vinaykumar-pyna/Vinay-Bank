@@ -14,7 +14,7 @@ ISO 20022 bulk payment files; branch staff work a maker-checker queue, a cash
 counter and a tamper-evident audit trail. Around the core there is an ISO 8583
 card switch over mutual TLS, a Java Spring Boot fraud engine behind a circuit
 breaker, a SOAP service with WS-Security, and a double-entry general ledger in
-SQL with Oracle scripts. It has 336 automated tests and CI.
+SQL with Oracle scripts. It has 370 automated tests and CI.
 
 **Architecture.** A modular NestJS monolith for the core, because transfers
 need ACID across accounts, postings, approvals and audit; separate processes
@@ -32,39 +32,51 @@ the switch, keyed verification).
 Start everything with `npm run dev` and sign in with the demo accounts listed in
 the [README](../README.md#demo-sign-in).
 
-1. **Customer dashboard** (Priya): balances, cash-flow chart, spending, live
+1. **Sign in**: the owl beside the form follows the text cursor while the email
+   is typed, covers its eyes with its wings for the password (and turns away if
+   the password is shown) and shakes its head after a wrong password. While
+   pages and data load, the animated VB mark appears (a splash at start-up, a
+   loader inside the page, a slim progress bar at the top). With a mouse, the
+   app's own animated cursor replaces the system pointer: a dot exactly where
+   you point and a soft ring that trails it, grows over whatever can be clicked
+   and turns into a text bar over fields.
+2. **Customer dashboard** (Priya): balances, cash-flow chart, spending, live
    exchange rates. Built with React 19, Redux Toolkit with RTK Query (cache
    tags), Axios with silent token refresh and Bootstrap 5 + SCSS; responsive
    down to phones.
-2. **Send money**: pick Rahul, Rs 1,234.50. Note the amount in words, the OTP
+3. **Send money**: pick Rahul, Rs 1,234.50. Note the amount in words, the OTP
    that arrives as a live notification (Socket.IO) and the instant receipt.
    Behind the scenes: a signed quote, an OTP bound to that quote, an
    Idempotency-Key, a conditional debit inside a MongoDB transaction, and the
-   Java engine scoring the transfer.
-3. **Cards**: reveal the card details with an OTP (hidden again after a
+   Java engine scoring the transfer. To pay someone at another bank, add a
+   payee first: pick the bank (Bank of Baroda, State Bank of India, HDFC Bank
+   and the others listed by `GET /banks`), which fills in the start of the
+   IFSC, and the live IFSC directory names the branch. On a freshly seeded
+   database Priya already has a Bank of Baroda payee, Neha Joshi.
+4. **Cards**: reveal the card details with an OTP (hidden again after a
    minute), switches for ATM/shops/online, limits with usage meters.
-4. **ATM simulator** (`/simulator`): use the demo card, check the balance,
+5. **ATM simulator** (`/simulator`): use the demo card, check the balance,
    withdraw Rs 2,000, then press "Cash not dispensed". Open the message
    inspector: 0200/0210, bitmap, field 52 hidden, hex dump, TLS 1.3. PIN
    blocks, zone keys, MACs and mutual TLS are explained in
    [ISO8583.md](ISO8583.md). The same flow also works from a terminal:
    `npm run atm -- balance --demo --pin 4826`.
-5. **Bulk payments**: download the sample pain.001, upload it, review the
+6. **Bulk payments**: download the sample pain.001, upload it, review the
    checks (XPath, control totals, payee bank lookup), approve with one OTP:
    all-or-nothing. For SOAP, run `npm run soap -- security` in a terminal: a
    client generated from the WSDL signs with PasswordDigest, then a replayed
    request, a wrong password and another customer's account are all refused.
-6. **Staff portal** as the teller: cash deposit of Rs 3,00,000 goes to approval.
+7. **Staff portal** as the teller: cash deposit of Rs 3,00,000 goes to approval.
    Switch to the manager and approve it (a maker can never approve their own
    request).
-7. **General ledger** (manager): trial balance balances, every customer account
+8. **General ledger** (manager): trial balance balances, every customer account
    reconciles with MongoDB, journal entries with Dr/Cr lines.
-8. **Audit trail**: "Verify integrity" (chain intact), run `npm run demo:tamper`,
+9. **Audit trail**: "Verify integrity" (chain intact), run `npm run demo:tamper`,
    verify again: tampering detected at record N. Restore with
    `npm run demo:tamper:restore`.
-9. **Resilience**: stop the `risk` process; transfers keep working, the
+10. **Resilience**: stop the `risk` process; transfers keep working, the
    dashboard says "Fallback rules"; restart it and the circuit closes again.
-10. **Engineering**: Swagger at `/api/docs`, the WSDL at `/soap/banking?wsdl`,
+11. **Engineering**: Swagger at `/api/docs`, the WSDL at `/soap/banking?wsdl`,
     the CI workflow and the test suites ([TESTING.md](TESTING.md)).
 
 ## Where each technology is used
@@ -73,11 +85,11 @@ the [README](../README.md#demo-sign-in).
 |---|---|
 | Node.js / NestJS on a NoSQL database | `backend/apps/api`: 20+ NestJS modules on MongoDB (replica set, multi-document transactions, aggregation pipelines, TTL and unique indexes) |
 | External APIs and microservices | IFSC directory and ECB exchange rates with caching and fallbacks; Java risk engine over HTTP with a circuit breaker; card switch as a separate NestJS app over a NestJS TCP microservice |
-| Testing | 336 tests: Jest (backend, frontend), React Testing Library, Supertest e2e with an in-memory replica set, JUnit 5 + MockMvc |
-| Front-end architecture | Feature folders, route-level code splitting, Redux Toolkit + RTK Query with cache invalidation tags, typed API layer, guards by role, design tokens in SCSS |
+| Testing | 370 tests: Jest (backend, frontend), React Testing Library, Supertest e2e with an in-memory replica set, JUnit 6 + MockMvc |
+| Front-end architecture | Feature folders, route-level code splitting, Redux Toolkit + RTK Query with cache invalidation tags, typed API layer, guards by role, design tokens in SCSS, branded loading states, animations and an animated cursor |
 | Performance | Indexes on every query path, `lean()` reads, aggregation pipelines for KPIs, single round-trip `$lookup`, streaming audit verification, compression, cached lookups, lazy-loaded pages |
 | MongoDB, NestJS, React, TypeScript | The whole stack, TypeScript strict mode end to end |
-| REST and JSON | 77 versioned endpoints, uniform envelopes and error codes, OpenAPI docs |
+| REST and JSON | 78 versioned endpoints, uniform envelopes and error codes, OpenAPI docs |
 | Object-oriented design and patterns | Strategy, Registry, State machine, Observer, Circuit breaker, Adapter, Repository, DI (see ARCHITECTURE.md) |
 | Developer tooling | npm scripts for every task (`dev`, `test`, `lint`, `typecheck`, `format`, `build`); an API debug mode (`npm --prefix backend run start:debug`) that any Node.js debugger can attach to on port 9229; EditorConfig and Prettier for consistent formatting in any editor; plain-text `.http` request files |
 | NoSQL and relational / Oracle SQL | MongoDB for operations; double-entry ledger in SQL via TypeORM; Oracle DDL, PL/SQL package and analytic reports in `database/oracle` |
@@ -205,6 +217,23 @@ immutable caching of hashed assets in nginx.
 errors); a small Redux slice for auth and UI preferences; local component state
 for forms (React Hook Form + Zod). The access token is in memory only.
 
+**How do the animations stay smooth and out of the way?** Every animation is
+CSS transforms and opacity, so the browser can run it on the GPU without layout
+work, and they are always on. Loaders wait a moment before appearing, so fast
+responses never flash. With a mouse or trackpad the app draws its own cursor
+instead of the system one: a dot exactly at the pointer, so clicks land where
+it points, and a ring that trails it. The layer ignores the pointer, and the
+system cursor comes back whenever the animated one is not on screen (touch
+screens, pointer outside the window). The sign-in owl is hidden from screen
+readers, and the scrollbars change colour only, never size, so nothing shifts
+or blocks a click.
+
+**Where does the list of banks come from?** One list on the server
+(`common/constants/banks.ts`), with each bank's IFSC code and a real example
+branch. The web app's bank picker reads it from `GET /banks`, and the IFSC
+lookup uses it to name the bank from the first four letters of the code when
+the live directory is unreachable. Adding a bank is one line.
+
 **How is it tested?** A pyramid: unit tests for pure logic, end-to-end tests on
 the real application with a real (in-memory) MongoDB replica set, component
 tests in the browser environment, JUnit with MockMvc for Java. CI runs all of
@@ -226,8 +255,8 @@ four-line probe program and fixed in the dev runner.
 
 | | |
 |---|---|
-| Automated tests | 336 (168 backend unit, 83 API e2e, 68 frontend, 17 JUnit) |
+| Automated tests | 370 (171 backend unit, 84 API e2e, 98 frontend, 17 JUnit) |
 | E2E coverage | 87% of statements, 90% of lines (API, switch, shared lib) |
-| REST endpoints | 77, plus SOAP (3 operations), ISO 8583 (3 message pairs), RPC (2), WebSocket |
+| REST endpoints | 78, plus SOAP (3 operations), ISO 8583 (3 message pairs), RPC (2), WebSocket |
 | Runtime processes | 5: MongoDB, API, card switch, risk engine, web |
 | Languages | TypeScript, Java, SQL/PL-SQL, XSLT, SCSS |

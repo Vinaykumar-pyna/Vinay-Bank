@@ -45,7 +45,7 @@ Error codes are stable strings (`VALIDATION_FAILED`, `INVALID_CREDENTIALS`,
 `MAKER_CHECKER_VIOLATION`, `KYC_REQUIRED`, ...): clients branch on `code`,
 never on the message text.
 
-## REST endpoints (77)
+## REST endpoints (78)
 
 ### Authentication and profile
 
@@ -72,7 +72,8 @@ never on the message text.
 | GET | `/accounts/:id/statement` (`.csv`, `.xml`, `.html`) | owner / staff | Statement as JSON, CSV, XML or XSLT-rendered HTML |
 | POST | `/accounts/:id/status` | manager, admin | Freeze, unfreeze or close |
 | GET, POST, DELETE | `/beneficiaries`, `/beneficiaries/:id` | customer | Payees (24-hour cooling period) |
-| GET | `/ifsc/:code` | any | Bank branch lookup (live directory, cached, offline fallback) |
+| GET | `/banks` | any | Banks payees can be added at (Vinay Bank, Bank of Baroda, SBI, HDFC and others): IFSC bank code, name, example IFSC |
+| GET | `/ifsc/:code` | any | Bank branch lookup (live directory, cached, offline fallback that names the bank from the same list) |
 | GET | `/transfers/rails` | customer | IMPS, NEFT, RTGS with fees and timings |
 | POST | `/transfers/quote` | customer | Step 1: fee, rail, risk score; HMAC-signed quote + OTP |
 | POST | `/transfers` | customer | Step 2: execute (OTP, Idempotency-Key, one ACID transaction) |

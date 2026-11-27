@@ -6,10 +6,14 @@ import request from 'supertest';
 import { registerCustomer } from './utils/auth-helpers';
 import {
   account,
+  addBeneficiary,
+  ageBeneficiary,
   auth,
+  execute,
   fund,
   latestOtp,
   myAccounts,
+  quote,
   RUPEE,
   verifyKyc,
 } from './utils/banking-helpers';
@@ -413,6 +417,53 @@ describe('Integrations: SOAP, XML/XSLT, ISO 20022 and forex (e2e)', () => {
         })
         .expect(200);
       expect(xxe.body.data.issues[0].message).toMatch(/DOCTYPE/);
+    });
+  });
+
+  describe('banks and the IFSC directory', () => {
+    it('lists the banks payees can be added at and pays a Bank of Baroda payee over IMPS', async () => {
+      const c = await customer(20_000);
+      const banks = await http().get('/api/v1/banks').set(auth(c.accessToken)).expect(200);
+      expect(banks.body.data[0]).toMatchObject({ code: 'VINB', isInternal: true });
+      expect(banks.body.data).toEqual(
+        expect.arrayContaining([
+          { code: 'BARB', name: 'Bank of Baroda', exampleIfsc: 'BARB0ANDHER', isInternal: false },
+        ]),
+      );
+      await http().get('/api/v1/banks').expect(401);
+
+      // The IFSC directory is unreachable in tests: the bank is named from its IFSC code.
+      const ifsc = await http()
+        .get('/api/v1/ifsc/BARB0ANDHER')
+        .set(auth(c.accessToken))
+        .expect(200);
+      expect(ifsc.body.data).toMatchObject({ bank: 'Bank of Baroda', source: 'OFFLINE' });
+
+      const ben = await addBeneficiary(app, c.accessToken, {
+        name: 'Neha Joshi',
+        accountNumber: '29080100004567',
+        ifsc: 'BARB0ANDHER',
+      }).expect(201);
+      expect(ben.body.data).toMatchObject({ bankName: 'Bank of Baroda', isInternal: false });
+      await ageBeneficiary(app, ben.body.data.id);
+
+      const before = new Date();
+      const q = await quote(app, c.accessToken, {
+        fromAccountId: c.savings.id,
+        mode: 'BENEFICIARY',
+        beneficiaryId: ben.body.data.id,
+        rail: 'IMPS',
+        amount: 2_500 * RUPEE,
+      }).expect(200);
+      expect(q.body.data.payee).toMatchObject({ bankName: 'Bank of Baroda', ifsc: 'BARB0ANDHER' });
+      const paid = await execute(
+        app,
+        c.accessToken,
+        q.body.data.quoteToken,
+        await latestOtp(app, c.user.id, before),
+      ).expect(201);
+      expect(paid.body.data).toMatchObject({ status: 'COMPLETED', rail: 'IMPS' });
+      expect(paid.body.data.to).toMatchObject({ bankName: 'Bank of Baroda' });
     });
   });
 

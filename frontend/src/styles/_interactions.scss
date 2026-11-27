@@ -1,0 +1,183 @@
+// ---------------------------------------------------------------
+// Animated cursor and click feedback
+//
+// On devices with a mouse or trackpad the app draws its own cursor
+// (components/common/CursorEffects.tsx): a dot exactly at the pointer and a
+// ring that trails it. While it is on screen, <html data-cursor="custom">
+// hides the system cursor on every page and element, so only the animated one
+// shows; touch screens, and a pointer outside the window, use the system
+// cursor as usual. Nothing here alters sizes or layout, so every control keeps
+// working exactly as before.
+// ---------------------------------------------------------------
+:root {
+  --vb-cursor-rgb: 79, 70, 229;
+  // Thin outlines in the page colour, so the cursor stays visible on coloured
+  // surfaces such as primary buttons (they do not show on the page itself).
+  --vb-cursor-halo: rgba(255, 255, 255, 0.9);
+  --vb-cursor-ring-halo: rgba(255, 255, 255, 0.5);
+}
+
+[data-bs-theme='dark'] {
+  --vb-cursor-rgb: 165, 180, 252;
+  --vb-cursor-halo: rgba(11, 16, 32, 0.85);
+  --vb-cursor-ring-halo: rgba(11, 16, 32, 0.45);
+}
+
+html[data-cursor='custom'],
+html[data-cursor='custom'] *,
+html[data-cursor='custom'] *::before,
+html[data-cursor='custom'] *::after {
+  cursor: none !important;
+}
+
+.vb-cursor-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483000; // above everything; it ignores the pointer
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.vb-cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+
+  &.is-visible {
+    opacity: 1;
+  }
+}
+
+// Moved by the script: the trail eases after the pointer, the point is exactly on it.
+.vb-cursor__trail,
+.vb-cursor__point {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+.vb-cursor__ring {
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  width: 30px;
+  height: 30px;
+  border: 1.5px solid rgba(var(--vb-cursor-rgb), 0.45);
+  border-radius: 50%;
+  background-color: rgba(var(--vb-cursor-rgb), 0);
+  box-shadow: 0 0 0 1px var(--vb-cursor-ring-halo);
+  transition:
+    transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.vb-cursor__dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  translate: -50% -50%; // centred on the pointer at any size
+  border-radius: 999px;
+  background-color: rgb(var(--vb-cursor-rgb));
+  box-shadow: 0 0 0 1.5px var(--vb-cursor-halo);
+  transition:
+    width 0.18s cubic-bezier(0.2, 0.8, 0.2, 1),
+    height 0.18s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.18s ease;
+}
+
+// Over something clickable: the ring grows, fills and strengthens around the dot.
+.vb-cursor.is-interactive .vb-cursor__ring {
+  transform: scale(1.55);
+  border-color: rgba(var(--vb-cursor-rgb), 0.7);
+  background-color: rgba(var(--vb-cursor-rgb), 0.1);
+}
+
+.vb-cursor.is-interactive .vb-cursor__dot {
+  transform: scale(0.85);
+}
+
+.vb-cursor.is-pressed .vb-cursor__ring {
+  transform: scale(0.8);
+}
+
+.vb-cursor.is-pressed .vb-cursor__dot {
+  transform: scale(0.7);
+}
+
+.vb-cursor.is-interactive.is-pressed .vb-cursor__ring {
+  transform: scale(1.25);
+  background-color: rgba(var(--vb-cursor-rgb), 0.18);
+}
+
+// Over text fields: the dot becomes a text bar and the ring steps out of the way.
+.vb-cursor.is-text .vb-cursor__ring {
+  transform: scale(0.35);
+  opacity: 0;
+}
+
+.vb-cursor.is-text .vb-cursor__dot {
+  width: 2px;
+  height: 20px;
+}
+
+// Over disabled controls: dimmed, with a dashed ring.
+.vb-cursor.is-disabled .vb-cursor__ring {
+  border-style: dashed;
+  opacity: 0.6;
+}
+
+.vb-cursor.is-disabled .vb-cursor__dot {
+  opacity: 0.45;
+}
+
+.vb-cursor-ripple {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  border: 2px solid rgba(var(--vb-cursor-rgb), 0.55);
+  border-radius: 50%;
+  animation: vb-cursor-ripple 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes vb-cursor-ripple {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(5.5);
+  }
+}
+
+@media print {
+  .vb-cursor-layer {
+    display: none;
+  }
+}
+
+// Buttons press in slightly when clicked. Buttons joined to their neighbours
+// (button groups, input groups) stay put so the seams never open up.
+.btn:where(:not(:disabled, .disabled)):active {
+  transform: scale(0.97);
+}
+
+.btn-group > .btn:active,
+.input-group > .btn:active {
+  transform: none;
+}
+
+// Solid primary buttons glow softly on hover (the keyboard focus ring wins over it).
+.btn-primary:where(:not(:disabled, .disabled)):hover:not(:focus-visible) {
+  box-shadow: 0 10px 22px -12px rgba(var(--bs-primary-rgb), 0.95);
+}

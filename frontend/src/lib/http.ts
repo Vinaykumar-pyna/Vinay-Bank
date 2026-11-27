@@ -6,7 +6,7 @@ import { env } from '@/config/env';
  *  - withCredentials: sends the httpOnly refresh-token cookie to /auth endpoints
  *  - X-Requested-With: a custom header that simple cross-site form posts cannot add,
  *    which the API checks on cookie-authenticated endpoints (CSRF defence)
- * Authentication interceptors are attached in lib/authInterceptors.ts.
+ * Authentication interceptors are attached in lib/session.ts.
  */
 export const http = axios.create({
   baseURL: env.apiBaseUrl,

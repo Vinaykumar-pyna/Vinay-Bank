@@ -146,6 +146,7 @@ export class BankingSeeder {
         {
           key: 'rahulSavings',
           employer: 'Wipro Ltd',
+          employerBank: 'Bank of Baroda',
           salary: 110_000,
           rent: 28_000,
           landlord: 'Lakshmi Rao',
@@ -170,7 +171,7 @@ export class BankingSeeder {
           category: Category.SALARY,
           amount: person.salary * RUPEE,
           credit: person.key,
-          counterparty: external(person.employer),
+          counterparty: external(person.employer, person.employerBank),
           narrationCredit: `NEFT CR - ${person.employer} - Salary ${monthLabel}`,
         });
         if (person.rent) {
@@ -488,6 +489,18 @@ export class BankingSeeder {
         ifsc: 'HDFC0000240',
         bankName: 'HDFC Bank',
         branchName: 'Mumbai - Sandoz House',
+        isInternal: false,
+        coolingUntil: old,
+        createdAt: old,
+      },
+      {
+        ownerId: customers.priya._id,
+        name: 'Neha Joshi',
+        nickname: 'Sister',
+        accountNumber: '29080100004567',
+        ifsc: 'BARB0ANDHER',
+        bankName: 'Bank of Baroda',
+        branchName: 'Mumbai - Andheri',
         isInternal: false,
         coolingUntil: old,
         createdAt: old,

@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Alert, Button, Form, InputGroup, Spinner } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -11,6 +11,7 @@ import { emailSchema } from '@/lib/validation';
 import { useLoginMutation } from './authApi';
 import { AuthLayout } from './AuthLayout';
 import { DemoAccounts } from './DemoAccounts';
+import { LoginOwl } from './LoginOwl';
 import { MfaChallenge } from './MfaChallenge';
 
 const schema = z.object({
@@ -23,7 +24,9 @@ export default function LoginPage() {
   const [login, { isLoading }] = useLoginMutation();
   const [mfaToken, setMfaToken] = useState<string | null>(null);
   const [error, setError] = useState<ApiError | null>(null);
+  const [failedAttempts, setFailedAttempts] = useState(0);
   const [showPassword, setShowPassword] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
   const {
     register,
     handleSubmit,
@@ -46,6 +49,7 @@ export default function LoginPage() {
       }
     } catch (err) {
       setError(toApiError(err));
+      setFailedAttempts((count) => count + 1);
     }
   };
 
@@ -59,8 +63,17 @@ export default function LoginPage() {
 
   return (
     <AuthLayout>
-      <h1 className="h3 mb-1">Sign in</h1>
-      <p className="text-body-secondary mb-4">Welcome back. Sign in to manage your money.</p>
+      <div className="d-flex align-items-end justify-content-between gap-3 mb-3">
+        <div className="pb-2">
+          <h1 className="h3 mb-1">Sign in</h1>
+          <p className="text-body-secondary mb-0">Welcome back. Sign in to manage your money.</p>
+        </div>
+        <LoginOwl
+          formRef={formRef}
+          passwordVisible={showPassword}
+          failedAttempts={failedAttempts}
+        />
+      </div>
 
       {error && (
         <Alert variant={error.code === 'ACCOUNT_LOCKED' ? 'warning' : 'danger'} className="py-2">
@@ -72,8 +85,8 @@ export default function LoginPage() {
         </Alert>
       )}
 
-      <Form onSubmit={handleSubmit(onSubmit)} noValidate>
-        <Form.Group className="mb-3" controlId="login-email">
+      <Form ref={formRef} onSubmit={handleSubmit(onSubmit)} noValidate>
+        <Form.Group className="mb-3" controlId="login-email" data-owl="email">
           <Form.Label>Email</Form.Label>
           <Form.Control
             type="email"
@@ -85,7 +98,7 @@ export default function LoginPage() {
           <Form.Control.Feedback type="invalid">{errors.email?.message}</Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="mb-4" controlId="login-password">
+        <Form.Group className="mb-4" controlId="login-password" data-owl="password">
           <Form.Label>Password</Form.Label>
           <InputGroup hasValidation>
             <Form.Control

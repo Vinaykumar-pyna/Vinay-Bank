@@ -1,0 +1,93 @@
+// ---------------------------------------------------------------
+// Auto-hiding scrollbars
+//
+// Thin, brand-tinted thumbs on a transparent track. A thumb stays invisible
+// until it is useful: while its area scrolls (.vb-scrolling, added by
+// lib/scrollbars.ts), while the pointer is over an inner scroll area, and
+// while the pointer rests at the page's right-hand edge (.vb-scrollbar-peek).
+// Only colours change, so showing and hiding never shifts the layout.
+// Touch screens keep their native overlay scrollbars and forced-colours
+// (high contrast) mode keeps the system ones.
+// ---------------------------------------------------------------
+
+// A registered colour can be transitioned, which gives the thumb a soft fade.
+@property --vb-scrollbar-thumb {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: transparent;
+}
+
+:root {
+  --vb-scrollbar-color: rgba(79, 70, 229, 0.34);
+  --vb-scrollbar-color-active: rgba(79, 70, 229, 0.62);
+}
+
+[data-bs-theme='dark'] {
+  --vb-scrollbar-color: rgba(165, 180, 252, 0.36);
+  --vb-scrollbar-color-active: rgba(165, 180, 252, 0.62);
+}
+
+@media (hover: hover) and (pointer: fine) and (forced-colors: none) {
+  // Zero specificity: any element with its own transition keeps it (and simply skips the fade).
+  * {
+    transition: --vb-scrollbar-thumb 0.3s ease-out;
+  }
+
+  .vb-scrolling,
+  .vb-scrollbar-peek,
+  .vb-scrollbar-peek .modal,
+  :where(
+      .overflow-auto,
+      .overflow-y-auto,
+      .overflow-x-auto,
+      .overflow-scroll,
+      .table-responsive,
+      .modal-body,
+      .offcanvas-body,
+      .dropdown-menu,
+      .hex-dump,
+      pre,
+      textarea,
+      select
+    ):hover {
+    --vb-scrollbar-thumb: var(--vb-scrollbar-color);
+  }
+
+  // Chromium, Edge and Safari
+  @supports selector(::-webkit-scrollbar) {
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-track,
+    ::-webkit-scrollbar-corner {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      --vb-scrollbar-thumb: inherit;
+      min-width: 40px;
+      min-height: 40px;
+      border: 2px solid transparent;
+      border-radius: 999px;
+      background-color: var(--vb-scrollbar-thumb);
+      background-clip: padding-box;
+    }
+
+    // The thumb under the pointer (or being dragged) always shows, a little stronger.
+    ::-webkit-scrollbar-thumb:hover,
+    ::-webkit-scrollbar-thumb:active {
+      --vb-scrollbar-thumb: var(--vb-scrollbar-color-active);
+    }
+  }
+
+  // Firefox and any browser without the WebKit pseudo-elements
+  @supports not selector(::-webkit-scrollbar) {
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: var(--vb-scrollbar-thumb) transparent;
+    }
+  }
+}

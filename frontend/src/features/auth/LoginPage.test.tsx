@@ -29,6 +29,29 @@ describe('LoginPage', () => {
     expect(screen.getByLabelText('Password')).toHaveValue('Demo@1234');
   });
 
+  it('has an owl that watches the email field and covers its eyes for the password', async () => {
+    renderWithProviders(<LoginPage />, { route: '/login' });
+    const owl = document.querySelector<SVGSVGElement>('.login-owl')!;
+    expect(owl).toHaveAttribute('aria-hidden', 'true');
+    expect(owl).toHaveAttribute('data-owl-state', 'idle');
+
+    await userEvent.type(screen.getByLabelText('Email'), 'priya@example.com');
+    expect(owl).toHaveAttribute('data-owl-state', 'watching');
+    expect(owl.style.getPropertyValue('--owl-look-x')).toMatch(/px$/);
+
+    await userEvent.click(screen.getByLabelText('Password'));
+    expect(owl).toHaveAttribute('data-owl-state', 'covering');
+    expect(owl).not.toHaveAttribute('data-owl-shy');
+
+    // Revealing the password keeps the eyes covered and turns the head away.
+    await userEvent.click(screen.getByRole('button', { name: 'Show password' }));
+    expect(owl).toHaveAttribute('data-owl-state', 'covering');
+    expect(owl).toHaveAttribute('data-owl-shy', 'true');
+
+    await userEvent.click(document.body);
+    expect(owl).toHaveAttribute('data-owl-state', 'idle');
+  });
+
   it('toggles password visibility', async () => {
     renderWithProviders(<LoginPage />, { route: '/login' });
     const input = screen.getByLabelText('Password');

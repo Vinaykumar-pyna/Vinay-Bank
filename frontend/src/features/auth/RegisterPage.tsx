@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useState, type MouseEvent } from 'react';
 import { Alert, Button, Col, Form, Row, Spinner } from 'react-bootstrap';
 import { useForm, useWatch, type FieldPath } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -101,8 +101,9 @@ export default function RegisterPage() {
     handleSubmit,
     trigger,
     control,
+    getFieldState,
     setError,
-    formState: { errors },
+    formState: { errors, submitCount },
   } = useForm<RegisterValues>({
     resolver: zodResolver(schema),
     mode: 'onTouched',
@@ -120,7 +121,19 @@ export default function RegisterPage() {
     },
   });
 
-  const next = async () => {
+  // The terms message belongs to a submit attempt: it appears when "Create my
+  // account" is pressed with the box clear and goes as soon as the box is
+  // ticked. Clearing the box again does not bring it back before the next attempt.
+  const [termsChangedAt, setTermsChangedAt] = useState(0);
+  const termsError = submitCount > termsChangedAt ? errors.acceptTerms?.message : undefined;
+
+  const next = async (event: MouseEvent<HTMLButtonElement>) => {
+    // React turns this same button into "Create my account" on the last step, and
+    // a browser carries out a click's default action only after its handlers have
+    // run, when the button already submits. Without this, the click that opens
+    // the last step would also submit the form and show every error there before
+    // anything was typed.
+    event.preventDefault();
     if (await trigger(STEPS[step].fields)) setStep((s) => s + 1);
   };
 
@@ -348,7 +361,15 @@ export default function RegisterPage() {
                 type="password"
                 autoComplete="new-password"
                 isInvalid={!!errors.password}
-                {...register('password')}
+                {...register('password', {
+                  // Keep "Passwords do not match" in step with the password once the
+                  // confirmation has been filled in and left (or after a submit attempt).
+                  onChange: () => {
+                    if (submitCount > 0 || getFieldState('confirmPassword').isTouched) {
+                      void trigger('confirmPassword');
+                    }
+                  },
+                })}
               />
               <Form.Control.Feedback type="invalid">
                 {errors.password?.message}
@@ -373,11 +394,11 @@ export default function RegisterPage() {
             <Form.Group controlId="reg-terms">
               <Form.Check
                 type="checkbox"
-                isInvalid={!!errors.acceptTerms}
-                feedback={errors.acceptTerms?.message}
+                isInvalid={!!termsError}
+                feedback={termsError}
                 feedbackType="invalid"
                 label="I agree to the terms and conditions and the privacy policy"
-                {...register('acceptTerms')}
+                {...register('acceptTerms', { onChange: () => setTermsChangedAt(submitCount) })}
               />
             </Form.Group>
           </>
@@ -391,7 +412,7 @@ export default function RegisterPage() {
             </Button>
           )}
           {step < STEPS.length - 1 ? (
-            <Button className="ms-auto" onClick={next}>
+            <Button type="button" className="ms-auto" onClick={next}>
               Continue <i className="bi bi-arrow-right ms-1" aria-hidden="true" />
             </Button>
           ) : (

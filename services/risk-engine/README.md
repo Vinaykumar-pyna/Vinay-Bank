@@ -14,7 +14,7 @@ score every transfer before the money moves, and acts on the decision:
 
 - Java 21 (runs on 21 or newer), Spring Boot 4.1 (Spring Framework 7, Tomcat 11)
 - Spring Web MVC, Bean Validation, Actuator (health, info, metrics), virtual threads
-- JUnit 5, AssertJ, MockMvc
+- JUnit 6, AssertJ, MockMvc
 - Maven via the Maven Wrapper: nothing to install besides a JDK. The wrapper
   downloads Maven 3.9.16 once, pinned by its SHA-256 checksum.
 

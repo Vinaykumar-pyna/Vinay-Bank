@@ -1,0 +1,297 @@
+// ---------------------------------------------------------------
+// Loading screens: the animated VB mark (BrandLoader), the in-page loader,
+// the full-screen splash/overlay and the top progress bar.
+// The boot splash in index.html repeats the essentials of these styles,
+// because it is painted before this stylesheet has loaded.
+// ---------------------------------------------------------------
+$vb-loader-cycle: 2.8s;
+$vb-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+.vb-loader {
+  display: inline-block;
+  overflow: visible;
+
+  // Every animated part transforms around the centre of the 120x120 artboard.
+  .vb-loader__glow,
+  .vb-loader__orbit,
+  .vb-loader__tile {
+    transform-box: view-box;
+    transform-origin: 60px 60px;
+  }
+
+  .vb-loader__glow {
+    animation: vb-loader-glow $vb-loader-cycle ease-in-out infinite;
+  }
+
+  .vb-loader__track {
+    fill: none;
+    stroke: rgba(99, 102, 241, 0.14);
+    stroke-width: 3;
+  }
+
+  .vb-loader__orbit {
+    animation: vb-loader-spin 1.4s linear infinite;
+  }
+
+  .vb-loader__arc {
+    fill: none;
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    stroke-dasharray: 100 240;
+  }
+
+  .vb-loader__spark {
+    fill: #fbbf24;
+  }
+
+  .vb-loader__tile {
+    animation: vb-loader-breathe $vb-loader-cycle ease-in-out infinite;
+  }
+
+  // Drawn state by default: with animations off the mark is simply complete.
+  .vb-loader__letter {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 6.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1 1;
+    stroke-dashoffset: 0;
+    animation: vb-loader-draw $vb-loader-cycle $vb-ease-in-out infinite;
+  }
+
+  .vb-loader__letter--b {
+    animation-delay: 0.14s;
+  }
+
+  .vb-loader__coin {
+    fill: #fbbf24;
+    animation: vb-loader-coin $vb-loader-cycle ease-in-out infinite;
+  }
+}
+
+[data-bs-theme='dark'] .vb-loader .vb-loader__track {
+  stroke: rgba(165, 180, 252, 0.14);
+}
+
+@keyframes vb-loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes vb-loader-glow {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.9);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes vb-loader-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.035);
+  }
+}
+
+// The V and B write themselves, hold, then wipe away in the same direction.
+@keyframes vb-loader-draw {
+  0% {
+    stroke-dashoffset: 1;
+  }
+
+  32%,
+  72% {
+    stroke-dashoffset: 0;
+  }
+
+  94%,
+  100% {
+    stroke-dashoffset: -1;
+  }
+}
+
+// The gold coin drops into the V, bounces once, rests, then fades.
+@keyframes vb-loader-coin {
+  0%,
+  26% {
+    opacity: 0;
+    transform: translateY(-30px);
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
+  }
+
+  38% {
+    opacity: 1;
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);
+  }
+
+  44% {
+    transform: translateY(-5px);
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
+  }
+
+  50%,
+  76% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  90%,
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+
+@keyframes vb-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes vb-fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.vb-loader-label {
+  margin-top: 0.85rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--bs-secondary-color);
+  letter-spacing: 0.01em;
+}
+
+// Three dots that appear one after another.
+.vb-loader-dots::after {
+  content: '...';
+  display: inline-block;
+  width: 1.1em;
+  overflow: hidden;
+  vertical-align: bottom;
+  text-align: left;
+  animation: vb-loader-dots 1.4s steps(4, end) infinite;
+}
+
+@keyframes vb-loader-dots {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 1.1em;
+  }
+}
+
+// In-page loader (a card or the content area while data loads). The short
+// delay keeps quick responses from flashing it.
+.page-loader {
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: vb-fade-in 0.3s ease 0.12s both;
+}
+
+.page-loader--compact {
+  min-height: 0;
+  padding: 1.75rem 0;
+}
+
+// Full-screen splash and page-change overlay
+.vb-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 1090; // above modals and the sidebar, below toasts
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background: var(--vb-hero-glow), var(--bs-body-bg);
+  text-align: center;
+}
+
+.vb-splash--overlay {
+  background: rgba(var(--bs-body-bg-rgb), 0.72);
+  backdrop-filter: blur(6px) saturate(140%);
+  animation: vb-fade-in 0.25s ease both;
+
+  &.is-leaving {
+    animation: vb-fade-out 0.25s ease both;
+  }
+}
+
+.vb-splash__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.vb-splash__brand {
+  margin-top: 1rem;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--bs-body-color);
+}
+
+// Slim progress bar at the top of the window (page changes, data requests)
+.vb-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2100;
+  height: 3px;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 40%;
+    border-radius: 0 3px 3px 0;
+    background: linear-gradient(90deg, transparent, #6366f1 35%, #a78bfa 75%, #fbbf24);
+    transform: translateX(-100%);
+  }
+
+  &.is-active {
+    opacity: 1;
+
+    &::before {
+      animation: vb-progress-slide 1.15s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+  }
+}
+
+@keyframes vb-progress-slide {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(250%);
+  }
+}

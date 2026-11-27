@@ -46,7 +46,7 @@ export function NotificationBell() {
             </Button>
           )}
         </div>
-        <div style={{ maxHeight: 380, overflowY: 'auto' }}>
+        <div className="overflow-y-auto" style={{ maxHeight: 380 }}>
           {isFetching && !data ? (
             <div className="text-center py-4">
               <Spinner size="sm" animation="border" />
