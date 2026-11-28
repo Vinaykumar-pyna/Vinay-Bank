@@ -4,10 +4,12 @@
 > (Docker 29.9, Windows 11): all five containers start; the web app works
 > through nginx; live notifications arrive over WebSockets; the ATM CLI and
 > the SOAP client talk to the containers; the API reaches the Java risk engine
-> with its API key. The nginx edge configuration, the systemd units, the PM2
-> file and the Oracle scripts follow standard practice but were **not run**
-> (there was no Linux server, nginx or Oracle in the development environment).
-> Treat those as a reviewed starting point.
+> with its API key; HTTP clients on the host call the API and the risk engine
+> directly on their published ports, over both loopback addresses. The nginx
+> edge configuration, the systemd units, the PM2 file and the Oracle scripts
+> follow standard practice but were **not run** (there was no Linux server,
+> nginx or Oracle in the development environment). Treat those as a reviewed
+> starting point.
 
 ## Topology
 
@@ -37,9 +39,12 @@ Open http://localhost:8080; the demo sign-ins work as in development. The
 first build downloads about 1.5 GB of base images and packages and takes a few
 minutes; later builds reuse the cache.
 
-- **Stop `npm run dev` first**: both publish the card switch on port 5800.
-- nginx (8080) and the card switch (5800) are published. The API and the risk
-  engine are reachable only inside the Compose network.
+- **Stop `npm run dev` first**: both use ports 4000, 5800 and 8085.
+- nginx (8080) and the card switch (5800) are published. The API (4000) and
+  the risk engine (8085) are published on the loopback addresses only
+  (`127.0.0.1` and `::1`), so HTTP clients on this machine can call them
+  directly (see [Calling the APIs directly](#calling-the-apis-directly)). The
+  issuer RPC port (4001) stays inside the Compose network.
 - MongoDB is published on `127.0.0.1:27017` only, so database clients on this
   machine can connect (see [Inspecting the data](#inspecting-the-data)). It has
   no password, which is why it is never exposed beyond localhost. If another
@@ -64,6 +69,35 @@ start. Secrets are mounted read-only, never baked into images. The Maven
 Wrapper checks the Maven download against a pinned SHA-256; the build stage
 installs `unzip` because without it the wrapper fetches the `.tar.gz`, whose
 checksum differs from the pinned `.zip`.
+
+### Calling the APIs directly
+
+The API and the risk engine answer at the same addresses as with `npm run dev`,
+so the request files in [`http/`](../http/README.md) and any other HTTP client
+on this machine work against the containers unchanged.
+
+| Service | Address | Authentication |
+|---|---|---|
+| REST API | http://localhost:4000/api/v1 | Bearer access token from `POST /auth/login` |
+| API docs (OpenAPI) | http://localhost:4000/api/docs (JSON spec: `/api/docs-json`) | None |
+| SOAP service | http://localhost:4000/soap/banking (WSDL: `?wsdl`) | WS-Security UsernameToken |
+| Risk engine | http://localhost:8085/api/v1/risk | `X-Api-Key` header |
+| Risk engine health | http://localhost:8085/actuator/health | None |
+
+- The SOAP password and the risk engine API key are generated per installation
+  and stored in `backend/.env` (`SOAP_PASSWORD`, `RISK_ENGINE_API_KEY`); the
+  sign-ins are listed in the [README](../README.md#demo-sign-in).
+- Requests to port 4000 skip nginx; http://localhost:8080/api/v1 reaches the
+  same API through it. The WSDL advertises the nginx address
+  (`SOAP_PUBLIC_URL`), so clients generated from it call port 8080.
+- The card switch (5800) and the issuer RPC (4001) use mutual TLS, not HTTP;
+  `http/card-network.http` drives the card network through the API instead.
+- Both loopback addresses are published because some clients try `::1` before
+  `127.0.0.1`; without `::1`, each of their new connections would wait for that
+  attempt to fail (about two seconds on Windows). If Docker cannot bind `::1`
+  (IPv6 disabled on the host), delete the two `[::1]` lines in
+  `docker-compose.yml`.
+- Quick check from a terminal: `curl http://localhost:4000/api/v1/health`.
 
 ### Inspecting the data
 

@@ -82,6 +82,11 @@ Then open:
 The first `npm run dev` downloads the official MongoDB server binary once
 (about 780 MB on Windows, less on Linux/macOS). Data is kept in `backend/.data/mongo`.
 
+To run everything in containers instead, see
+[Deployment](docs/DEPLOYMENT.md#option-1-docker-compose): the web app is then at
+http://localhost:8080, and the API, SOAP and risk engine addresses above stay
+the same.
+
 ## Demo sign-in
 
 The local database is seeded with demo data on first start. These are test

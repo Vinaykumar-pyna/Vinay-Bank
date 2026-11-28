@@ -52,6 +52,14 @@ services:
     volumes:
       - ./backend/.secrets:/app/.secrets:ro
       - ledger-data:/app/.data
+    ports:
+      # Lets HTTP clients on this machine call the API directly, at the same
+      # addresses as "npm run dev": http://localhost:4000/api/v1 (API docs at
+      # /api/docs, SOAP at /soap/banking). Loopback only: with TRUST_PROXY the
+      # API trusts X-Forwarded-For, which only nginx should set. Both loopback
+      # addresses, so clients that try ::1 first don't wait for it to fail.
+      - "127.0.0.1:4000:4000"
+      - "[::1]:4000:4000"
     depends_on:
       mongo:
         condition: service_healthy
@@ -76,6 +84,12 @@ services:
     env_file: ./backend/.env # RISK_ENGINE_API_KEY
     environment:
       RISK_ENGINE_BIND: 0.0.0.0
+    ports:
+      # Lets HTTP clients on this machine call the risk engine directly:
+      # http://localhost:8085/api/v1/risk (X-Api-Key header) and /actuator/health.
+      # Loopback only, like the API, because /actuator needs no API key.
+      - "127.0.0.1:8085:8085"
+      - "[::1]:8085:8085"
 
   web:
     build: ./frontend
